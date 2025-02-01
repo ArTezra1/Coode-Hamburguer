@@ -1,10 +1,10 @@
-import ClientesModel from "../models/ClientesSchema.js";
+import BebidasAlcoolModel from "../models/BebidasAlcoolSchema.js"
 
-class ClientesController{
+class BebidasAlcoolController{
     constructor(){
-
+        
     }
-    static async listarClientes(req, res, next){
+    static async listarAlcool(req, res, next){
         try {
             const lista = await BebidasAlcoolModel.find({})
             
@@ -13,7 +13,7 @@ class ClientesController{
         }
     }
 
-    static async listarClientePorId(req, res, next) {
+    static async listarAlcoolPorId(req, res, next) {
         try {
             const id = req.params.id
             const alcoolEspecifico = await BebidasAlcoolModel.findById(id)
@@ -23,7 +23,7 @@ class ClientesController{
         }
     }
 
-    static async cadastrarCliente(req, res, next) {
+    static async cadastrarAlcool(req, res, next) {
         try {
             
         } catch (error) {
@@ -31,7 +31,7 @@ class ClientesController{
         }
     }
 
-    static async atualizarCliente(req, res, next) {
+    static async atualizarAlcool(req, res, next) {
         try {
             
         } catch (error) {
@@ -39,7 +39,7 @@ class ClientesController{
         }
     }
 
-    static async deletarCliente(req, res, next) {
+    static async deletarAlcool(req, res, next) {
         try {
             
         } catch (error) {
@@ -48,4 +48,4 @@ class ClientesController{
     }
 }
 
-export default ClientesController
+export default BebidasAlcoolController

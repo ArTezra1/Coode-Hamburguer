@@ -1,10 +1,10 @@
-import ClientesModel from "../models/ClientesSchema.js";
+import LanchesModel from "../models/LanchesSchema.js"
 
-class ClientesController{
+class LanchesController{
     constructor(){
 
     }
-    static async listarClientes(req, res, next){
+    static async listarLanches(req, res, next){
         try {
             const lista = await BebidasAlcoolModel.find({})
             
@@ -13,7 +13,7 @@ class ClientesController{
         }
     }
 
-    static async listarClientePorId(req, res, next) {
+    static async listarLanchesPorId(req, res, next) {
         try {
             const id = req.params.id
             const alcoolEspecifico = await BebidasAlcoolModel.findById(id)
@@ -23,7 +23,7 @@ class ClientesController{
         }
     }
 
-    static async cadastrarCliente(req, res, next) {
+    static async cadastrarLanche(req, res, next) {
         try {
             
         } catch (error) {
@@ -31,7 +31,7 @@ class ClientesController{
         }
     }
 
-    static async atualizarCliente(req, res, next) {
+    static async atualizarLanche(req, res, next) {
         try {
             
         } catch (error) {
@@ -39,7 +39,7 @@ class ClientesController{
         }
     }
 
-    static async deletarCliente(req, res, next) {
+    static async deletarLanche(req, res, next) {
         try {
             
         } catch (error) {
@@ -48,4 +48,4 @@ class ClientesController{
     }
 }
 
-export default ClientesController
+export default LanchesController
