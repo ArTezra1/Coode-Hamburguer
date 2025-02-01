@@ -17,7 +17,7 @@ const PedidosSchema = new mongoose.Schema({
                 ref: "Enderecos",
                 required: true
             },
-            bebidaIs: {
+            bebidaId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Bebidas"
             },
@@ -27,7 +27,7 @@ const PedidosSchema = new mongoose.Schema({
             },
             combosId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Bebidas"
+                ref: "Combos"
             },
             nome: {
                 type: String,

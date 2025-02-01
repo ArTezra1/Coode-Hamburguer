@@ -5,9 +5,9 @@ const BebidasAlcoolSchema = new mongoose.Schema({
         type: String,
         required: [true, "Por favor insira a Marca do produto!"]
     },
-    tipo:{
+    tipo: {
         type: String,
-        enum: ["cerveja", "dose"],
+        enum: ["cerveja", "dose", "caipirinha", "fardinho"],
         required: [true, "Por favor insira o Tipo de bebida"]
     },
     preco_unitario: {
