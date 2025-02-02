@@ -3,24 +3,14 @@ import ClientesController from "../controllers/ClientesController.js"
 
 const routes = express.Router()
 
-routes.get("/clientes", (req, res)=>{
-    
-})
+routes.get("/clientes", ClientesController.listarClientes)
 
-routes.get("/clientes/:id", (req, res)=>{
+routes.get("/clientes/:id", ClientesController.listarClientePorId)
 
-})
+routes.post("/clientes", ClientesController.cadastrarCliente)
 
-routes.post("/clientes", (req, res)=>{
+routes.put("/clientes/:id", ClientesController.atualizarCliente)
 
-})
-
-routes.put("/clientes/:id", (req, res)=>{
-
-})
-
-routes.delete("/clientes/:id", (req, res)=>{
-
-})
+routes.delete("/clientes/:id", ClientesController.deletarCliente)
 
 export default routes

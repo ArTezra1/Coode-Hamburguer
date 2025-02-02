@@ -10,7 +10,7 @@ import combos from "./CombosRoutes.js"
 const routes = (app) => {
     app.route("/").get((req, res) => res.status(200).send("Curso de Node.js"));
   
-    app.use(express.json(), [endereco, clientes, bebidas, alcool, pedidos, lanches, combos]);
+    app.use([endereco, clientes, bebidas, alcool, pedidos, lanches, combos]);
 };
 
 export default routes

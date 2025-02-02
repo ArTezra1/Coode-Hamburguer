@@ -6,10 +6,13 @@ class ClientesController{
     }
     static async listarClientes(req, res, next){
         try {
-            const lista = await BebidasAlcoolModel.find({})
-            
+            const listaClientes = await ClientesModel.find()
+            .populate("Enderecos")
+            .exec()
+
+            res.status(200).json(listaClientes)
         } catch (error) {
-            next(error)
+            // next(error)
         }
     }
 
@@ -25,9 +28,11 @@ class ClientesController{
 
     static async cadastrarCliente(req, res, next) {
         try {
-            
+            const clienteCriado = await ClientesModel.create(req.body)
+
+            res.send(200).json(clienteCriado)
         } catch (error) {
-            next(error)
+            // next(error)
         }
     }
 

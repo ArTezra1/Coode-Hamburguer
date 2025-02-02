@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
 async function connectDB() {
-    mongoose.connect(process.env.DATABASE_URL)
+    try {
+        mongoose.connect(process.env.DATABASE_URL)
+        console.log("Conectado ao banco de dados.")
+    } catch (error) {
+        throw error
+    }
 
     return mongoose.connection
 }

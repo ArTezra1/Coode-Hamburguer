@@ -1,6 +1,9 @@
 import express from "express"
 import routes from "./routes/index.js"
 import connectDB from "./config/dbConnect.js"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const conexao = await connectDB()
 
