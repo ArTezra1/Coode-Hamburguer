@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div className='bg-zinc-900 w-full h-[30vh] flex justify-between p-6'>
+    <div className='bg-zinc-900 w-full h-72 flex justify-between p-6 rounded-md'>
         <div>
 
         </div>

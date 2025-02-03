@@ -5,8 +5,8 @@ import React from 'react'
 
 const Aside = () => {
   return (
-    <div className='bg-zinc-800 h-full w-[20vw] md:w-[25vw] md:flex flex-col xs:hidden rounded-br-xl fixed'>
-        <div className='h-36 p-6 flex flex-col gap-4'>
+    <div className='bg-zinc-950 h-full w-[20vw] md:w-[25vw] md:flex flex-col xs:hidden rounded-br-xl gap-1 fixed'>
+        <div className='h-72 p-6 flex flex-col gap-4 bg-zinc-800 rounded-md'>
           <div className='flex gap-4 items-center'>
             <img src="#" alt="#" />
               <div>
@@ -14,12 +14,10 @@ const Aside = () => {
                 <p className='font-light text-zinc-500 !important'>Descrição</p>
               </div>
           </div>
-          <div>
-
-          </div>
+          
         </div>
-        <hr className='border-zinc-700 w-full'/>
-        <div className='p-6 flex flex-col gap-4'>
+        
+        <div className='p-6 flex flex-col gap-4 bg-zinc-800 h-full rounded-md'>
           <Input
           placeholder="Procurar"
           type="text"

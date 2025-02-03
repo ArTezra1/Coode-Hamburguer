@@ -1,4 +1,5 @@
 import ClientesModel from "../models/ClientesSchema.js";
+import EnderecosModel from "../models/EnderecosSchema.js";
 
 class ClientesController{
     constructor(){
@@ -27,10 +28,17 @@ class ClientesController{
     }
 
     static async cadastrarCliente(req, res, next) {
+        const { nome, email, senha, endereco } = req.body
         try {
-            const clienteCriado = await ClientesModel.create(req.body)
+            const clienteCriado = await ClientesModel.create({ nome,email, senha })
+            const enderecoCliente = await EnderecosModel.create({
+                ...endereco,
+                clienteId: cliente._id
+            })
 
-            res.send(200).send(clienteCriado.toJSON())
+            clienteCriado.endereco = enderecoCliente._id
+
+            res.send(200).json({clienteCriado, endereco: enderecoCliente})
         } catch (error) {
             // next(error)
         }
