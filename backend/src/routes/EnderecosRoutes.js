@@ -3,24 +3,14 @@ import EnderecosController from "../controllers/EnderecoController.js"
 
 const routes = express.Router()
 
-routes.get("/", (req, res)=>{
-    
-})
+routes.get("/endereco", EnderecosController.listarEnderecos)
 
-routes.get("/endereco/:id", (req, res)=>{
+routes.get("/endereco/:id", EnderecosController.listarEnderecoPorId)
 
-})
+routes.post("/endereco", EnderecosController.cadastrarEndereco)
 
-routes.post("/endereco", (req, res)=>{
+routes.put("/endereco/:id", EnderecosController.atualizarEndereco)
 
-})
-
-routes.put("/endereco/:id", (req, res)=>{
-
-})
-
-routes.delete("/endereco/:id", (req, res)=>{
-
-})
+routes.delete("/endereco/:id", EnderecosController.deletarEndereco)
 
 export default routes

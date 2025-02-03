@@ -3,24 +3,14 @@ import BebidasAlcoolController from "../controllers/BebidasAlcoolController.js"
 
 const routes = express.Router()
 
-routes.get("/alcool", (req, res)=>{
-    
-})
+routes.get("/alcool", BebidasAlcoolController.listarAlcool)
 
-routes.get("/alcool/:id", (req, res)=>{
+routes.get("/alcool/:id", BebidasAlcoolController.listarAlcoolPorId)
 
-})
+routes.post("/alcool", BebidasAlcoolController.cadastrarAlcool)
 
-routes.post("/alcool", (req, res)=>{
+routes.put("/alcool/:id", BebidasAlcoolController.atualizarAlcool)
 
-})
-
-routes.put("/alcool/:id", (req, res)=>{
-
-})
-
-routes.delete("/alcool/:id", (req, res)=>{
-
-})
+routes.delete("/alcool/:id", BebidasAlcoolController.deletarAlcool)
 
 export default routes

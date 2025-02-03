@@ -6,8 +6,10 @@ class BebidasAlcoolController{
     }
     static async listarAlcool(req, res, next){
         try {
-            const lista = await BebidasAlcoolModel.find({})
+            const listaAlcool = await BebidasAlcoolModel.find()
             
+            res.status(200).send(listaAlcool)
+
         } catch (error) {
             next(error)
         }
@@ -18,6 +20,8 @@ class BebidasAlcoolController{
             const id = req.params.id
             const alcoolEspecifico = await BebidasAlcoolModel.findById(id)
 
+            res.status(200).send(alcoolEspecifico)
+
         } catch (error) {
             next(error)
         }
@@ -25,7 +29,10 @@ class BebidasAlcoolController{
 
     static async cadastrarAlcool(req, res, next) {
         try {
-            
+            const alcoolNovo = await BebidasAlcoolModel.create(req.body)
+
+            res.status(201).send(alcoolNovo)
+
         } catch (error) {
             next(error)
         }
@@ -33,7 +40,13 @@ class BebidasAlcoolController{
 
     static async atualizarAlcool(req, res, next) {
         try {
-            
+            const idAlcoolAtualizado = req.params.id
+            const alcoolAtualizado = req.body
+
+            const novoAlcoolAtualizado = await BebidasAlcoolModel.findByIdAndUpdate(idAlcoolAtualizado, alcoolAtualizado)
+
+            res.status(200).send(novoAlcoolAtualizado)
+
         } catch (error) {
             next(error)
         }
@@ -41,7 +54,12 @@ class BebidasAlcoolController{
 
     static async deletarAlcool(req, res, next) {
         try {
-            
+            await BebidasAlcoolModel.findByIdAndDelete(req.params.id)
+
+            res.status(200).send({
+                message: "Bebida alcólica deletada com sucesso."
+            })
+
         } catch (error) {
             next(error)
         }

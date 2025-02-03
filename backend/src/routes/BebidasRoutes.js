@@ -3,24 +3,14 @@ import BebidasController from "../controllers/BebidasController.js"
 
 const routes = express.Router()
 
-routes.get("/", (req, res)=>{
-    
-})
+routes.get("/bebidas", BebidasController.listarBebida)
 
-routes.get("/lanches/:id", (req, res)=>{
+routes.get("/bebidas/:id", BebidasController.listarBebidaPorId)
 
-})
+routes.post("/bebidas", BebidasController.cadastrarBebida)
 
-routes.post("/lanches", (req, res)=>{
+routes.put("/bebidas/:id", BebidasController.atualizarBebida)
 
-})
-
-routes.put("/lanches/:id", (req, res)=>{
-
-})
-
-routes.delete("/lanches/:id", (req, res)=>{
-
-})
+routes.delete("/bebidas/:id", BebidasController.deletarBebida)
 
 export default routes

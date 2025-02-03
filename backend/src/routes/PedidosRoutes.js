@@ -3,24 +3,14 @@ import PedidosController from "../controllers/PedidosController.js"
 
 const routes = express.Router()
 
-routes.get("/", (req, res)=>{
-    
-})
+routes.get("/pedidos", PedidosController.listarPedidos)
 
-routes.get("/pedidos/:id", (req, res)=>{
+routes.get("/pedidos/:id", PedidosController.listarPedidoPorId)
 
-})
+routes.post("/pedidos", PedidosController.cadastrarPedido)
 
-routes.post("/pedidos", (req, res)=>{
+routes.put("/pedidos/:id", PedidosController.atualizarPedido)
 
-})
-
-routes.put("/pedidos/:id", (req, res)=>{
-
-})
-
-routes.delete("/pedidos/:id", (req, res)=>{
-
-})
+routes.delete("/pedidos/:id", PedidosController.deletarPedido)
 
 export default routes

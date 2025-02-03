@@ -3,24 +3,14 @@ import LanchesController from "../controllers/LanchesController.js"
 
 const routes = express.Router()
 
-routes.get("/", (req, res)=>{
-    
-})
+routes.get("/lanches", LanchesController.listarLanches)
 
-routes.get("/bebidas/:id", (req, res)=>{
+routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
 
-})
+routes.post("/lanches", LanchesController.cadastrarLanche)
 
-routes.post("/bebidas", (req, res)=>{
+routes.put("/lanches/:id", LanchesController.atualizarLanche)
 
-})
-
-routes.put("/bebidas/:id", (req, res)=>{
-
-})
-
-routes.delete("/bebidas/:id", (req, res)=>{
-
-})
+routes.delete("/lanches/:id", LanchesController.deletarLanche)
 
 export default routes

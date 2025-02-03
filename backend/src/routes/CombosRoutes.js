@@ -3,24 +3,14 @@ import CombosController from "../controllers/CombosController.js"
 
 const routes = express.Router()
 
-routes.get("/", (req, res)=>{
-    
-})
+routes.get("/combos", CombosController.listarCombos)
 
-routes.get("/combos/:id", (req, res)=>{
+routes.get("/combos/:id", CombosController.listarComboPorId)
 
-})
+routes.post("/combos", CombosController.cadastrarCombo)
 
-routes.post("/combos", (req, res)=>{
+routes.put("/combos/:id", CombosController.atualizarCombo)
 
-})
-
-routes.put("/combos/:id", (req, res)=>{
-
-})
-
-routes.delete("/combos/:id", (req, res)=>{
-
-})
+routes.delete("/combos/:id", CombosController.deletarCombo)
 
 export default routes
