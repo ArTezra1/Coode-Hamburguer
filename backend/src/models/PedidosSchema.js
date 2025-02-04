@@ -50,7 +50,10 @@ const PedidosSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Recebido", "Em preparo", "Pronto", "Saiu para a Entrega", "Entregue"],
+        enum: {
+            values: ["Recebido", "Em preparo", "Pronto", "Saiu para a Entrega", "Entregue"],
+            message: "O tipo de pedido {VALUE} não é permitido."
+        },
         default: "Recebido"
     }
 }, {

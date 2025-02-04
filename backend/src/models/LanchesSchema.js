@@ -7,8 +7,11 @@ const LanchesSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        enum: ["hamburguer", "batata", "pastel"],
-        required: [true, "Por favor insira o Tipo do lance!"]
+        enum: {
+            values:["hamburguer", "batata", "pastel"],
+            message: "O lanche {VALUE} não é permitido."
+        }, 
+        required: [true, "Por favor insira o Tipo do lanche!"]
     },
     sabor: {
         type: String,

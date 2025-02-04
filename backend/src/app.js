@@ -2,6 +2,7 @@ import express from "express"
 import routes from "./routes/index.js"
 import connectDB from "./config/dbConnect.js"
 import dotenv from "dotenv"
+import ManipuladorDeErros from "./middlewares/ErroRouter.js"
 
 dotenv.config()
 
@@ -19,5 +20,7 @@ const app = express()
 app.use(express.json())
 
 routes(app)
+
+app.use(ManipuladorDeErros)
 
 export default app

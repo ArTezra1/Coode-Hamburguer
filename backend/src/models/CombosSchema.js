@@ -7,7 +7,10 @@ const CombosSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        enum: ["completo", "bebida"]
+        enum: {
+            values: ["completo", "bebida"],
+            message: "O tipo de combo {VALUE} não é permitido."
+        } 
     },
     preco_unitario: {
         type: Number,

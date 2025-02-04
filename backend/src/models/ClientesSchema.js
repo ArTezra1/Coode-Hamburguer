@@ -27,7 +27,10 @@ const ClientesSchema = new mongoose.Schema({
     ],
     role: {
         type: String,
-        enum: ["cliente", "admin"],
+        enum: {
+            values: ["cliente", "admin"],
+            message: "O tipo de cargo {VALUE} não é permitido."
+        }, 
         default: ["cliente"]
     }
 }, {

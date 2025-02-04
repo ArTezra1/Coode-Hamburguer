@@ -15,7 +15,10 @@ const BebidasSchema = new mongoose.Schema({
     },
     tipo:{
         type: String,
-        enum: ["refrigerante", "suco", "agua"],
+        enum: {
+            values: ["refrigerante", "suco", "agua"],
+            message: "A bebida {VALUE} não é permitida."
+        },
         required: [true, "Por favor insira o tipo da bebida!"]
     },
     preco:{
