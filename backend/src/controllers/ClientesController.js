@@ -8,18 +8,17 @@ class ClientesController{
     static async listarClientes(req, res, next){
         try {
             const listaClientes = await ClientesModel.find()
-            .populate("Enderecos")
 
             res.status(200).send(listaClientes)
         } catch (error) {
-            // next(error)
+            next(error)
         }
     }
 
     static async listarClientePorId(req, res, next) {
         try {
             const id = req.params.id
-            const clienteEspecifico = await ClientesModel.findById(id).populate("Enderecos")
+            const clienteEspecifico = await ClientesModel.findById(id)
 
             res.status(200).send(clienteEspecifico)
         } catch (error) {
@@ -28,19 +27,19 @@ class ClientesController{
     }
 
     static async cadastrarCliente(req, res, next) {
-        const { nome, email, senha, endereco } = req.body
+        const { nome, email, senha, role, telefone, endereco } = req.body
         try {
-            const clienteCriado = await ClientesModel.create({ nome,email, senha })
+            const clienteCriado = await ClientesModel.create({ nome, email, senha, role, telefone })
             const enderecoCliente = await EnderecosModel.create({
                 ...endereco,
-                clienteId: cliente._id
+                clienteId: clienteCriado._id
             })
 
             clienteCriado.endereco = enderecoCliente._id
 
-            res.send(200).json({clienteCriado, endereco: enderecoCliente})
+            res.status(200).json({cliente: clienteCriado, endereco: enderecoCliente})
         } catch (error) {
-            // next(error)
+            next(error)
         }
     }
 
@@ -69,6 +68,30 @@ class ClientesController{
             next(error)
         }
     }
+
+    static async listarClientesPorFiltro(req, res, next) {
+        try {
+            const pedido = await FiltrarPedido(req.query)
+            const pedidoResultado = await ClientesModel.find(pedido)
+
+            res.status(200).send(pedidoResultado)
+
+        } catch (error) {
+            next(error)
+        }
+    }
+}
+
+async function FiltrarPedido(params){
+
+    const { nome, role } = params
+
+    const busca = {}
+
+    if(nome) busca.nome = { $regex: nome, $options: "i" }
+    if(role) busca.role = { $regex: role, $options: "i" }
+
+    return busca
 }
 
 export default ClientesController

@@ -12,7 +12,7 @@ const ClientesSchema = new mongoose.Schema({
     },
     senha: {
         type: String,
-        required: [true, "Por favir insira a Senha corretamente!"],
+        required: [true, "Por favor insira a Senha corretamente!"],
     },
     telefone: {
         type: String,

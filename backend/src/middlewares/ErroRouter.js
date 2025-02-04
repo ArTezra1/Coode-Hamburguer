@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import { ErroBadRequest, MensagemErro } from "../error/ClasseDeErro"
-import { ErroNotFound } from "../error/ClasseDeErro"
-import { ErroUnauthorized } from "../error/ClasseDeErro"
-import { ErroValidation } from "../error/ClasseDeErro"
+import { ErroBadRequest, MensagemErro } from "../error/ClasseDeErro.js"
+import { ErroNotFound } from "../error/ClasseDeErro.js"
+import { ErroUnauthorized } from "../error/ClasseDeErro.js"
+import { ErroValidation } from "../error/ClasseDeErro.js"
 
 function ManipuladorDeErros(erro, req, res, next){
     if(erro instanceof mongoose.Error.CastError){

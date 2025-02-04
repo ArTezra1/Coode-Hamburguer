@@ -7,6 +7,8 @@ routes.get("/lanches", LanchesController.listarLanches)
 
 routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
 
+routes.get("/lanches/query", LanchesController.listarLanchesPorFiltro)
+
 routes.post("/lanches", LanchesController.cadastrarLanche)
 
 routes.put("/lanches/:id", LanchesController.atualizarLanche)
