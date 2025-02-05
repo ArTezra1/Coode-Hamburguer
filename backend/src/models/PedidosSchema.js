@@ -1,9 +1,11 @@
 import mongoose, { mongo } from "mongoose";
+import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const PedidosSchema = new mongoose.Schema({
     clienteId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Clientes"
+        ref: "Clientes",
+        autopopulate: true
     },
     enderecoId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -59,6 +61,8 @@ const PedidosSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+PedidosSchema.plugin(mongooseAutoPopulate)
 
 const PedidosModel = mongoose.model("Pedidos", PedidosSchema)
 

@@ -1,10 +1,12 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+import mongooseAutoPopulate from "mongoose-autopopulate"
 
 const EnderecosSchema = new mongoose.Schema({
     clienteId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Clientes",
-        required: [true, "Por favor referencie o cliente!"]
+        required: [true, "Por favor referencie o cliente!"],
+        autopopulate: { select: "nome" }
     },
     cep: {
         type: String,
@@ -29,6 +31,8 @@ const EnderecosSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+EnderecosSchema.plugin(mongooseAutoPopulate)
 
 const EnderecosModel = mongoose.model("Enderecos", EnderecosSchema)
 

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const ClientesSchema = new mongoose.Schema({
     nome: {
@@ -22,7 +23,8 @@ const ClientesSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Enderecos",
-            required: [true, "Por favor referencie o Endereço"]
+            required: [true, "Por favor referencie o Endereço"],
+            autopopulate: true    
         }
     ],
     role: {
@@ -36,6 +38,8 @@ const ClientesSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
+
+ClientesSchema.plugin(mongooseAutoPopulate)
 
 const ClientesModel = mongoose.model("Clientes", ClientesSchema)
 
