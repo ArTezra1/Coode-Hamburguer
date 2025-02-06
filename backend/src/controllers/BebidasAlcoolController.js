@@ -1,13 +1,13 @@
 import BebidasAlcoolModel from "../models/BebidasAlcoolSchema.js"
 
-class BebidasAlcoolController{
-    constructor(){
-        
+class BebidasAlcoolController {
+    constructor() {
+
     }
-    static async listarAlcool(req, res, next){
+    static async listarAlcool(req, res, next) {
         try {
             const listaAlcool = await BebidasAlcoolModel.find()
-            
+
             res.status(200).send(listaAlcool)
 
         } catch (error) {
@@ -67,8 +67,8 @@ class BebidasAlcoolController{
 
     static async listarAlcoolPorFiltro(req, res, next) {
         try {
-            const pedido = await FiltrarPedido(req.query)
-            const pedidoResultado = await BebidasAlcoolModel.find(pedido)
+            const busca = await filtrarPedido(req.query)
+            const pedidoResultado = await BebidasAlcoolModel.find(busca)
 
             res.status(200).send(pedidoResultado)
 
@@ -78,19 +78,19 @@ class BebidasAlcoolController{
     }
 }
 
-async function FiltrarPedido(params){
+async function filtrarPedido(params) {
 
     const { marca, tipo, precoMin, precoMax } = params
 
     const busca = {}
 
-    if(marca) busca.marca = { $regex: marca, $options: "i" }
-    if(tipo) busca.tipo = { $regex: tipo, $options: "i" }
+    if (marca) busca.marca = { $regex: marca, $options: "i" }
+    if (tipo) busca.tipo = { $regex: tipo, $options: "i" }
 
-    if(precoMax || precoMin) busca.preco = {}
+    if (precoMax || precoMin) busca.preco_unitario = {}
 
-    if(precoMin) busca.preco.$gte = precoMin
-    if(precoMax) busca.preco.$lte = precoMax
+    if (precoMin) busca.preco_unitario.$gte = precoMin
+    if (precoMax) busca.preco_unitario.$lte = precoMax
 
     return busca
 }

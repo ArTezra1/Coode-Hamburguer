@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.get("/combos", CombosController.listarCombos)
 
-routes.get("/combos/:id", CombosController.listarComboPorId)
-
 routes.get("/combos/query", CombosController.listarCombosPorFiltro)
+
+routes.get("/combos/:id", CombosController.listarComboPorId)
 
 routes.post("/combos", CombosController.cadastrarCombo)
 

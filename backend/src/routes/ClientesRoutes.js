@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.get("/clientes", ClientesController.listarClientes)
 
-routes.get("/clientes/:id", ClientesController.listarClientePorId)
-
 routes.get("/clientes/query", ClientesController.listarClientesPorFiltro)
+
+routes.get("/clientes/:id", ClientesController.listarClientePorId)
 
 routes.post("/clientes", ClientesController.cadastrarCliente)
 

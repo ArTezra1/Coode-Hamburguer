@@ -71,10 +71,15 @@ class ClientesController{
 
     static async listarClientesPorFiltro(req, res, next) {
         try {
-            const pedido = await FiltrarPedido(req.query)
-            const pedidoResultado = await ClientesModel.find(pedido)
+            const busca = await filtrarPedido(req.query)
 
-            res.status(200).send(pedidoResultado)
+            if(busca !== null){
+                const pedidoResultado = await ClientesModel.find(busca)
+
+                res.status(200).send(pedidoResultado)
+            }else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)
@@ -82,14 +87,15 @@ class ClientesController{
     }
 }
 
-async function FiltrarPedido(params){
+async function filtrarPedido(params){
 
-    const { nome, role } = params
+    const { nome, role, email } = params
 
     const busca = {}
 
     if(nome) busca.nome = { $regex: nome, $options: "i" }
     if(role) busca.role = { $regex: role, $options: "i" }
+    if(email) busca.email = { $regex: email, $options: "i" }
 
     return busca
 }

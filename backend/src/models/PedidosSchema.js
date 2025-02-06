@@ -1,35 +1,40 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const PedidosSchema = new mongoose.Schema({
     clienteId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Clientes",
-        autopopulate: true
+        autopopulate: { select: "nome telefone" }
     },
     enderecoId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Enderecos"
+        ref: "Enderecos",
+        autopopulate: { select: "cep bairro rua numero complemento"  }
     },
     items: [
         {
             produtoId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Enderecos",
-                required: true
+                ref: "Produtos",
+                required: true,
+                autopopulate: true
             },
             bebidaId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Bebidas"
+                ref: "Bebidas",
+                autopopulate: { select: "marca sabor tipo" }
             },
             bebidasAlcoolId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "BebidasAlcool"
+                ref: "BebidasAlcool",
+                autopopulate: { select: "marca tipo sabor" }
             },
             combosId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Combos"
+                ref: "Combos",
+                autopopulate: { select: "nome tipo" }
             },
             nome: {
                 type: String,

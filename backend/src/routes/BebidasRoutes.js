@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.get("/bebidas", BebidasController.listarBebida)
 
-routes.get("/bebidas/:id", BebidasController.listarBebidaPorId)
-
 routes.get("/bebidas/query", BebidasController.listarBebida)
+
+routes.get("/bebidas/:id", BebidasController.listarBebidaPorId)
 
 routes.post("/bebidas", BebidasController.cadastrarBebida)
 

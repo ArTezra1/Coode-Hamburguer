@@ -13,6 +13,10 @@ const BebidasAlcoolSchema = new mongoose.Schema({
         }, 
         required: [true, "Por favor insira o Tipo de bebida!"]
     },
+    sabor:{
+        type: String,
+        default: ""
+    },
     preco_unitario: {
         type: Number,
         required: [true, "Por favor insira o Preço do produto!"],
