@@ -1,4 +1,5 @@
 import BebidasModel from "../models/BebidasSchema.js";
+import { ErroNotFound } from "../error/ClasseDeErro.js";
 
 class BebidasController{
     constructor(){
@@ -21,7 +22,11 @@ class BebidasController{
             const id = req.params.id
             const bebidaEspecifica = await BebidasModel.findById(id)
 
-            res.status(200).send(bebidaEspecifica)
+            if(bebidaEspecifica !== null){
+                res.status(200).send(bebidaEspecifica)
+            } else{
+                next( new ErroNotFound("Bebida não encontrada."))
+            }
 
         } catch (error) {
             next(error)
@@ -45,7 +50,11 @@ class BebidasController{
             const novaBebidaAtualizada = req.body
             const bebidaAtualizada = await BebidasModel.findByIdAndUpdate(idBebidaAtualizada, novaBebidaAtualizada)
 
-            res.status(200).send(bebidaAtualizada.toJSON())
+            if(bebidaAtualizada !== null){
+                res.status(200).send(bebidaAtualizada.toJSON())
+            } else{
+                next( new ErroNotFound("Bebida não encontrada."))
+            }
 
         } catch (error) {
             next(error)
@@ -54,11 +63,15 @@ class BebidasController{
 
     static async deletarBebida(req, res, next) {
         try {
-            await BebidasModel.findByIdAndDelete(req.params.id)
+             const bebidaDeletada = await BebidasModel.findByIdAndDelete(req.params.id)
             
-            res.status(200).send({
-                message: "Bebida deletada com sucesso."
-            })
+            if(bebidaDeletada !== null){
+                res.status(200).send({
+                    message: "Bebida deletada com sucesso."
+                })
+            } else{
+                next( new ErroNotFound("Bebida não encontrada, não foi possivel deletar."))
+            }
 
         } catch (error) {
             next(error)
@@ -68,9 +81,15 @@ class BebidasController{
     static async listarBebidaPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await BebidasModel.find(busca)
 
-            res.status(200).send(pedidoResultado)
+            if(busca !== null){
+                const pedidoResultado = await BebidasModel.find(busca)
+    
+                res.status(200).send(pedidoResultado)
+                
+            } else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)

@@ -1,4 +1,5 @@
 import LanchesModel from "../models/LanchesSchema.js"
+import { ErroNotFound } from "../error/ClasseDeErro.js"
 
 class LanchesController{
     constructor(){
@@ -20,7 +21,11 @@ class LanchesController{
             const id = req.params.id
             const lancheEspecifico = await LanchesModel.findById(id)
 
-            res.status(200).send(lancheEspecifico)            
+            if(lancheEspecifico !== null){
+                res.status(200).send(lancheEspecifico)            
+            } else{
+                next( new ErroNotFound("Lanche não encontrado."))
+            }
 
         } catch (error) {
             next(error)
@@ -41,10 +46,14 @@ class LanchesController{
         try {
             const idLancheAtualizado = req.params.id
             const novoLancheAtualizado = req.body
-
             const lancheAtualizado = await LanchesModel.findByIdAndUpdate(idLancheAtualizado, novoLancheAtualizado)
 
-            res.status(200).send(lancheAtualizado.toJSON())
+            if(lancheAtualizado !== null){
+                res.status(200).send(lancheAtualizado.toJSON())
+            } else{
+                next( new ErroNotFound("Lanche não encontrado, não foi possivel atualizar."))
+            }
+
         } catch (error) {
             next(error)
         }
@@ -52,11 +61,16 @@ class LanchesController{
 
     static async deletarLanche(req, res, next) {
         try {
-            await LanchesModel.findByIdAndDelete(req.params.id)
+            const lancheDeletado = await LanchesModel.findByIdAndDelete(req.params.id)
 
-            res.status(200).send({
-                message: `Lanche deletado com sucesso.`
-            })
+            if(lancheDeletado !== null){
+                res.status(200).send({
+                    message: `Lanche deletado com sucesso.`
+                })
+            } else{
+                next( new ErroNotFound("Lanche não encontrado, não foi possivel deletar."))
+            }
+
         } catch (error) {
             next(error)
         }
@@ -65,9 +79,13 @@ class LanchesController{
     static async listarLanchesPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await LanchesModel.find(busca)
 
-            res.status(200).send(pedidoResultado)
+            if(busca !== null){
+                const pedidoResultado = await LanchesModel.find(busca)
+                res.status(200).send(pedidoResultado)
+            } else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)

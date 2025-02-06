@@ -1,4 +1,5 @@
 import EnderecosModel from "../models/EnderecosSchema.js"
+import { ErroNotFound } from "../error/ClasseDeErro.js"
 
 class EnderecosController{
     constructor(){
@@ -20,7 +21,11 @@ class EnderecosController{
             const id = req.params.id
             const enderecoEspecifico = await EnderecosModel.findById(id)
 
-            res.status(200).send(enderecoEspecifico)
+            if(enderecoEspecifico !== null){
+                res.status(200).send(enderecoEspecifico)
+            } else{
+                next( new ErroNotFound("Endereço não encontrado."))
+            }
 
         } catch (error) {
             next(error)
@@ -42,10 +47,13 @@ class EnderecosController{
         try {
             const idEnderecoAtualizado = req.params.id
             const novoEnderecoAtualizado = req.body
-
             const enderecoAtualizado = await EnderecosModel.findByIdAndUpdate(idEnderecoAtualizado, novoEnderecoAtualizado)
 
-            res.status(200).send(enderecoAtualizado.toJSON())
+            if(enderecoAtualizado !== null){
+                res.status(200).send(enderecoAtualizado.toJSON())
+            } else{
+                next( new ErroNotFound("Endereço não encontrado, não foi possivel atualizar."))
+            }
 
         } catch (error) {
             next(error)
@@ -54,11 +62,16 @@ class EnderecosController{
 
     static async deletarEndereco(req, res, next) {
         try {
-            await EnderecosModel.findByIdAndDelete(req.params.id)
+            const enderecoDeletado = await EnderecosModel.findByIdAndDelete(req.params.id)
 
-            res.status(200).send({
-                message: "Endereço deletado com sucesso."
-            })
+            if(enderecoDeletado !== null){
+                res.status(200).send({
+                    message: "Endereço deletado com sucesso."
+                })
+            } else{
+                next( new ErroNotFound("Endereço não encontrado, não foi possivel deletar."))
+            }
+
         } catch (error) {
             next(error)
         }
@@ -67,9 +80,15 @@ class EnderecosController{
     static async listarEnderecosPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await EnderecosModel.find(busca)
+            
+            if(busca !== null){
+                const pedidoResultado = await EnderecosModel.find(busca) 
+                
+                res.status(200).send(pedidoResultado)
 
-            res.status(200).send(pedidoResultado)
+            } else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)

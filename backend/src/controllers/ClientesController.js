@@ -1,5 +1,6 @@
 import ClientesModel from "../models/ClientesSchema.js";
 import EnderecosModel from "../models/EnderecosSchema.js";
+import { ErroNotFound } from "../error/ClasseDeErro.js";
 
 class ClientesController{
     constructor(){
@@ -22,7 +23,12 @@ class ClientesController{
             const id = req.params.id
             const clienteEspecifico = await ClientesModel.findById(id)
 
-            res.status(200).send(clienteEspecifico)
+            if(clienteEspecifico !== null){
+                res.status(200).send(clienteEspecifico)
+            } else{
+                next( new ErroNotFound("Cliente não encontrado."))
+            }
+
         } catch (error) {
             next(error)
         }
@@ -49,10 +55,13 @@ class ClientesController{
         try {
             const idClienteAtualizado = req.params.id
             const novoClienteAtualizado = req.body
-
             const clienteAtualizado = await ClientesModel.findByIdAndUpdate(idClienteAtualizado, novoClienteAtualizado)
 
-            res.status(200).send(clienteAtualizado.toJSON())
+            if(clienteAtualizado !== null){
+                res.status(200).send(clienteAtualizado.toJSON())
+            } else{
+                next( new ErroNotFound("Cliente não encontrado, não foi possivel atualizar."))
+            }
 
         } catch (error) {
             next(error)
@@ -61,11 +70,16 @@ class ClientesController{
 
     static async deletarCliente(req, res, next) {
         try {
-            await ClientesModel.findByIdAndDelete(req.params.id)
+            const clienteDeletado = await ClientesModel.findByIdAndDelete(req.params.id)
 
-            res.status(200).send({
-                message: "Cliente deletado com sucesso."
-            })
+            if(clienteDeletado !== null){
+                res.status(200).send({
+                    message: "Cliente deletado com sucesso."
+                })
+            } else{
+                next( new ErroNotFound("Cliente não encontrado, não foi possivel deletar."))
+            }
+
         } catch (error) {
             next(error)
         }

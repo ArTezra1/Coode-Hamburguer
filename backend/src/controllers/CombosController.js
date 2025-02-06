@@ -1,4 +1,5 @@
 import CombosModel from "../models/CombosSchema.js"
+import { ErroNotFound } from "../error/ClasseDeErro.js"
 
 class CombosController{
     constructor(){
@@ -20,7 +21,11 @@ class CombosController{
             const id = req.params.id
             const comboEspecifico = await CombosModel.findById(id)
 
-            res.status(200).send(comboEspecifico)
+            if(comboEspecifico !== null){
+                res.status(200).send(comboEspecifico)
+            } else{
+                next( new ErroNotFound("Combo não encontrado."))
+            }
 
         } catch (error) {
             next(error)
@@ -42,10 +47,13 @@ class CombosController{
         try {
             const idComboAtualizado = req.params.id
             const novoComboAtualizado = req.body
-
             const comboAtualizado = await CombosModel.findByIdAndUpdate(idComboAtualizado, novoComboAtualizado)
 
-            res.status(200).send(comboAtualizado.toJSON())
+            if(comboAtualizado !==  null){
+                res.status(200).send(comboAtualizado.toJSON())
+            } else{
+                next( new ErroNotFound("Combo não encontrado, não foi possivel atualizar."))
+            }
             
         } catch (error) {
             next(error)
@@ -54,11 +62,15 @@ class CombosController{
 
     static async deletarCombo(req, res, next) {
         try {
-            await CombosModel.findByIdAndDelete(req.params.id)
+            const comboDeletado = await CombosModel.findByIdAndDelete(req.params.id)
 
-            res.tatus(200).send({
-                message: "Combo deletado com sucesso."
-            })
+            if(comboDeletado !== null){
+                res.tatus(200).send({
+                    message: "Combo deletado com sucesso."
+                })
+            } else{
+                next( new ErroNotFound("Combo não encontrado, não foi possivel deletar."))
+            }
             
         } catch (error) {
             next(error)
@@ -68,9 +80,15 @@ class CombosController{
     static async listarCombosPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await CombosModel.find(busca)
+            
+            if(busca !== null){
+                const pedidoResultado = await CombosModel.find(busca)
+                
+                res.status(200).send(pedidoResultado)
 
-            res.status(200).send(pedidoResultado)
+            } else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)

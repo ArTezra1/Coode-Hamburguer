@@ -1,4 +1,5 @@
 import BebidasAlcoolModel from "../models/BebidasAlcoolSchema.js"
+import { ErroNotFound }from "../error/ClasseDeErro.js"
 
 class BebidasAlcoolController {
     constructor() {
@@ -20,7 +21,11 @@ class BebidasAlcoolController {
             const id = req.params.id
             const alcoolEspecifico = await BebidasAlcoolModel.findById(id)
 
-            res.status(200).send(alcoolEspecifico)
+            if(alcoolEspecifico !== null){
+                res.status(200).send(alcoolEspecifico)
+            } else{
+                next(new ErroNotFound("Bebida não encontrada."))
+            }
 
         } catch (error) {
             next(error)
@@ -42,10 +47,13 @@ class BebidasAlcoolController {
         try {
             const idAlcoolAtualizado = req.params.id
             const alcoolAtualizado = req.body
-
             const novoAlcoolAtualizado = await BebidasAlcoolModel.findByIdAndUpdate(idAlcoolAtualizado, alcoolAtualizado)
 
-            res.status(200).send(novoAlcoolAtualizado)
+            if(novoAlcoolAtualizado !== null){
+                res.status(200).send("Bebida atualizado com sucesso.")
+            } else{
+                next( new ErroNotFound("Bebida não encontrada, não foi possivel atualizar."))
+            }
 
         } catch (error) {
             next(error)
@@ -54,11 +62,15 @@ class BebidasAlcoolController {
 
     static async deletarAlcool(req, res, next) {
         try {
-            await BebidasAlcoolModel.findByIdAndDelete(req.params.id)
+            const bebidaDeletada = await BebidasAlcoolModel.findByIdAndDelete(req.params.id)
 
-            res.status(200).send({
-                message: "Bebida alcólica deletada com sucesso."
-            })
+            if(bebidaDeletada !== null){
+                res.status(200).send({
+                    message: "Bebida alcólica deletada com sucesso."
+                })
+            } else{
+                next( new ErroNotFound("Bebida não encontrada, não foi possivel deletar."))
+            }
 
         } catch (error) {
             next(error)
@@ -68,9 +80,15 @@ class BebidasAlcoolController {
     static async listarAlcoolPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await BebidasAlcoolModel.find(busca)
 
-            res.status(200).send(pedidoResultado)
+            if(busca !== null){
+                const pedidoResultado = await BebidasAlcoolModel.find(busca)
+    
+                res.status(200).send(pedidoResultado)
+                
+            } else{
+                res.status(200).send([])
+            }
 
         } catch (error) {
             next(error)
