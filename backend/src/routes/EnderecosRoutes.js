@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.get("/endereco", EnderecosController.listarEnderecos)
 
-routes.get("/endereco/:id", EnderecosController.listarEnderecoPorId)
-
 routes.get("/endereco/query", EnderecosController.listarEnderecosPorFiltro)
+
+routes.get("/endereco/:id", EnderecosController.listarEnderecoPorId)
 
 routes.post("/endereco", EnderecosController.cadastrarEndereco)
 

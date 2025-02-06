@@ -5,9 +5,9 @@ const routes = express.Router()
 
 routes.get("/lanches", LanchesController.listarLanches)
 
-routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
-
 routes.get("/lanches/query", LanchesController.listarLanchesPorFiltro)
+
+routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
 
 routes.post("/lanches", LanchesController.cadastrarLanche)
 
