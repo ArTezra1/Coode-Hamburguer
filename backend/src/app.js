@@ -3,6 +3,7 @@ import routes from "./routes/index.js"
 import connectDB from "./config/dbConnect.js"
 import dotenv from "dotenv"
 import ManipuladorDeErros from "./middlewares/ErroRouter.js"
+import cors from "cors"
 
 dotenv.config()
 
@@ -19,6 +20,11 @@ conexao.once("once", ()=>{
 const app = express()
 app.use(express.json())
 
+app.use(cors({
+    origin: "http://localhost:3000", // Permite requisições do frontend
+    methods: "GET, POST, PUT, DELETE",
+    allowedHeaders: "Content-Type, Authorization"
+}))
 routes(app)
 
 app.use(ManipuladorDeErros)

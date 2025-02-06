@@ -1,44 +1,19 @@
+"use client"
+import getFunction from "../services/APImethodes.js" 
+
 import React from 'react'
 
-const placeholder = [
-  {
-    title: "pep",
-    description: "p2wp",
-    img:"#",
-    alt: "#",
-    price: "1010"
-  },
-  {
-    title: "pep",
-    description: "p2wp",
-    img:"#",
-    alt: "#",
-    price: "1010"
-  },
-  {
-    title: "pep",
-    description: "p2wp",
-    img:"#",
-    alt: "#",
-    price: "1010"
-  },
-  {
-    title: "pep",
-    description: "p2wp",
-    img:"#",
-    alt: "#",
-    price: "1010"
-  },
-]
-
 const Main = () => {
+  
+  function getData(){
+    getFunction().then(data => console.log(data)).catch(err => console.error(err))
+
+  }  
+
   return (
-    <div className='bg-zinc-950 h-full p-6 w-full'>
-        <div className='flex flex-col justify-center items-center w-full text-center'>
-
-
-        </div>
-    </div>
+    <main>
+      <button onClick={getData}>GET function</button>
+    </main>
   )
 }
 
