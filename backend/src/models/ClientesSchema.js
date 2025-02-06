@@ -33,7 +33,7 @@ const ClientesSchema = new mongoose.Schema({
             values: ["cliente", "admin"],
             message: "O tipo de cargo {VALUE} não é permitido."
         }, 
-        default: ["cliente"]
+        default: "cliente"
     }
 }, {
     timestamps: true

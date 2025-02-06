@@ -68,7 +68,7 @@ class CombosController{
     static async listarCombosPorFiltro(req, res, next) {
         try {
             const busca = await filtrarPedido(req.query)
-            const pedidoResultado = await BebidasAlcoolModel.find(busca)
+            const pedidoResultado = await CombosModel.find(busca)
 
             res.status(200).send(pedidoResultado)
 

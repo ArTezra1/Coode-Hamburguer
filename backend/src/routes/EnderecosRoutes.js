@@ -1,11 +1,12 @@
 import express from "express"
 import EnderecosController from "../controllers/EnderecoController.js"
+import paginar from "../middlewares/Paginar.js"
 
 const routes = express.Router()
 
-routes.get("/endereco", EnderecosController.listarEnderecos)
+routes.get("/endereco", EnderecosController.listarEnderecos, paginar)
 
-routes.get("/endereco/query", EnderecosController.listarEnderecosPorFiltro)
+routes.get("/endereco/query", EnderecosController.listarEnderecosPorFiltro, paginar)
 
 routes.get("/endereco/:id", EnderecosController.listarEnderecoPorId)
 

@@ -7,9 +7,11 @@ class ClientesController{
     }
     static async listarClientes(req, res, next){
         try {
-            const listaClientes = await ClientesModel.find()
+            const listaClientes = ClientesModel.find()
 
-            res.status(200).send(listaClientes)
+            req.resultado = listaClientes
+
+            next()
         } catch (error) {
             next(error)
         }
@@ -74,9 +76,11 @@ class ClientesController{
             const busca = await filtrarPedido(req.query)
 
             if(busca !== null){
-                const pedidoResultado = await ClientesModel.find(busca)
+                const pedidoResultado = ClientesModel.find(busca)
 
-                res.status(200).send(pedidoResultado)
+                req.resultado = pedidoResultado
+                
+                next()
             }else{
                 res.status(200).send([])
             }

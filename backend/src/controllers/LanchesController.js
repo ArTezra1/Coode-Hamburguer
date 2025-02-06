@@ -64,8 +64,8 @@ class LanchesController{
 
     static async listarLanchesPorFiltro(req, res, next) {
         try {
-            const pedido = await FiltrarPedido(req.query)
-            const pedidoResultado = await BebidasAlcoolModel.find(pedido)
+            const busca = await filtrarPedido(req.query)
+            const pedidoResultado = await LanchesModel.find(busca)
 
             res.status(200).send(pedidoResultado)
 
@@ -75,19 +75,20 @@ class LanchesController{
     }
 }
 
-async function FiltrarPedido(params){
+async function filtrarPedido(params){
 
-    const { marca, tipo, precoMin, precoMax } = params
+    const { nome, tipo, sabor, precoMin, precoMax } = params
 
     const busca = {}
 
-    if(marca) busca.marca = { $regex: marca, $options: "i" }
+    if(nome) busca.nome = { $regex: nome, $options: "i" }
     if(tipo) busca.tipo = { $regex: tipo, $options: "i" }
+    if(sabor) busca.sabor = { $regex: sabor, $options: "i" }
 
-    if(precoMax || precoMin) busca.preco = {}
+    if(precoMax || precoMin) busca.preco_unitario = {}
 
-    if(precoMin) busca.preco.$gte = precoMin
-    if(precoMax) busca.preco.$lte = precoMax
+    if(precoMin) busca.preco_unitario.$gte = precoMin
+    if(precoMax) busca.preco_unitario.$lte = precoMax
 
     return busca
 }

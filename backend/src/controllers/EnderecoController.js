@@ -66,8 +66,8 @@ class EnderecosController{
 
     static async listarEnderecosPorFiltro(req, res, next) {
         try {
-            const pedido = await FiltrarPedido(req.query)
-            const pedidoResultado = await BebidasAlcoolModel.find(pedido)
+            const busca = await filtrarPedido(req.query)
+            const pedidoResultado = await EnderecosModel.find(busca)
 
             res.status(200).send(pedidoResultado)
 
@@ -77,19 +77,16 @@ class EnderecosController{
     }
 }
 
-async function FiltrarPedido(params){
+async function filtrarPedido(params){
 
-    const { marca, tipo, precoMin, precoMax } = params
+    const { cep, bairro, rua, numero } = params
 
     const busca = {}
 
-    if(marca) busca.marca = { $regex: marca, $options: "i" }
-    if(tipo) busca.tipo = { $regex: tipo, $options: "i" }
-
-    if(precoMax || precoMin) busca.preco = {}
-
-    if(precoMin) busca.preco.$gte = precoMin
-    if(precoMax) busca.preco.$lte = precoMax
+    if(cep) busca.cep = { $regex: cep, $options: "i" }
+    if(bairro) busca.bairro = { $regex: bairro, $options: "i" }
+    if(rua) busca.rua = { $regex: rua, $options: "i" }
+    if(numero) busca.numero = { $regex: numero, $options: "i" }
 
     return busca
 }
