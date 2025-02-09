@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input'
 import React from 'react'
+import { ScrollArea } from './ui/scroll-area'
 
 const Aside = () => {
   return (
@@ -14,6 +15,10 @@ const Aside = () => {
       placeholder="Pesquisar"
       >
       </Input>
+
+      <ScrollArea className="w-full h-[300px] mt-6">
+        
+      </ScrollArea>
       </div>
     </aside>
   )
