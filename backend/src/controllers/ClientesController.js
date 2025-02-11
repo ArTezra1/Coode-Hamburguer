@@ -1,6 +1,8 @@
 import ClientesModel from "../models/ClientesSchema.js";
 import EnderecosModel from "../models/EnderecosSchema.js";
 import { ErroNotFound } from "../error/ClasseDeErro.js";
+import bcrypt from "bcrypt"
+import jsonwebtoken from "jsonwebtoken";
 
 class ClientesController{
     constructor(){
@@ -21,7 +23,7 @@ class ClientesController{
     static async listarClientePorId(req, res, next) {
         try {
             const id = req.params.id
-            const clienteEspecifico = await ClientesModel.findById(id)
+            const clienteEspecifico = await ClientesModel.findById(id, "-senha")
 
             if(clienteEspecifico !== null){
                 res.status(200).send(clienteEspecifico)
@@ -37,7 +39,18 @@ class ClientesController{
     static async cadastrarCliente(req, res, next) {
         const { nome, email, senha, role, telefone, endereco } = req.body
         try {
-            const clienteCriado = await ClientesModel.create({ nome, email, senha, role, telefone })
+            const senhaCodificada = await codificarSenha(senha)
+
+            const clienteCriado = await ClientesModel.create({ 
+                nome, 
+                email, 
+                senha: senhaCodificada, 
+                role, 
+                telefone 
+            })
+
+            const enderecoNovo = await criarEndereco(...endereco)
+
             const enderecoCliente = await EnderecosModel.create({
                 ...endereco,
                 clienteId: clienteCriado._id
@@ -116,6 +129,16 @@ async function filtrarPedido(params){
     if(email) busca.email = { $regex: email, $options: "i" }
 
     return busca
+}
+
+function codificarSenha(senha){
+    const senha = senha
+
+    return senha
+}
+
+function criarEndereco(endereco){
+
 }
 
 export default ClientesController
