@@ -3,6 +3,10 @@ import EnderecosModel from "../models/EnderecosSchema.js";
 import { ErroNotFound } from "../error/ClasseDeErro.js";
 import bcrypt from "bcrypt"
 import jsonwebtoken from "jsonwebtoken";
+import ClientesServices from "../../services/ClientesServices.js";
+
+const clienteNovo = new ClientesServices()
+
 
 class ClientesController{
     constructor(){
@@ -49,7 +53,7 @@ class ClientesController{
                 telefone 
             })
 
-            const enderecoNovo = await criarEndereco(...endereco)
+            const enderecoNovo = criarEndereco(...endereco)
 
             const enderecoCliente = await EnderecosModel.create({
                 ...endereco,
@@ -131,10 +135,12 @@ async function filtrarPedido(params){
     return busca
 }
 
-function codificarSenha(senha){
-    const senha = senha
+async function codificarSenha(senha){
+    const salt = bcrypt.genSalt(12)
 
-    return senha
+    const senhaHash = bcrypt.hash(senha, salt)
+
+    return senhaHash
 }
 
 function criarEndereco(endereco){
