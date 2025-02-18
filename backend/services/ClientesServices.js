@@ -1,8 +1,9 @@
-import Services from "./Services.js"
+import Services from "./ServicesController.js"
+import ClientesModel from "../src/models/ClientesSchema.js"
 
 class ClientesServices extends Services{
     constructor(){
-        super("Clientes")
+        super(ClientesModel)
     }
 }
 
