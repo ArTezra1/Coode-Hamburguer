@@ -19,7 +19,7 @@ class ErroNotFound extends MensagemErro{
 }
 
 class ErroBadRequest extends MensagemErro{
-    constructor(message = "Erro na requisição."){
+    constructor(message = "Erro na requisição, um ou mais dados fornecidos estão incorretos."){
         super(message, 400)
     }
 }
@@ -35,8 +35,7 @@ class ErroValidation extends MensagemErro{
         const mensagemErro = Object.values(erro.errors)
         .map(erro => erro.message)
         .join("; ")
-
-        super(`Os seguintes erros foram encontrados: ${mensagemErro}`)
+        super(`Os seguintes erros foram encontrados: ${mensagemErro}`, 422)
     }
 }
 

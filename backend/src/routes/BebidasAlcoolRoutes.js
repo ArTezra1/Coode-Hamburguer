@@ -4,16 +4,16 @@ import paginar from "../middlewares/Paginar.js"
 
 const routes = express.Router()
 
-routes.get("/alcool", BebidasAlcoolController.listarAlcool, paginar)
+routes.get("/alcool", (req, res, next) => BebidasAlcoolController.listar(req, res, next), paginar)
 
-routes.get("/alcool/query", BebidasAlcoolController.listarAlcoolPorFiltro, paginar)
+routes.get("/alcool/query", (req, res, next) => BebidasAlcoolController.listarPorFiltro(req, res, next), paginar)
 
-routes.get("/alcool/:id", BebidasAlcoolController.listarAlcoolPorId)
+routes.get("/alcool/:id",(req, res, next) => BebidasAlcoolController.buscarPorId(req, res, next))
 
-routes.post("/alcool", BebidasAlcoolController.cadastrarAlcool)
+routes.post("/alcool", (req, res, next) => BebidasAlcoolController.criar(req, res, next))
 
-routes.put("/alcool/:id", BebidasAlcoolController.atualizarAlcool)
+routes.put("/alcool/:id", (req, res, next) => BebidasAlcoolController.atualizar(req, res, next))
 
-routes.delete("/alcool/:id", BebidasAlcoolController.deletarAlcool)
+routes.delete("/alcool/:id", (re1, res, next) => BebidasAlcoolController.deletar(req, res, next))
 
 export default routes

@@ -1,4 +1,6 @@
 import filtrarPedido from "../src/middlewares/FiltrarBusca.js"
+import { ErroBadRequest, ErroNotFound, ErroValidation } from "../src/error/ClasseDeErro.js"
+import mongoose from "mongoose"
 
 class Services {
     constructor(model) {
@@ -7,14 +9,9 @@ class Services {
 
     async listar(req, res, next) {
         try {
-            const registros = await this.model.find({})
-
-            if (!registros) {
-                console.log("Lista de registros vazia.")
-            }
-
-            return res.status(200).json(registros)
-
+            req.resultado = this.model.find()   
+            next()
+            
         } catch (error) {
             console.error("Erro ao listar registros:", error)
             next(error)
@@ -25,11 +22,12 @@ class Services {
         try {
             const registro = await this.model.findById(req.params.id)
 
-            if (!registro) {
-                return res.status(404).json({ message: "Registro não encontrado." })
+            if (registro !== null) {
+                return res.status(200).json(registro)
+            } else{
+                next( new ErroNotFound("Registro não encontrado"))
             }
 
-            return res.status(200).json(registro)
 
         } catch (error) {
             console.error("Erro ao buscar registro:", error)
@@ -40,15 +38,16 @@ class Services {
     async criar(req, res, next) {
         try {
             const novoRegistro = await this.model.create(req.body)
-
+    
             return res.status(201).json({
                 message: "Registro criado com sucesso.",
                 registro: novoRegistro
             })
-
+    
         } catch (error) {
-            console.error("Erro ao criar registro:", error)
-            next(error)
+            if(error instanceof mongoose.Error.ValidationError){
+                next(error)
+            }
         }
     }
 
@@ -91,21 +90,14 @@ class Services {
         try {
             const busca = await filtrarPedido(this.model, req.query)
 
-            const pedidoResultado = await this.model.find(busca)
-
-            if (pedidoResultado !== null) {
-                return await res.status(200).send(pedidoResultado)
-
-            } else {
-                res.status(200).send([])
-            }
+            req.resultado = this.model.find(busca)
+            next()
 
         } catch (error) {
             next(error)
-            console.error("erro porra", error)
+            console.error("erro:", error)
         }
     }
-
 }
 
 export default Services

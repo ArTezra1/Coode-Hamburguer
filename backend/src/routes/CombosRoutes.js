@@ -4,16 +4,16 @@ import paginar from "../middlewares/Paginar.js"
 
 const routes = express.Router()
 
-routes.get("/combos", CombosController.listarCombos, paginar)
+routes.get("/combos", (req, res, next) => CombosController.listar(req, res, next), paginar)
 
-routes.get("/combos/query", CombosController.listarCombosPorFiltro, paginar)
+routes.get("/combos/query", (req, res, next) => CombosController.listarPorFiltro(req, res, next), paginar)
 
-routes.get("/combos/:id", CombosController.listarComboPorId)
+routes.get("/combos/:id", (req, res, next) => CombosController.buscarPorId(req, res, next))
 
-routes.post("/combos", CombosController.cadastrarCombo)
+routes.post("/combos", (req, res, next) => CombosController.criar(req, res, next))
 
-routes.put("/combos/:id", CombosController.atualizarCombo)
+routes.put("/combos/:id", (req, res, next) => CombosController.atualizar(req, res, next))
 
-routes.delete("/combos/:id", CombosController.deletarCombo)
+routes.delete("/combos/:id", (req, res, next) => CombosController.deletar(req, res, next))
 
 export default routes
