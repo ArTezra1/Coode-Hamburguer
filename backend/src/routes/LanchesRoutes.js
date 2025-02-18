@@ -4,16 +4,16 @@ import paginar from "../middlewares/Paginar.js"
 
 const routes = express.Router()
 
-routes.get("/lanches", LanchesController.listarLanches, paginar)
+// routes.get("/lanches", LanchesController.listarLanches, paginar)
 
-routes.get("/lanches/query", LanchesController.listarLanchesPorFiltro, paginar)
+routes.get("/lanches/query", (req, res, next) => LanchesController.listarPorFiltro(req, res, next))
 
-routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
+// routes.get("/lanches/:id", LanchesController.listarLanchesPorId)
 
-routes.post("/lanches", LanchesController.cadastrarLanche)
+// routes.post("/lanches", LanchesController.cadastrarLanche)
 
-routes.put("/lanches/:id", LanchesController.atualizarLanche)
+// routes.put("/lanches/:id", LanchesController.atualizarLanche)
 
-routes.delete("/lanches/:id", LanchesController.deletarLanche)
+// routes.delete("/lanches/:id", LanchesController.deletarLanche)
 
 export default routes

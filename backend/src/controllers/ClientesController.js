@@ -27,6 +27,7 @@ class ClientesController extends Services {
             next(error)
         }
     }
+
 }
 
 export default new ClientesController()
