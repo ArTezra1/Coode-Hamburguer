@@ -1,5 +1,5 @@
 import filtrarPedido from "../src/middlewares/FiltrarBusca.js"
-import { ErroBadRequest, ErroNotFound, ErroValidation } from "../src/error/ClasseDeErro.js"
+import {ErroNotFound} from "../src/error/ClasseDeErro.js"
 import mongoose from "mongoose"
 
 class Services {
@@ -27,7 +27,6 @@ class Services {
             } else{
                 next( new ErroNotFound("Registro não encontrado"))
             }
-
 
         } catch (error) {
             console.error("Erro ao buscar registro:", error)
@@ -88,7 +87,7 @@ class Services {
 
     async listarPorFiltro(req, res, next) {
         try {
-            const busca = await filtrarPedido(this.model, req.query)
+            const busca = await filtrarPedido(req.query)
 
             req.resultado = this.model.find(busca)
             next()
