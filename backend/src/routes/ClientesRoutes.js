@@ -6,6 +6,8 @@ const routes = express.Router()
 
 routes.get("/clientes", (req, res, next) => ClientesController.listar(req, res, next), paginar)
 
+routes.get("/clientes/login", (req, res, next) => ClientesController.login(req, res, next))
+
 routes.get("/clientes/query", (req, res, next) => ClientesController.listarPorFiltro(req, res, next), paginar)
 
 routes.get("/clientes/:id", (req, res, next) => ClientesController.buscarPorId(req, res, next))
