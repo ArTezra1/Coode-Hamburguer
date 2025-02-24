@@ -20,7 +20,7 @@ class ClientesController extends Services {
             const salt = await bcrypt.genSalt(10)
             const senhaHash = await bcrypt.hash(senha, salt)
 
-            const cliente = await this.model.create({ ...dadosCliente, senha: senhaHash })
+            const cliente = await ClientesModel.create({ ...dadosCliente, senha: senhaHash })
 
             return res.status(201).json(cliente)
 
@@ -57,7 +57,13 @@ class ClientesController extends Services {
                     { expiresIn: "1h" }
                 )
     
-                return res.json({token})
+                return res.json({token,
+                    usuario: {
+                        id: usuario._id,
+                        nome: usuario.nome,
+                        role: usuario.role
+                    }
+                })
     
             } else{
                 return res.status(422).json({

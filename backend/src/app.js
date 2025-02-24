@@ -14,14 +14,14 @@ conexao.on("error", (erro)=>{
 })
 
 conexao.once("once", ()=>{
-    console.error("Conexão feita com sucesso.")
+    console.log("Conexão feita com sucesso.")
 })
 
 const app = express()
 app.use(express.json())
 
 app.use(cors({
-    origin: "http://localhost:3000", // Permite requisições do frontend
+    origin: "http://localhost:3000", 
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization"
 }))

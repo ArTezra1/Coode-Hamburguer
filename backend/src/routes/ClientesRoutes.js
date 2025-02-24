@@ -1,10 +1,12 @@
 import express from "express"
 import ClientesController from "../controllers/ClientesController.js"
 import paginar from "../middlewares/Paginar.js"
+import CheckAdmin from "../middlewares/CheckAdmin.js"
+import CheckToken from "../middlewares/CheckToken.js"
 
 const routes = express.Router()
 
-routes.get("/clientes", (req, res, next) => ClientesController.listar(req, res, next), paginar)
+routes.get("/clientes", CheckToken, CheckAdmin, (req, res, next) => ClientesController.listar(req, res, next), paginar)
 
 routes.get("/clientes/login", (req, res, next) => ClientesController.login(req, res, next))
 
