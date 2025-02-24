@@ -8,16 +8,16 @@ const routes = express.Router()
 
 routes.get("/clientes", CheckToken, CheckAdmin, (req, res, next) => ClientesController.listar(req, res, next), paginar)
 
-routes.get("/clientes/login", (req, res, next) => ClientesController.login(req, res, next))
+routes.get("/clientes/query", CheckToken, CheckAdmin, (req, res, next) => ClientesController.listarPorFiltro(req, res, next), paginar)
 
-routes.get("/clientes/query", (req, res, next) => ClientesController.listarPorFiltro(req, res, next), paginar)
+routes.delete("/clientes/:id", CheckToken, CheckAdmin, (req, res, next) => ClientesController.deletar(req, res, next))
 
-routes.get("/clientes/:id", (req, res, next) => ClientesController.buscarPorId(req, res, next))
+routes.get("/clientes/:id", CheckToken, (req, res, next) => ClientesController.buscarPorId(req, res, next))
 
-routes.post("/clientes", (req, res, next) => ClientesController.criar(req, res, next))
+routes.put("/clientes/:id", CheckToken, (req, res, next) => ClientesController.atualizar(req, res, next))
 
-routes.put("/clientes/:id", (req, res, next) => ClientesController.atualizar(req, res, next))
+routes.post("/login", (req, res, next) => ClientesController.login(req, res, next))
 
-routes.delete("/clientes/:id", (req, res, next) => ClientesController.deletar(req, res, next))
+routes.post("/cadastrar", (req, res, next) => ClientesController.criar(req, res, next))
 
 export default routes
