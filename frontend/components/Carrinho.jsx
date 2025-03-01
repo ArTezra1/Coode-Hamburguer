@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { X } from 'lucide-react'
 import React, { useState } from 'react'
+import { Button } from './ui/button'
 
 const Carrinho = ({ onClose }) => {
     const [isConfirmed, setIsConfirmed] = useState(0)
@@ -39,7 +40,7 @@ const Carrinho = ({ onClose }) => {
                         <h1>JOBKBL</h1>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit accusamus dolores tenetur quod ipsa error perferendis suscipit velit dolorum cum deserunt commodi praesentium, laudantium doloremque neque voluptas libero quas ullam!</p>
 
-                        
+                        <Button>Confirmar pedido</Button>                        
                     </div>
                 </div>
             </div>
