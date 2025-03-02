@@ -3,11 +3,12 @@ import React from "react";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import { ScrollArea } from "./ui/scroll-area";
+import RenderItems from "./RenderItems";
 
 const Main = () => {
   return (
     <main className="bg-zinc-950 w-full h-full flex flex-col items-center">
-      <ScrollArea className="w-full h-full flex flex-col justify-center items-center">
+      <ScrollArea className="w-full h-full flex flex-col justify-center items-center pb-4">
       <Header></Header>
       <div className="flex items-center justify-center">
         <NavBar></NavBar>
@@ -21,8 +22,8 @@ const Main = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet tempora modi corporis ratione iusto obcaecati laboriosam assumenda dolor aut earum reprehenderit sit nemo exercitationem harum enim voluptates expedita, dolorem aliquam!
         </p>
       </div>
-      <div className="">
-
+      <div className="flex items-center justify-center mt-10">
+        <RenderItems></RenderItems>
       </div>
       </ScrollArea>
 

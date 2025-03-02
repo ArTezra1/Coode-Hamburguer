@@ -25,7 +25,7 @@ const Aside = () => {
     <aside className='bg-zinc-950 md:w-[20vw] h-full flex flex-col items-center gap-2'>
       <div className='bg-zinc-900 w-full lg:h-[51vh] flex flex-col rounded-r-lg pt-4 justify-between overflow-hidden'>
         <div className='p-2 flex gap-2 items-center mb-4'>
-          <CircleUserRound className='w-10 h-10'></CircleUserRound>
+          <CircleUserRound className='w-10 h-10 cursor-pointer'></CircleUserRound>
           <div>
             <h1 className='text-lg'>
               Perfil

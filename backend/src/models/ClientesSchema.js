@@ -19,14 +19,12 @@ const ClientesSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    endereco: [
-        {
+    endereco: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Enderecos",
             required: [true, "Por favor referencie o Endereço"],
             autopopulate: true    
-        }
-    ],
+        },
     role: {
         type: String,
         enum: {

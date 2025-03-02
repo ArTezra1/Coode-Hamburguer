@@ -8,10 +8,15 @@ const CombosSchema = new mongoose.Schema({
     tipo: {
         type: String,
         enum: {
-            values: ["completo", "bebida"],
+            values: ["completo", "bebida", "lanches"],
             message: "O tipo de combo {VALUE} não é permitido."
         },
         required: [true, "Por favor insira o tipo do Combo"]
+    },
+    items:{
+        type: Array,
+        required: [true, "Por favor insira os items do combo"],
+        min: [2, "O mínimo de itens de um combo deve ser 2."]
     },
     preco_unitario: {
         type: Number,
