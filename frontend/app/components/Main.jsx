@@ -4,6 +4,7 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import { ScrollArea } from "./ui/scroll-area";
 import RenderItems from "./RenderItems";
+import useProdutos from "../hooks/PegarMercadorias.jsx";
 
 const Main = () => {
   return (
@@ -23,7 +24,10 @@ const Main = () => {
         </p>
       </div>
       <div className="flex items-center justify-center mt-10">
-        <RenderItems></RenderItems>
+        <RenderItems
+        titulo={"Lanches"}
+        produtos={useProdutos().produtos.lanches}
+        ></RenderItems>
       </div>
       </ScrollArea>
 

@@ -1,5 +1,5 @@
-import Main from "../components/Main";
-import Aside from "../components/Aside";
+import Main from "./components/Main";
+import Aside from "./components/Aside";
 
 import { Poppins } from "next/font/google";
 
