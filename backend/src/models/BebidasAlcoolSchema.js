@@ -17,6 +17,11 @@ const BebidasAlcoolSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    estoque:{
+        type: Number,
+        required: [true, "Por favor insira a quantidade estoque."],
+        min: [0, "O estoque não pode ser negativo."]
+    },
     preco_unitario: {
         type: Number,
         required: [true, "Por favor insira o Preço do produto!"],

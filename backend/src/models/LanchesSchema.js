@@ -17,6 +17,11 @@ const LanchesSchema = new mongoose.Schema({
         type: String,
         required: [true, "Por favor insira o Sabor do lanche!"]
     },
+    estoque:{
+        type: Number,
+        required: [true, "Por favor insira a quantidade estoque."],
+        min: [0, "O estoque não pode ser negativo."]
+    },
     preco_unitario: {
         type: Number,
         required: [true, "Por favor insira o Preço do lanche!"],

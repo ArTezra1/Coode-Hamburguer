@@ -21,6 +21,11 @@ const BebidasSchema = new mongoose.Schema({
         },
         required: [true, "Por favor insira o tipo da bebida!"]
     },
+    estoque:{
+        type: Number,
+        required: [true, "Por favor insira a quantidade estoque."],
+        min: [0, "O estoque não pode ser negativo."]
+    },
     preco_unitario:{
         type: Number,
         required: [true, "Por favor insira o preço do Produto!"],
