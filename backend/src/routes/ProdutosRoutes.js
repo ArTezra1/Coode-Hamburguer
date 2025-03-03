@@ -8,6 +8,8 @@ const routes = express.Router()
 
 routes.get("/produtos", CheckToken, CheckAdmin, (req, res, next) => ProdutosController.listar(req, res, next), paginar)
 
+routes.get("/mercadorias", (req, res, next) => ProdutosController.listarMercadorias(req, res, next))
+
 routes.get("/produtos/query", CheckToken, CheckAdmin, (req, res, next) => ProdutosController.listarPorFiltro(req, res, next), paginar)
 
 routes.delete("/produtos/:id", CheckToken, CheckAdmin, (req, res, next) => ProdutosController.deletar(req, res, next))
