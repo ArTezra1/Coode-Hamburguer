@@ -21,7 +21,7 @@ const Main = () => {
             Catálogo
           </h3>
           <p className="text-zinc-400 text-sm text-center leading-4 w-[75%]">
-            Está com fome ou com sede? Veja o nosso catálogo e peça algum lanche, bebida ou os <strong className="text-zinc-300">dois</strong> com os nossos combos de sua preferencia. Claro não apenas isso, veja também o resto dos nossos produtos apenas rolando para baixo!
+            Está com fome ou com sede? Veja o nosso catálogo e peça algum lanche, bebida ou os <strong className="text-zinc-300">dois</strong> com os nossos combos de sua preferencia. Claro, não apenas isso, veja também o resto do nosso catálogo apenas rolando para baixo!
           </p>
         </div>
         <div className="flex flex-col items-center justify-center mt-10">

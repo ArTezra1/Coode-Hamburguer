@@ -45,7 +45,7 @@ const Header = () => {
           Bem-vindo a nossa Hamburgueria!
         </h1>
         <p className='text-zinc-400 text-sm text-center leading-4'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, soluta voluptatum blanditiis, illum iure ullam accusamus dolor odit laboriosam porro iusto, earum aut doloribus incidunt explicabo possimus quae aliquam exercitationem.
+        Bem-vindo à nossa hamburgueria, temos não apenas hamburguers mas também pastéis, batatas, bebidas e <strong className="text-zinc-300">mais</strong>. Estamos prontos para servir você, aproveite!
         </p>
       </div>
       {isOpenCart &&
