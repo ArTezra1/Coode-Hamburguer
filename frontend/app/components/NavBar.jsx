@@ -36,7 +36,7 @@ const NavBar = () => {
         className={clsx(isSelected == "bebidas" ? "bg-zinc-800 py-1 px-4 rounded-xl" : "hover:bg-zinc-800 hover:py-1 hover:px-4 rounded-xl cursor-pointer transition-all duration-300")}
         onClick={() => handleSelected("bebidas")}
         >
-          <a href="#">
+          <a href="#bebidas">
             Bebidas
           </a>
         </div>
@@ -45,8 +45,8 @@ const NavBar = () => {
         className={clsx(isSelected == "cervejas" ? "bg-zinc-800 py-1 px-4 rounded-xl" : "hover:bg-zinc-800 hover:py-1 hover:px-4 rounded-xl cursor-pointer transition-all duration-300")}
         onClick={() => handleSelected("cervejas")}
         >
-          <a href="#">
-            cervejas
+          <a href="#alcool">
+            Doses
           </a>
         </div>
     </nav>

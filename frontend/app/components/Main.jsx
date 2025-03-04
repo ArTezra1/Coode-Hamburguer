@@ -16,18 +16,41 @@ const Main = () => {
       </div>
 
       <div className="flex flex-col items-center justify-center w-[100%]">
-        <h3 className="m-4 font-semibold text-xl">
-          Lanches
+        <h3 className="m-4 font-semibold text-2xl">
+          Catálogo
         </h3>
         <p className="text-zinc-400 text-sm text-center leading-4 w-[75%]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet tempora modi corporis ratione iusto obcaecati laboriosam assumenda dolor aut earum reprehenderit sit nemo exercitationem harum enim voluptates expedita, dolorem aliquam!
         </p>
       </div>
-      <div className="flex items-center justify-center mt-10">
+      <div className="flex flex-col items-center justify-center mt-10">
         <RenderItems
         titulo={"Lanches"}
         produtos={useProdutos().produtos.lanches}
-        ></RenderItems>
+        id={"lanches"}
+        >
+        </RenderItems>
+
+        <RenderItems
+        titulo={"Combos"}
+        produtos={useProdutos().produtos.combos}
+        id={"combos"}
+        >
+        </RenderItems>
+
+        <RenderItems
+        titulo={"Bebidas"}
+        produtos={useProdutos().produtos.bebidas}
+        id={"bebidas"}
+        >
+        </RenderItems>
+
+        <RenderItems
+        titulo={"Bebidas Alcoólicas"}
+        produtos={useProdutos().produtos.bebidasAlcool}
+        id={"alcool"}
+        >
+        </RenderItems>
       </div>
       </ScrollArea>
 
