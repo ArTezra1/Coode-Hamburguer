@@ -1,6 +1,6 @@
 "use client"
 
-import { Input } from '@/app/components/ui/input'
+import { Input } from '@/components/ui/input'
 import React from 'react'
 import { ScrollArea } from './ui/scroll-area'
 import { CircleUserRound, ShoppingCartIcon } from 'lucide-react'
