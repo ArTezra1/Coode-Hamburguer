@@ -1,10 +1,14 @@
 "use client"
 
+import { X } from "lucide-react";
 import { useState } from "react";
 
 const RenderItems = ({ titulo, produtos, id }) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  function abrirInfo(){
+    setIsOpen(!isOpen)
+  }
 
   return (
     <section className="flex flex-col items-center my-8" id={id}>
@@ -17,8 +21,27 @@ const RenderItems = ({ titulo, produtos, id }) => {
               <div className="flex items-center justify-center">
                 <h3 className="my-2 font-semibold text-center text-xl">{produto.nome}</h3>
                 {produto.items && produto.items.length >= 1 && (
-                  <div className="p-2 bg-zinc-300 rounded-full w-6 h-6 flex justify-center items-center border border-zinc-950 hover:scale-105 transition-all cursor-pointer right-4 absolute">
-                    <p className="text-zinc-950">i</p>
+                  <div className="p-2 bg-zinc-300 rounded-full w-6 h-6 flex justify-center items-center border border-zinc-950 cursor-pointer right-4 absolute">
+                    <p className="text-zinc-950" onClick={abrirInfo}>i</p>
+                    {
+                      isOpen &&(
+                    <div className="p-2 bg-zinc-800 absolute w-[275px] -right-1 top-0 rounded-lg cursor-default">
+                      <p className="absolute right-2" onClick={abrirInfo}>
+                        <X className="cursor-pointer hover:scale-105 transition-all"></X>  
+                      </p>
+                      {
+                        produto.items.map((item, index)=>(
+                          <p
+                          key={index}
+                          className="bg-zinc-900 px-4 my-1 w-[200px] rounded-sm border-zinc-950 border-b"
+                          >
+                            {index + 1}° - {item}
+                          </p>
+                        ))
+                      }
+                    </div>
+                      )
+                    }
                   </div>
                 )}
               </div>
