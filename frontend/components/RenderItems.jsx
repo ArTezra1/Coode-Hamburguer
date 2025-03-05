@@ -3,10 +3,12 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import useCarrinho from "@/app/hooks/CarrinhoHook";
 
 const RenderItems = ({ titulo, produtos, id, descricao }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const aux = 3
+
+  const { itens, adicionarItem, removerItem, removerTodosItens, calcularTotal } = useCarrinho()
 
   function abrirInfo() {
     setIsOpen(!isOpen)
@@ -55,10 +57,11 @@ const RenderItems = ({ titulo, produtos, id, descricao }) => {
                   <p className="text-md font-bold text-white">R$ {produto.preco_unitario.toFixed(2)}</p>
                 </div>
 
-                <div className='px-2 py-1 border border-yellow-700 rounded-md shadow-sm shadow-yellow-900 cursor-pointer hover:scale-105 hover:bg-yellow-700 transition-all uppercase'>
-                  <p>
-                    Add ao carrinho
-                  </p>
+                <div className='px-2 py-1 border border-yellow-700 rounded-md shadow-sm shadow-yellow-900 cursor-pointer hover:scale-105 hover:bg-yellow-700 transition-all uppercase' onClick={() => {
+                  adicionarItem(produto)
+                  calcularTotal()
+                }}>
+                  Add ao carrinho
                 </div>
               </div>
             </div>
@@ -74,21 +77,21 @@ const RenderItems = ({ titulo, produtos, id, descricao }) => {
               </div>
             </Skeleton>
             <Skeleton className="w-[300px] h-[300px] bg-zinc-900 p-4 rounded-lg flex flex-col items-center">
-            <div className="w-full h-[180px] bg-zinc-800 object-cover rounded-md"></div>
-            <div className="w-[60%] h-10 bg-zinc-800 my-2 rounded-md"></div>
-            <div className="flex justify-between w-full">
-              <div className="w-[30%] h-10 bg-zinc-800 rounded-md"></div>
-              <div className="w-[60%] h-10 bg-zinc-800 rounded-md"></div>
-            </div>
-          </Skeleton>
-          <Skeleton className="w-[300px] h-[300px] bg-zinc-900 p-4 rounded-lg flex flex-col items-center">
-            <div className="w-full h-[180px] bg-zinc-800 object-cover rounded-md"></div>
-            <div className="w-[60%] h-10 bg-zinc-800 my-2 rounded-md"></div>
-            <div className="flex justify-between w-full">
-              <div className="w-[30%] h-10 bg-zinc-800 rounded-md"></div>
-              <div className="w-[60%] h-10 bg-zinc-800 rounded-md"></div>
-            </div>
-          </Skeleton>
+              <div className="w-full h-[180px] bg-zinc-800 object-cover rounded-md"></div>
+              <div className="w-[60%] h-10 bg-zinc-800 my-2 rounded-md"></div>
+              <div className="flex justify-between w-full">
+                <div className="w-[30%] h-10 bg-zinc-800 rounded-md"></div>
+                <div className="w-[60%] h-10 bg-zinc-800 rounded-md"></div>
+              </div>
+            </Skeleton>
+            <Skeleton className="w-[300px] h-[300px] bg-zinc-900 p-4 rounded-lg flex flex-col items-center">
+              <div className="w-full h-[180px] bg-zinc-800 object-cover rounded-md"></div>
+              <div className="w-[60%] h-10 bg-zinc-800 my-2 rounded-md"></div>
+              <div className="flex justify-between w-full">
+                <div className="w-[30%] h-10 bg-zinc-800 rounded-md"></div>
+                <div className="w-[60%] h-10 bg-zinc-800 rounded-md"></div>
+              </div>
+            </Skeleton>
           </div>
         )}
       </div>

@@ -7,9 +7,11 @@ import { CircleUserRound, ShoppingCartIcon } from 'lucide-react'
 import { useState } from 'react'
 import Carrinho from './Carrinho'
 import { createPortal } from "react-dom";
+import useCarrinho from '@/app/hooks/CarrinhoHook'
 
 const Aside = () => {
-  const [items, setItems] = useState([{ nome: "X-salada", desc: "Hamburguer de salada", preco: 12.00, img: "images/xbacon.jpeg" }, { nome: "X-bacon", desc: "Hamburguer de bacon", preco: 12.00, img: "images/xbacon.jpeg" }, { nome: "X-egg", desc: "Hamburguer de ovo", preco: 12.00, img: "images/xbacon.jpeg" }])
+
+  const { itens } = useCarrinho()
 
   const [isOpenCart, setOpenCart] = useState(false)
 
@@ -17,9 +19,6 @@ const Aside = () => {
     setOpenCart(!isOpenCart)
   }
 
-  function renderItems() {
-    setItems([1])
-  }
 
   return (
     <aside className='bg-zinc-950 md:w-[20vw] h-full flex flex-col items-center gap-2'>
@@ -44,8 +43,8 @@ const Aside = () => {
           <ScrollArea className="h-80 w-full">
             <div className='flex flex-col items-center justify-center'>
               {
-                items.length > 0 && (
-                  items.map((item, index) => (
+                itens.length > 0 && (
+                  itens.map((item, index) => (
                     <div className='mt-4 w-[90%] bg-zinc-900 h-16 rounded-md flex gap-2 pr-2 lg:pl-2 xl:pl-0'
                       key={index}
                     >
@@ -77,7 +76,7 @@ const Aside = () => {
               }
             </div>
             {
-              items.length == 0 && (
+              itens.length == 0 && (
                 <div className='flex flex-col items-center gap-2'>
                   <p className='text-zinc-400 text-sm'>
                     Sem itens no carrinho
