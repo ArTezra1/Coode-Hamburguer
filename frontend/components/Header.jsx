@@ -34,7 +34,7 @@ const Header = () => {
           </div>
           <div className='cursor-pointer'>
             <Link
-            href="/auth/login"
+            href={"/login"}
             >
             <CircleUserRound className='w-10 h-10 text-zinc-300 hover:text-zinc-100 transition-colors'></CircleUserRound>
             </Link>
