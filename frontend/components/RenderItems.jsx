@@ -3,12 +3,12 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
-import useCarrinho from "@/app/hooks/CarrinhoHook";
+import { useCarrinho } from "@/contexts/CarrinhoContext";
 
 const RenderItems = ({ titulo, produtos, id, descricao }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { itens, adicionarItem, removerItem, removerTodosItens, calcularTotal } = useCarrinho()
+  const { itens, removerItem, adicionarItem, calcularTotal } = useCarrinho()
 
   function abrirInfo() {
     setIsOpen(!isOpen)

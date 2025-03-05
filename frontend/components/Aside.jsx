@@ -7,7 +7,7 @@ import { CircleUserRound, ShoppingCartIcon } from 'lucide-react'
 import { useState } from 'react'
 import Carrinho from './Carrinho'
 import { createPortal } from "react-dom";
-import useCarrinho from '@/app/hooks/CarrinhoHook'
+import { useCarrinho } from '@/contexts/CarrinhoContext'
 
 const Aside = () => {
 
@@ -19,10 +19,9 @@ const Aside = () => {
     setOpenCart(!isOpenCart)
   }
 
-
   return (
     <aside className='bg-zinc-950 md:w-[20vw] h-full flex flex-col items-center gap-2'>
-      <div className='bg-zinc-900 w-full lg:h-[51vh] flex flex-col rounded-r-lg pt-4 justify-between overflow-hidden'>
+      <div className='bg-zinc-900 w-full lg:h-[52vh] flex flex-col rounded-r-lg pt-4 justify-between overflow-hidden'>
         <div className='p-2 flex gap-2 items-center mb-4'>
           <CircleUserRound className='w-10 h-10 cursor-pointer'></CircleUserRound>
           <div>
@@ -67,7 +66,7 @@ const Aside = () => {
                           Preço:
                         </p>
                         <p className='text-xs'>
-                          R${item.preco.toFixed(2)}
+                          R${item.preco_unitario.toFixed(2)}
                         </p>
                       </div>
                     </div>

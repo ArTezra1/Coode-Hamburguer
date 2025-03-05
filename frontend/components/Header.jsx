@@ -4,15 +4,12 @@ import { CircleUserRound, ShoppingCart } from 'lucide-react'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import Carrinho from './Carrinho'
+import Link from 'next/link'
 
 const Header = () => {
   const [items, setItems] = useState(0)
 
   const [isOpenCart, setOpenCart] = useState(false)
-
-  function renderItems() {
-    setItems(+1)
-  }
 
   function openCart() {
     setOpenCart(!isOpenCart)
@@ -36,7 +33,11 @@ const Header = () => {
 
           </div>
           <div className='cursor-pointer'>
+            <Link
+            href="/auth/login"
+            >
             <CircleUserRound className='w-10 h-10 text-zinc-300 hover:text-zinc-100 transition-colors'></CircleUserRound>
+            </Link>
           </div>
         </div>
       </div>
