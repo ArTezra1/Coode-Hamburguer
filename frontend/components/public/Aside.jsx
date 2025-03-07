@@ -2,12 +2,13 @@
 
 import { Input } from '@/components/ui/input'
 import React from 'react'
-import { ScrollArea } from './ui/scroll-area'
+import { ScrollArea } from '../ui/scroll-area'
 import { CircleUserRound, ShoppingCartIcon } from 'lucide-react'
 import { useState } from 'react'
 import Carrinho from './Carrinho'
 import { createPortal } from "react-dom";
 import { useCarrinho } from '@/contexts/CarrinhoContext'
+import { navItens } from '@/assets/utils'
 
 const Aside = () => {
 
@@ -97,7 +98,25 @@ const Aside = () => {
         </Input>
 
         <ScrollArea className="w-full h-[300px] mt-6">
-
+            {
+              navItens.map((item)=>(
+                <div key={item.id}>
+                  <div className='flex items-center gap-4 border border-zinc-300 pr-4 rounded-md'>
+                    <img src={item.img} alt={item.nome} 
+                    className='h-16 xl:w-[30%] md:w-[50%] rounded-md'
+                    />
+                    <div className='flex flex-col gap-1 items-center justify-center text-center'>
+                      <p className='font-bold text-lg'>
+                        {item.nome}
+                      </p>
+                      <p className='text-xs text-zinc-300 leading-3'>
+                      {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
         </ScrollArea>
       </div>
       {isOpenCart &&

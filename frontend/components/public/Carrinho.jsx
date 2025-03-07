@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ShoppingCartIcon, X } from 'lucide-react'
 import React, { useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { useCarrinho } from '@/contexts/CarrinhoContext'
 
 const Carrinho = ({ onClose }) => {

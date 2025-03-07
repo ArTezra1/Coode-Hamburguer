@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import NavBar from "./NavBar";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "../ui/scroll-area";
 import RenderItems from "./RenderItems";
-import useProdutos from "../hooks/PegarMercadorias.jsx";
+import useProdutos from "../../hooks/PegarMercadorias.jsx";
 
 const Main = () => {
 

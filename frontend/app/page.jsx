@@ -1,4 +1,4 @@
-import Landing from "./Home";
+import Landing from "./(public)/Home";
 
 import { Poppins } from "next/font/google";
 

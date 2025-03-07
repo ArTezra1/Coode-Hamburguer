@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { useState } from "react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 import { useCarrinho } from "@/contexts/CarrinhoContext";
 
 const RenderItems = ({ titulo, produtos, id, descricao }) => {

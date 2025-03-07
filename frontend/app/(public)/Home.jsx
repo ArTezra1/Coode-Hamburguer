@@ -1,6 +1,6 @@
 import React from 'react'
-import Aside from '@/components/Aside'
-import Main from '@/components/Main'
+import Aside from '@/components/public/Aside'
+import Main from '@/components/public/Main'
 
 const Landing = () => {
   return (
