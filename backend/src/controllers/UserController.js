@@ -5,8 +5,20 @@ class UserController{
 
     }
 
-    static async create(req, res, next){
-        UserServices.create(req, res, next)
+    static async login(req, res, next){
+        UserServices.login(req, res, next)
+    }
+
+    static async getOrders(req, res, next){
+        UserServices.getOrders(req, res, next)
+    }
+
+    static async updateAddress(req, res, next){
+        UserServices.updateAddress(req, res, next)
+    }
+
+    static async getAddress(req, res, next){
+        UserServices.getAddress(req, res, next)
     }
 
     static async getAll(req, res, next){
