@@ -1,4 +1,4 @@
-class MensagemErro extends Error{
+class ErrorMessage extends Error{
     constructor(message = "Erro no servidor.", status = 500){
         super()
         this.message = message,
@@ -12,25 +12,25 @@ class MensagemErro extends Error{
     }
 }
 
-class ErroNotFound extends MensagemErro{
+class ErroNotFound extends ErrorMessage{
     constructor(message = "Não encontrado."){
         super(message, 404)
     }
 }
 
-class ErroBadRequest extends MensagemErro{
+class ErroBadRequest extends ErrorMessage{
     constructor(message = "Erro na requisição, um ou mais dados fornecidos estão incorretos."){
         super(message, 400)
     }
 }
 
-class ErroUnauthorized extends MensagemErro{
+class ErroUnauthorized extends ErrorMessage{
     constructor(message = "Acesso não autorizado."){
         super(message, 403)
     }
 }
 
-class ErroValidation extends MensagemErro{
+class ErroValidation extends ErrorMessage{
     constructor(erro){
         const mensagemErro = Object.values(erro.errors)
         .map(erro => erro.message)
@@ -39,4 +39,31 @@ class ErroValidation extends MensagemErro{
     }
 }
 
-export { MensagemErro, ErroNotFound, ErroUnauthorized, ErroBadRequest, ErroValidation }
+class ErroAuthentication extends MensagemErro {
+    constructor(message = "Autenticação necessária.") {
+        super(message, 401)
+    }
+}
+
+class ErroConflict extends MensagemErro {
+    constructor(message = "Conflito de dados. O recurso já existe.") {
+        super(message, 409)
+    }
+}
+
+class ErroTimeout extends MensagemErro {
+    constructor(message = "Tempo de requisição excedido.") {
+        super(message, 408)
+    }
+}
+
+export {
+    ErrorMessage,
+    ErroNotFound,
+    ErroUnauthorized,
+    ErroBadRequest,
+    ErroValidation,
+    ErroAuthentication,
+    ErroConflict,
+    ErroTimeout
+}

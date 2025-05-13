@@ -2,7 +2,7 @@ import express from "express"
 import routes from "./routes/index.js"
 import connectDB from "./config/dbConnect.js"
 import dotenv from "dotenv"
-import ManipuladorDeErros from "./middlewares/ErroRouter.js"
+import ErrorRouter from "./middlewares/ErroRouter.js"
 import cors from "cors"
 
 dotenv.config()
@@ -27,6 +27,6 @@ app.use(cors({
 }))
 routes(app)
 
-app.use(ManipuladorDeErros)
+app.use(ErrorRouter)
 
 export default app

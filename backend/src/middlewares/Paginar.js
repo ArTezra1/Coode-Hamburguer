@@ -1,8 +1,8 @@
-import { ErroBadRequest } from "../error/ClasseDeErro.js"
+import { ErroBadRequest } from "../error/ErrorClasses.js"
 
 async function paginar(req, res, next) {
     try {
-        let { limite = 5, pagina = 1, ordenacao = "_id:-1" } = req.query
+        let { limite = 10, pagina = 1, ordenacao = "_id:-1" } = req.query
 
         let [campoOrdenacao, ordem] = ordenacao.split(":")
 
@@ -10,18 +10,18 @@ async function paginar(req, res, next) {
         pagina = parseInt(pagina)
         ordem = parseInt(ordem)
 
-        const resultado = req.resultado
+        const query = req.result
 
         if (limite > 0 && pagina > 0) {
-            const resultadoPaginado = await resultado.find()
+            const resultadoPaginado = await query
                 .sort({ [campoOrdenacao]: ordem })
                 .skip((pagina - 1) * limite)
                 .limit(limite)
                 .exec()
 
-            res.status(200).send(resultadoPaginado)
+            return res.status(200).json(resultadoPaginado)
         } else {
-            next(new ErroBadRequest())
+            next(new ErroBadRequest("Parâmetros de paginação inválidos."))
         }
 
     } catch (error) {

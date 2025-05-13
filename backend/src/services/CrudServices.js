@@ -7,37 +7,38 @@ class ServicesController {
     }
 
     async create(req, res, next) {
-        try {
-            const newRegister = await this.model.create(req.body)
+        const { register } = req.body
 
-            if (newRegister) {
-                return res.status(201).json({
-                    message: "Registro criado com sucesso."
+        try {
+            if (!register) {
+                return res.status(400).json({
+                    message: "Por favor, preencha todos os campos obrigatórios."
                 })
             }
 
-            return res.status(400).json({
-                message: "Erro ao criar registro"
-            })
+            const newRegister = await this.model.create(register)
+
+            if (newRegister) {
+                return res.status(201).json({
+                    message: "Registro criado com sucesso.",
+                    data: newRegister
+                })
+            }
 
         } catch (error) {
+            console.error("Erro ao criar registro:", error)
             next(error)
         }
     }
 
     async getAll(req, res, next) {
         try {
-            const registers = await this.model.find({})
+            req.result = this.model.find({})
 
-            if (registers.length > 0) {
-                return res.status(200).json(registers)
-            }
-
-            return res.status(404).json({
-                message: "Nenhum registro encontrado."
-            })
+            next()
 
         } catch (error) {
+            console.error("Erro ao buscar registros:", error)
             next(error)
         }
     }
@@ -59,6 +60,7 @@ class ServicesController {
             })
 
         } catch (error) {
+            console.error("Erro ao buscar registro:", error)
             next(error)
         }
     }
@@ -67,25 +69,32 @@ class ServicesController {
         const { params } = req.query
 
         try {
-            const search = await filterRequest(params)
+            const filter = await filterRequest(params)
 
-            req.result = this.model.find(search)
+            req.result = this.model.find(filter)
 
-            return res.status(200).json(req.result)
+            next()
 
         } catch (error) {
+            console.error("Erro ao filtrar registros:", error)
             next(error)
         }
     }
 
     async update(req, res, next) {
-        try {
-            const registerUpdate = await this.model.findByIdAndUpdate(req.params.id, req.body)
+        const { id } = req.params
+        const { register } = req.body
 
-            if (registerUpdate) {
-                return res.status(200).json({
-                    message: "Registro atualizado com sucesso."
-                })
+        try {
+            if (id && mongoose.Types.ObjectId.isValid(id)) {
+                const registerUpdate = await this.model.findByIdAndUpdate(id, register, { new: true })
+
+                if (registerUpdate) {
+                    return res.status(200).json({
+                        message: "Registro atualizado com sucesso.",
+                        data: registerUpdate
+                    })
+                }
             }
 
             return res.status(404).json({
@@ -93,6 +102,7 @@ class ServicesController {
             })
 
         } catch (error) {
+            console.error("Erro ao atualizar registro:", error)
             next(error)
         }
     }
@@ -116,6 +126,7 @@ class ServicesController {
             })
 
         } catch (error) {
+            console.error("Erro ao deletar registro:", error)
             next(error)
         }
     }

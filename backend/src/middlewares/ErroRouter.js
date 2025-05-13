@@ -1,21 +1,43 @@
 import mongoose from "mongoose"
-import { ErroBadRequest, MensagemErro } from "../error/ClasseDeErro.js"
-import { ErroNotFound } from "../error/ClasseDeErro.js"
-import { ErroValidation } from "../error/ClasseDeErro.js"
+import {
+  ErrorMessage,
+  ErroBadRequest,
+  ErroNotFound,
+  ErroValidation,
+  ErroUnauthorized,
+  ErroAuthentication,
+  ErroConflict,
+  ErroTimeout
+} from "../error/ClasseDeErro.js"
 
-function ManipuladorDeErros(erro, req, res, next){
-    if(erro instanceof mongoose.Error.CastError){
-        return new ErroBadRequest().enviarResposta(res)
+function ErrorRouter(erro, req, res, next){
+  if (erro instanceof mongoose.Error.CastError) {
+    return new ErroBadRequest("ID inválido.").enviarResposta(res)
 
-    } else if (erro instanceof mongoose.Error.ValidationError){
-        return new ErroValidation(erro).enviarResposta(res)
+  } else if (erro instanceof mongoose.Error.ValidationError) {
+    return new ErroValidation(erro).enviarResposta(res)
 
-    } else if(erro instanceof ErroNotFound){
-        return erro.enviarResposta(res)
-        
-    } else{
-        return new MensagemErro().enviarResposta(res)
-    }
+  } else if (
+    erro instanceof ErroBadRequest ||
+    erro instanceof ErroNotFound ||
+    erro instanceof ErroUnauthorized ||
+    erro instanceof ErroAuthentication ||
+    erro instanceof ErroConflict ||
+    erro instanceof ErroTimeout ||
+    erro instanceof ErroServiceUnavailable
+  ) {
+    return erro.enviarResposta(res)
+
+  } else if (erro.name === "JsonWebTokenError") {
+    return new ErroAuthentication("Token inválido.").enviarResposta(res)
+
+  } else if (erro.name === "TokenExpiredError") {
+    return new ErroAuthentication("Sessão expirada. Faça login novamente.").enviarResposta(res)
+
+  }
+
+  console.error("Erro não tratado:", erro)
+  return new ErrorMessage().enviarResposta(res)
 }
 
-export default ManipuladorDeErros
+export default ErrorRouter
