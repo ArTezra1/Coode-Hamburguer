@@ -1,0 +1,1 @@
+//instalar a lib express-oauth2-jwt-baerer ou outra lib de implementaçaõ do auth0 do node e fazer a função de autenticação que envia o jwt do auth0
