@@ -4,6 +4,7 @@ class ErrorMessage extends Error{
         this.message = message,
         this.status = status
     }
+
     enviarResposta(res){
         res.status(this.status).send({
             message: this.message,
@@ -39,19 +40,19 @@ class ErroValidation extends ErrorMessage{
     }
 }
 
-class ErroAuthentication extends MensagemErro {
+class ErroAuthentication extends ErrorMessage {
     constructor(message = "Autenticação necessária.") {
         super(message, 401)
     }
 }
 
-class ErroConflict extends MensagemErro {
+class ErroConflict extends ErrorMessage {
     constructor(message = "Conflito de dados. O recurso já existe.") {
         super(message, 409)
     }
 }
 
-class ErroTimeout extends MensagemErro {
+class ErroTimeout extends ErrorMessage {
     constructor(message = "Tempo de requisição excedido.") {
         super(message, 408)
     }
