@@ -20,6 +20,12 @@ const PortionSchema =  new mongoose.Schema({
     isAvailable:{
         type: Boolean,
         default: true
+    },
+    quantity: {
+        type: Number,
+        required: [true, "Quantity is required"],
+        min: [0, "Quantity must be greater than or equal to 0"],
+        default: 0
     }
 }, {
     timestamps: true

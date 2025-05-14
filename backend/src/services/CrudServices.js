@@ -51,7 +51,7 @@ class CrudServices {
             throw new ErroNotFound("Registro não encontrado.")
         }
 
-        return updated
+        return true
     }
 
     async delete(id) {
@@ -65,7 +65,7 @@ class CrudServices {
             throw new ErroNotFound("Registro não encontrado.")
         }
 
-        return deleted
+        return true
     }
 }
 

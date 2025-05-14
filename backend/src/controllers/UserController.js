@@ -105,9 +105,9 @@ class UserController {
             const { id } = req.params
             const data = req.body
 
-            const updated = await UserServices.update(id, data)
+            await UserServices.update(id, data)
 
-            return res.status(200).json(updated)
+            return res.status(200).send()
 
         } catch (error) {
             next(error)
@@ -120,9 +120,7 @@ class UserController {
 
             await UserServices.delete(id)
 
-            return res.status(200).json({
-                message: "Usuário deletado com sucesso."
-            })
+            return res.status(200).send()
 
         } catch (error) {
             next(error)

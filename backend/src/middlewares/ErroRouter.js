@@ -8,7 +8,7 @@ import {
   ErroAuthentication,
   ErroConflict,
   ErroTimeout
-} from "../error/ClasseDeErro.js"
+} from "../error/ErrorClasses.js"
 
 function ErrorRouter(erro, req, res, next){
   if (erro instanceof mongoose.Error.CastError) {
@@ -35,7 +35,7 @@ function ErrorRouter(erro, req, res, next){
 
   }
 
-  console.error("Erro não tratado:", erro)
+  // console.error("Erro não tratado:", erro)
   return new ErrorMessage().enviarResposta(res)
 }
 
