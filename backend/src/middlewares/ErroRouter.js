@@ -23,8 +23,7 @@ function ErrorRouter(erro, req, res, next){
     erro instanceof ErroUnauthorized ||
     erro instanceof ErroAuthentication ||
     erro instanceof ErroConflict ||
-    erro instanceof ErroTimeout ||
-    erro instanceof ErroServiceUnavailable
+    erro instanceof ErroTimeout
   ) {
     return erro.enviarResposta(res)
 

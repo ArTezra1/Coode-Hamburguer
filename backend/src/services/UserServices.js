@@ -8,6 +8,12 @@ import jsonwebtoken from "jsonwebtoken"
 
 dotenv.config()
 
+import { 
+    ErroBadRequest,
+    ErroNotFound,
+    ErroAuthentication
+} from "../error/ErrorClasses.js";
+
 class UserServices extends CrudServices {
     constructor() {
         super(UserModel)
@@ -15,7 +21,7 @@ class UserServices extends CrudServices {
 
     async login({ auth0Id, email, name }) {
         if (!auth0Id || !email || !name) {
-            throw new Error("Preencha todos os campos corretamente.")
+            throw new ErroBadRequest("Preencha todos os campos corretamente.")
         }
 
         let user = await UserModel.findOne({ auth0Id })
@@ -51,7 +57,7 @@ class UserServices extends CrudServices {
 
     async getOrders(auth0Id) {
         if (!auth0Id) {
-            throw new Error("Dados de autenticação são obrigatórios.")
+            throw new ErroAuthentication("Dados de autenticação são obrigatórios.")
         }
 
         const user = await UserModel.findOne({
@@ -59,7 +65,7 @@ class UserServices extends CrudServices {
         })
 
         if (!user) {
-            throw new Error("Usuário não encontrado.")
+            throw new ErroNotFound("Usuário não encontrado.")
         }
 
         const orders = await OrderModel.find({
@@ -67,7 +73,7 @@ class UserServices extends CrudServices {
         })
 
         if (!orders || orders.length === 0) {
-            throw new Error("Nenhum pedido encontrado.")
+            throw new ErroNotFound("Nenhum pedido encontrado.")
         }
 
         return {
@@ -78,7 +84,7 @@ class UserServices extends CrudServices {
 
     async updateAddress(auth0Id, address) {
         if (!auth0Id || !address) {
-            throw new Error("Dados de endereço e autenticação são obrigatórios.")
+            throw new ErroAuthentication("Dados de endereço e autenticação são obrigatórios.")
         }
 
         const user = await UserModel.findOne({
@@ -86,7 +92,7 @@ class UserServices extends CrudServices {
         })
 
         if (!user) {
-            throw new Error("Usuário não encontrado.")
+            throw new ErroNotFound("Usuário não encontrado.")
         }
 
         let updatedAddress
@@ -116,7 +122,7 @@ class UserServices extends CrudServices {
     async getAddress(auth0Id) {
 
         if (!auth0Id) {
-            throw new Error("Dados de autenticação são obrigatórios.")
+            throw new ErroAuthentication("Dados de autenticação são obrigatórios.")
         }
 
         const user = await UserModel.findOne({
@@ -124,13 +130,13 @@ class UserServices extends CrudServices {
         })
 
         if (!user) {
-            throw new Error("Usuário não encontrado.")
+            throw new ErroNotFound("Usuário não encontrado.")
         }
 
         const address = await AddressModel.findById(user.address)
 
         if (!address) {
-            throw new Error("Endereço não encontrado.")
+            throw new ErroNotFound("Endereço não encontrado.")
         }
 
         return {

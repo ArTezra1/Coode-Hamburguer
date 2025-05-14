@@ -1,6 +1,11 @@
 import mongoose from "mongoose"
 import filterRequest from "../middlewares/FilterRequest.js"
 
+import {
+    ErroNotFound,
+    ErroValidation
+} from "../error/ErrorClasses.js"
+
 class CrudServices {
     constructor(model) {
         this.model = model
@@ -15,25 +20,52 @@ class CrudServices {
     }
 
     async getById(id) {
-        if(!id || !mongoose.Types.ObjectId.isValid(id)) return null
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            throw new ErroValidation("ID inválido.")
+        }
 
-        return await this.model.findById(id)
+        const data = await this.model.findById(id)
+
+        if (!data) {
+            throw new ErroNotFound("Registro não encontrado.")
+        }
+
+        return data
     }
 
     async getByParams(params) {
-        
+
     }
 
     async update(id, data) {
-        if(!id || !mongoose.Types.ObjectId.isValid(id)) return null
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            throw new ErroValidation("ID inválido.")
+        }
 
-        return await this.model.findByIdAndUpdate(id, data, { new: true })
+        const updated = await this.model.findByIdAndUpdate(id, data, { 
+            new: true,
+            runValidators: true
+        })
+
+        if (!updated) {
+            throw new ErroNotFound("Registro não encontrado.")
+        }
+
+        return updated
     }
 
     async delete(id) {
-        if(!id || !mongoose.Types.ObjectId.isValid(id)) return null
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            throw new ErroValidation("ID inválido.")
+        }
 
-        return await this.model.findByIdAndDelete(id)
+        const deleted = await this.model.findByIdAndDelete(id)
+
+        if (!deleted) {
+            throw new ErroNotFound("Registro não encontrado.")
+        }
+
+        return deleted
     }
 }
 

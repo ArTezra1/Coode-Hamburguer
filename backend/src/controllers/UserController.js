@@ -80,12 +80,6 @@ class UserController {
 
             const user = await UserServices.getById(id)
 
-            if (!user) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                })
-            }
-
             return res.status(200).json(user)
 
         } catch (error) {
@@ -98,12 +92,6 @@ class UserController {
             const { params } = req.query
 
             const data = await UserServices.getByParams(params)
-
-            if (!data) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                })
-            }
 
             return res.status(200).json(data)
 
@@ -119,12 +107,6 @@ class UserController {
 
             const updated = await UserServices.update(id, data)
 
-            if (!updated) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                })
-            }
-
             return res.status(200).json(updated)
 
         } catch (error) {
@@ -136,13 +118,7 @@ class UserController {
         try {
             const { id } = req.params
 
-            const deleted = await UserServices.delete(id)
-
-            if (!deleted) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                })
-            }
+            await UserServices.delete(id)
 
             return res.status(200).json({
                 message: "Usuário deletado com sucesso."
