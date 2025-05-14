@@ -13,174 +13,129 @@ class UserServices extends CrudServices {
         super(UserModel)
     }
 
-    async login(req, res, next) {
-        try {
-            const { sub: auth0Id, email, name } = req.user
+    async login({ auth0Id, email, name }) {
+        if (!auth0Id || !email || !name) {
+            throw new Error("Preencha todos os campos corretamente.")
+        }
 
-            if (!auth0Id || !email || !name) {
-                return res.status(400).json({ message: "Preencha todos os campos corretamente." })
-            }
+        let user = await UserModel.findOne({ auth0Id })
 
-            let user = await UserModel.findOne({ auth0Id })
+        if (!user) {
+            user = await UserModel.create({
+                auth0Id,
+                name,
+                email
+            })
+        }
 
-            if (!user) {
-                user = await UserModel.create({
-                    auth0Id,
-                    name,
-                    email
-                })
-            }
-
-            const token = jsonwebtoken.sign({
-                    id: user._id,
-                    email: user.email,
-                    auth0Id: user.auth0Id
-                },
-                process.env.JWT_SECRET,
-                { 
-                    expiresIn: "1h" 
-                })
-
-            return res.status(200).json({
-                message: "Login realizado com sucesso.",
-                token,
-                user:{
-                    id: user._id,
-                    name: user.name,
-                    emaiç: user.email
-                }
+        const token = jsonwebtoken.sign({
+            id: user._id,
+            email: user.email,
+            auth0Id: user.auth0Id
+        },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h"
             })
 
-        } catch (error) {
-            next(error)
+        return {
+            message: "Login realizado com sucesso.",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
         }
     }
 
-    async getOrders(req, res, next) {
-        const { sub: auth0Id } = req.user
-
-        try {
-            if (!auth0Id) {
-                return res.status(400).json({
-                    message: "Dados de autenticação são obrigatórios."
-                })
-            }
-
-            const user = await UserModel.findOne({
-                auth0Id: auth0Id
-            })
-
-            if (user) {
-                const orders = await OrderModel.find({
-                    customer: user._id
-                })
-
-                if (!orders.length) {
-                    return res.status(404).json({
-                        message: "Nenhum pedido encontrado."
-                    })
-                }
-
-                return res.status(200).json({
-                    message: "Pedidos encontrados com sucesso.",
-                    orders: orders
-                })
-            }
-
-            return res.status(404).json({
-                message: "Usuário não encontrado."
-            })
-
-        } catch (error) {
-            next(error)
+    async getOrders(auth0Id) {
+        if (!auth0Id) {
+            throw new Error("Dados de autenticação são obrigatórios.")
         }
 
-    }
+        const user = await UserModel.findOne({
+            auth0Id: auth0Id
+        })
 
-    async updateAddress(req, res, next) {
-        const { sub: auth0Id } = req.user
-        const address = req.body
+        if (!user) {
+            throw new Error("Usuário não encontrado.")
+        }
 
-        try {
-            if (!auth0Id || !address) {
-                return res.status(400).json({
-                    message: "Dados de endereço e autenticação são obrigatórios."
-                })
-            }
+        const orders = await OrderModel.find({
+            customer: user._id
+        })
 
-            const user = await UserModel.findOne({
-                auth0Id: auth0Id
-            })
+        if (!orders || orders.length === 0) {
+            throw new Error("Nenhum pedido encontrado.")
+        }
 
-            if (!user) {
-                return res.status(404).json({
-                    message: "Usuário não encontrado."
-                })
-            }
-
-            let updatedAddress
-
-            if (user.address) {
-                updatedAddress = await AddressModel.findByIdAndUpdate(
-                    user.address,
-                    address,
-                    { new: true, runValidators: true }
-                )
-
-            } else {
-                updatedAddress = await AddressModel.create(address)
-                user.address = updatedAddress._id
-
-                await user.save()
-            }
-
-            const populatedUser = await UserModel.findById(user._id).populate("address")
-
-            return res.status(200).json({
-                message: user.address ? "Endereço atualizado com sucesso." : "Endereço criado e vinculado com sucesso.",
-                user: populatedUser
-            })
-
-        } catch (error) {
-            next(error)
+        return {
+            message: "Pedidos encontrados com sucesso.",
+            orders: orders
         }
     }
 
-    async getAddress(req, res, next) {
-        const { sub: auth0Id } = req.user
+    async updateAddress(auth0Id, address) {
+        if (!auth0Id || !address) {
+            throw new Error("Dados de endereço e autenticação são obrigatórios.")
+        }
 
-        try {
-            if (!auth0Id) {
-                return res.status(400).json({
-                    message: "Dados de autenticação são obrigatórios."
-                })
-            }
+        const user = await UserModel.findOne({
+            auth0Id: auth0Id
+        })
 
-            const user = await UserModel.findOne({
-                auth0Id: auth0Id
-            })
+        if (!user) {
+            throw new Error("Usuário não encontrado.")
+        }
 
-            if (user) {
-                const address = await AddressModel.findById(user.address)
+        let updatedAddress
 
-                if (!address) {
-                    return res.status(404).json({
-                        message: "Endereço não encontrado."
-                    })
-                }
+        if (user.address) {
+            updatedAddress = await AddressModel.findByIdAndUpdate(
+                user.address,
+                address,
+                { new: true, runValidators: true }
+            )
 
-                return res.status(200).json({
-                    message: "Endereço encontrado com sucesso.",
-                    address
-                })
-            }
+        } else {
+            updatedAddress = await AddressModel.create(address)
+            user.address = updatedAddress._id
 
-            return res.status(404).json({
-                message: "Usuário não encontrado."
-            })
+            await user.save()
+        }
 
-        } catch (error) {
-            next(error)
+        const populatedUser = await UserModel.findById(user._id).populate("address")
+
+        return {
+            message: user.address ? "Endereço atualizado com sucesso." : "Endereço criado e vinculado com sucesso.",
+            user: populatedUser
+        }
+    }
+
+    async getAddress(auth0Id) {
+
+        if (!auth0Id) {
+            throw new Error("Dados de autenticação são obrigatórios.")
+        }
+
+        const user = await UserModel.findOne({
+            auth0Id: auth0Id
+        })
+
+        if (!user) {
+            throw new Error("Usuário não encontrado.")
+        }
+
+        const address = await AddressModel.findById(user.address)
+
+        if (!address) {
+            throw new Error("Endereço não encontrado.")
+        }
+
+        return {
+            message: "Endereço encontrado com sucesso.",
+            address
         }
     }
 }
