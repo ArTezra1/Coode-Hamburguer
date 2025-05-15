@@ -1,32 +1,97 @@
 import PortionServices from "../services/PortionServices.js";
 
-class PortionController{
-    constructor(){
+class PortionController {
+    constructor() {
 
     }
 
-    static async create(req, res, next){
-        PortionServices.create(req, res, next)
+    static async create(req, res, next) {
+        try {
+            const {
+                name,
+                ingredients,
+                image,
+                price,
+                quantity
+            } = req.body
+
+            const result = await PortionServices.create({
+                name,
+                ingredients,
+                image,
+                price,
+                quantity
+            })
+
+            return res.status(201).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getAll(req, res, next){
-        PortionServices.getAll(req, res, next)
+    static async getAll(req, res, next) {
+        try {
+            const result = await PortionServices.getAll()
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getById(req, res, next){
-        PortionServices.getById(req, res, next)
+    static async getById(req, res, next) {
+        try {
+            const { id } = req.params
+
+            const result = await PortionServices.getById(id)
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getByParams(req, res, next){
-        PortionServices.getByParams(req, res, next)
+    static async getByParams(req, res, next) {
+        try {
+            const { params } = req.query
+
+            const result = await PortionServices.getByParams(params)
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async update(req, res, next){
-        PortionServices.update(req, res, next)
+    static async update(req, res, next) {
+        try {
+            const { id } = req.params
+            const data = req.body
+
+            await PortionServices.update(id, data)
+
+            return res.status(200).send()
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async delete(req, res, next){
-        PortionServices.delete(req, res, next)
+    static async delete(req, res, next) {
+        try {
+            const { id } = req.params
+
+            await PortionServices.delete(id)
+
+            return res.status(200).send()
+
+        } catch (error) {
+            next(error)
+        }
     }
 }
 

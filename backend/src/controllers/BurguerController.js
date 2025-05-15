@@ -7,10 +7,22 @@ class BurguerController {
 
     static async create(req, res, next) {
         try {
-            const { name, description, ingredients, price, image } = req.body
+            const {
+                name,
+                description,
+                ingredients,
+                price,
+                image,
+                quantity
+            } = req.body
 
             const result = await BurguerServices.create({
-                name, description, ingredients, image, price
+                name,
+                description,
+                ingredients,
+                image,
+                price,
+                quantity
             })
 
             res.status(201).json(result)

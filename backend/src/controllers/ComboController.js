@@ -1,32 +1,101 @@
 import ComboServices from "../services/ComboServices.js";
 
-class ComboController{
-    constructor(){
+class ComboController {
+    constructor() {
 
     }
 
-    static async create(req, res, next){
-        ComboServices.create(req, res, next)
+    static async create(req, res, next) {
+        try {
+            const {
+                name,
+                description,
+                price,
+                burguer,
+                drink,
+                portion,
+                image
+            } = req.body
+
+            const result = await ComboServices.create({
+                name,
+                description,
+                price,
+                burguer,
+                drink,
+                portion,
+                image
+            })
+
+            return res.status(201).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getAll(req, res, next){
-        ComboServices.getAll(req, res, next)
+    static async getAll(req, res, next) {
+        try {
+            const result = await ComboServices.getAll()
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getById(req, res, next){
-        ComboServices.getById(req, res, next)
+    static async getById(req, res, next) {
+        try {
+            const { id } = req.params
+
+            const result = await ComboServices.getById(id)
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async getByParams(req, res, next){
-        ComboServices.getByParams(req, res, next)
+    static async getByParams(req, res, next) {
+        try {
+            const { params } = req.query
+
+            const result = await ComboServices.getByParams(params)
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async update(req, res, next){
-        ComboServices.update(req, res, next)
+    static async update(req, res, next) {
+        try {
+            const { id } = req.params
+            const data = req.body
+
+            await ComboServices.update(id, data)
+
+            return res.status(200).send()
+
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async delete(req, res, next){
-        ComboServices.delete(req, res, next)
+    static async delete(req, res, next) {
+        try {
+            const { id } = req.params
+
+            await ComboServices.delete(id)
+
+            return res.status(200).send()
+
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
