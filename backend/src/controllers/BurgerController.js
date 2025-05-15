@@ -1,5 +1,9 @@
 import BurgerServices from "../services/BurgerServices.js"
 
+import { 
+    ErrorMessage 
+} from "../error/ErrorClasses.js"
+
 class BurgerController {
     constructor() {
 
@@ -7,23 +11,14 @@ class BurgerController {
 
     static async create(req, res, next) {
         try {
-            const {
-                name,
-                description,
-                ingredients,
-                price,
-                image,
-                quantity
-            } = req.body
+            const data = req.body
+            const file = req.file
 
-            const result = await BurgerServices.create({
-                name,
-                description,
-                ingredients,
-                image,
-                price,
-                quantity
-            })
+            if (!file) {
+                throw new ErrorMessage("Imagem não enviada.")
+            }
+
+            const result = await BurgerServices.create(data, file)
 
             res.status(201).json(result)
 

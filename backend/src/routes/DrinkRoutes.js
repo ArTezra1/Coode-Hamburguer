@@ -1,9 +1,11 @@
 import express from "express"
 import DrinkController from "../controllers/DrinkController.js"
 
+import Upload from "../config/multerConfig.js"
+
 const router = express.Router()
 
-router.post("/v1/products/drinks", DrinkController.create)
+router.post("/v1/products/drinks", Upload.single("image"), DrinkController.create)
 
 router.get("/v1/products/drinks", DrinkController.getAll)
 

@@ -7,23 +7,9 @@ class OrderController {
 
     static async create(req, res, next) {
         try {
-            const {
-                customer,
-                address,
-                items,
-                totalPrice,
-                status,
-                paymentMethod
-            } = req.body
+            const data = req.body
 
-            const result = await OrderServices.create({
-                customer,
-                address,
-                items,
-                totalPrice,
-                status,
-                paymentMethod
-            })
+            const result = await OrderServices.create(data)
 
             return res.status(201).json(result)
 

@@ -9,7 +9,7 @@ const BurgerSchema = new mongoose.Schema({
         type: [String],
         required: [true, "Ingredients are required"],
     },
-    image:{
+    imageSrc:{
         type: String,
         required: [true, "Image is required"]
     },

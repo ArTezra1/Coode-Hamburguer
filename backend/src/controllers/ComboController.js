@@ -7,25 +7,10 @@ class ComboController {
 
     static async create(req, res, next) {
         try {
-            const {
-                name,
-                description,
-                price,
-                burguer,
-                drink,
-                portion,
-                image
-            } = req.body
+            const data = req.body
+            const file = req.file
 
-            const result = await ComboServices.create({
-                name,
-                description,
-                price,
-                burguer,
-                drink,
-                portion,
-                image
-            })
+            const result = await ComboServices.create(data, file)
 
             return res.status(201).json(result)
 

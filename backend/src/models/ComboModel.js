@@ -25,7 +25,7 @@ import mongoose from "mongoose";
         type: mongoose.Schema.Types.ObjectId,
         ref: "Portion"
     },
-    image:{
+    imageSrc:{
         type: String,
         required: [true, "Image is required"]
     },

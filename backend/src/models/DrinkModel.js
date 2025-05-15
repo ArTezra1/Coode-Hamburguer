@@ -9,7 +9,7 @@ const DrinkSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Price is required"]
     },
-    image:{
+    imageSrc:{
         type: String,
         required: [true, "Image is required"]
     },

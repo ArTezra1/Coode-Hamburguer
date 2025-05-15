@@ -7,21 +7,10 @@ class PortionController {
 
     static async create(req, res, next) {
         try {
-            const {
-                name,
-                ingredients,
-                image,
-                price,
-                quantity
-            } = req.body
+            const data = req.body
+            const file = req.file
 
-            const result = await PortionServices.create({
-                name,
-                ingredients,
-                image,
-                price,
-                quantity
-            })
+            const result = await PortionServices.create(data, file)
 
             return res.status(201).json(result)
 

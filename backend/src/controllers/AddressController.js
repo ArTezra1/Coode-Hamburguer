@@ -7,19 +7,9 @@ class AddressController {
 
     static async create(req, res, next) {
         try {
-            const {
-                street,
-                number,
-                zipCode,
-                neighborhood
-            } = req.body
+            const data = req.body
 
-            const result = await AddressServices.create({
-                street,
-                number,
-                zipCode,
-                neighborhood
-            })
+            const result = await AddressServices.create(data)
 
             return res.status(201).json(result)
 

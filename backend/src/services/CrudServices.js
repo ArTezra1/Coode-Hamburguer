@@ -1,3 +1,5 @@
+import fs from "fs"
+import path from "path"
 import mongoose from "mongoose"
 import filterRequest from "../middlewares/FilterRequest.js"
 
@@ -9,9 +11,15 @@ import {
 class CrudServices {
     constructor(model) {
         this.model = model
+        this.imageField = "imageSrc"
+        this.imageFolder = "images"
     }
 
-    async create(data) {
+    async create(data, file) {
+        if (file && file.filename) {
+            data[this.imageField] = `${this.imageFolder}/${file.filename}`
+        }
+
         return await this.model.create(data)
     }
 
@@ -59,11 +67,27 @@ class CrudServices {
             throw new ErroValidation("ID inválido.")
         }
 
-        const deleted = await this.model.findByIdAndDelete(id)
+        const item = await this.model.findById(id)
 
-        if (!deleted) {
+        if (!item) {
             throw new ErroNotFound("Registro não encontrado.")
         }
+
+        const imagePath = item[this.imageField]
+
+        if(imagePath){
+            const fullPath = path.resolve(`.${imagePath}`)
+
+            try {
+                if(fs.existsSync(fullPath)){
+                    fs.unlinkSync(fullPath)
+                }
+            } catch (error) {
+                console.warn("Erro ao deletar imagem:", error.message)
+            }
+        }
+
+        await this.model.findByIdAndDelete(id)
 
         return true
     }

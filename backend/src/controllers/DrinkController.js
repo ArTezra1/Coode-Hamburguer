@@ -7,19 +7,10 @@ class DrinkController {
 
     static async create(req, res, next) {
         try {
-            const {
-                name,
-                price,
-                image,
-                quantity
-            } = req.body
+            const data = req.body
+            const file = req.file
 
-            const result = await DrinkServices.create({
-                name,
-                price,
-                image,
-                quantity
-            })
+            const result = await DrinkServices.create(data, file)
 
             return res.status(201).json(result)
 

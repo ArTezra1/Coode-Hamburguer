@@ -1,9 +1,11 @@
 import express from "express"
 import BurgerController from "../controllers/BurgerController.js"
 
+import Upload from "../config/multerConfig.js"
+
 const router = express.Router()
 
-router.post("/v1/products/burgers", BurgerController.create)
+router.post("/v1/products/burgers", Upload.single("image"), BurgerController.create)
 
 router.get("/v1/products/burgers", BurgerController.getAll)
 

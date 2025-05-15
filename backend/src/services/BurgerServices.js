@@ -3,7 +3,7 @@ import BurgerModel from "../models/BurgerModel.js";
 
 import {
     ErroBadRequest,
-    ErroNotFound
+    ErroNotFound,
 } from "../error/ErrorClasses.js";
 import mongoose from "mongoose";
 
