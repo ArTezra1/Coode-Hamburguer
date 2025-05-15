@@ -1,5 +1,5 @@
 import CrudServices from "./CrudServices.js";
-import BurguerModel from "../models/BurguerModel.js";
+import BurgerModel from "../models/BurgerModel.js";
 
 import {
     ErroBadRequest,
@@ -7,9 +7,9 @@ import {
 } from "../error/ErrorClasses.js";
 import mongoose from "mongoose";
 
-class BurguerServices extends CrudServices {
+class BurgerServices extends CrudServices {
     constructor() {
-        super(BurguerModel)
+        super(BurgerModel)
     }
 
     async getIngredients(id) {
@@ -17,7 +17,7 @@ class BurguerServices extends CrudServices {
             throw new ErroBadRequest("ID inválido.")
         }
 
-        const data = await BurguerModel.findById(id).populate("ingredients")
+        const data = await BurgerModel.findById(id).populate("ingredients")
 
         if (!data) {
             throw new ErroNotFound("Registro não encontrado.")
@@ -27,4 +27,4 @@ class BurguerServices extends CrudServices {
     }
 }
 
-export default new BurguerServices()
+export default new BurgerServices()

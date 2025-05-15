@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const BurguerSchema = new mongoose.Schema({
+const BurgerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"]
@@ -31,6 +31,6 @@ const BurguerSchema = new mongoose.Schema({
     timestamps: true
 })
 
-const BurguerModel = mongoose.model("Burguer", BurguerSchema)
+const BurgerModel = mongoose.model("Burguer", BurgerSchema)
 
-export default BurguerModel
+export default BurgerModel

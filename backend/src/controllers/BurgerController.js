@@ -1,6 +1,6 @@
-import BurguerServices from "../services/BurguerServices.js";
+import BurgerServices from "../services/BurgerServices.js"
 
-class BurguerController {
+class BurgerController {
     constructor() {
 
     }
@@ -16,7 +16,7 @@ class BurguerController {
                 quantity
             } = req.body
 
-            const result = await BurguerServices.create({
+            const result = await BurgerServices.create({
                 name,
                 description,
                 ingredients,
@@ -34,7 +34,7 @@ class BurguerController {
 
     static async getAll(req, res, next) {
         try {
-            const result = await BurguerServices.getAll()
+            const result = await BurgerServices.getAll()
 
             res.status(200).json(result)
 
@@ -47,7 +47,7 @@ class BurguerController {
         try {
             const { id } = req.params
 
-            const result = await BurguerServices.getById(id)
+            const result = await BurgerServices.getById(id)
 
             res.status(200).json(result)
 
@@ -60,7 +60,7 @@ class BurguerController {
         try {
             const { params } = req.query
 
-            const result = await BurguerServices.getByParams(params)
+            const result = await BurgerServices.getByParams(params)
 
             res.status(200).json(result)
 
@@ -73,7 +73,7 @@ class BurguerController {
         try {
             const { id } = req.params
 
-            const result = await BurguerServices.getIngredients(id)
+            const result = await BurgerServices.getIngredients(id)
 
             res.status(200).json(result)
 
@@ -87,7 +87,7 @@ class BurguerController {
             const { id } = req.params
             const data = req.body
 
-            await BurguerServices.update(id, data)
+            await BurgerServices.update(id, data)
 
             res.status(200).send()
 
@@ -100,7 +100,7 @@ class BurguerController {
         try {
             const { id } = req.params
 
-            await BurguerServices.delete(id)
+            await BurgerServices.delete(id)
 
             res.status(200).send()
 
@@ -110,4 +110,4 @@ class BurguerController {
     }
 }
 
-export default BurguerController
+export default BurgerController
