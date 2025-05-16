@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:services:burger": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=__test__/src/services/BurgerServices.test.js",
+    "test:services:drink": "node --experimental-vm-modules node_modules/jest/bin/jest.js --testPathPattern=__test__/src/services/DrinkServices.test.js",
     "dev": "nodemon server.js"
   },
   "keywords": [],

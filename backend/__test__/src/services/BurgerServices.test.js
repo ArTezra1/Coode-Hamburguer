@@ -111,6 +111,33 @@ describe('Testando os erros de CREATE do BurgerServices', () => {
             .toThrow('Quantity is required')
     })
 
+    it('Deve criar uma Hamburguer', async ()=>{
+            const burgerMock = {
+                name: 'X-Bacon',
+                ingredients:[
+                    'pão',
+                    'salada'
+                ],
+                price: 18,
+                quantity: 10
+            }
+            const fileMock = {
+                filename: 'pep.png'
+            }
+    
+            const result = await BurgerServices.create(burgerMock, fileMock)
+    
+            expect(result).toMatchObject({
+                name: burgerMock.name,
+                price: burgerMock.price,
+                quantity: burgerMock.quantity,
+                imageSrc: expect.stringContaining(fileMock.filename)
+            })
+
+            expect(result.ingredients).toStrictEqual(burgerMock.ingredients)
+
+        })
+
 })
 
 describe('Testando os métodos de GET do BurgerServices', () => {

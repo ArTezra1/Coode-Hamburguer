@@ -21,7 +21,6 @@ const DrinkSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Quantity is required"],
         min: [0, "Quantity must be greater than or equal to 0"],
-        default: 0
     }
 }, {
     timestamps: true
