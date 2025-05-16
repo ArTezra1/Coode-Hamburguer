@@ -8,8 +8,14 @@ const BurgerSchema = new mongoose.Schema({
     ingredients: {
         type: [String],
         required: [true, "Ingredients are required"],
+        validate: {
+            validator: function (v) {
+                return Array.isArray(v) && v.length > 0;
+            },
+            message: "Ingredients must contain at least one item"
+        }
     },
-    imageSrc:{
+    imageSrc: {
         type: String,
         required: [true, "Image is required"]
     },
@@ -25,12 +31,11 @@ const BurgerSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Quantity is required"],
         min: [0, "Quantity must be greater than or equal to 0"],
-        default: 0
     }
 }, {
     timestamps: true
 })
 
-const BurgerModel = mongoose.model("Burguer", BurgerSchema)
+const BurgerModel = mongoose.model("Burger", BurgerSchema)
 
 export default BurgerModel
