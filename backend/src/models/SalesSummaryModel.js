@@ -18,6 +18,8 @@ const SalesSummarySchema = new mongoose.Schema({
     totalOrders: {
         type: Number
     }
+}, {
+    timestamps: true
 })
 
 const SalesSummaryModel = mongoose.model("SalesSummary", SalesSummarySchema)

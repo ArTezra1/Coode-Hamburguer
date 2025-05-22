@@ -13,16 +13,20 @@ const SalesSchema = new mongoose.Schema({
     },
     productCountSale: {
         type: Number,
-        required: true
+        required: true,
+        min: 1
     },
     productTotalSale: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     saleDate: {
         type: Date,
         default: Date.now
     }
+}, {
+    timestamps: true
 })
 
 const SalesModel = mongoose.model("Sales", SalesSchema)

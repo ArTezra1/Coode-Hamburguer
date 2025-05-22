@@ -29,6 +29,25 @@ class SalesSummaryController{
         }
     }
 
+    static async getAllOrByDate(req, res, next){
+        try {
+            const { periodType } = req.query
+
+            if(periodType){
+                const result = await SalesSummaryServices.getByDate(periodType)
+
+                return res.status(200).json(result)
+            }
+
+            const result = await SalesSummaryServices.getAll()
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async getById(req, res, next){
         try {
             const { id } = req.params
@@ -56,7 +75,7 @@ class SalesSummaryController{
         }
     }
 
-    static async delte(req, res, next){
+    static async delete(req, res, next){
         try {
             const { id } = req.params
 
