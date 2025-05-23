@@ -8,18 +8,43 @@ class SalesController{
     static async createSale(req, res, next){
         try {
             const saleData = req.body
+
             const result = await SalesServices.createSale(saleData)
 
             res.status(201).json(result)
+
         } catch (error) {
             next(error)
         }
     }
 
-    static async getAll(req, res, next){
+    static async getAllOrByGroup(req, res, next){
         try { 
+            const { group } = req.query
 
+            if(group){
+                const result = await SalesServices.getByGroups(group)
+                
+                return res.status(200).json(result)
+            }
 
+            const result = await SalesServices.getAll()
+
+            return res.status(200).json(result)
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async getByGroup(req, res, next){
+        try {
+            const { group } = req.query
+
+            const result = await SalesServices.getByGroups(group)
+
+            res.status(200).json(result)
+            
         } catch (error) {
             next(error)
         }

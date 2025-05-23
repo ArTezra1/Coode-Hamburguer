@@ -5,9 +5,9 @@ const router = express.Router()
 
 router.post("/dashboard/sales", SalesController.createSale)
 
-router.get("/dashboard/sales", SalesController.getAll)
+router.get("/dashboard/sales", SalesController.getAllOrByGroup)
 
-router.get("/dashboard/sales:id", SalesController.getById)
+router.get("/dashboard/sales/:id", SalesController.getById)
 
 router.put("/dashboard/sales/:id", SalesController.update)
 
