@@ -9,7 +9,7 @@ import sales from "./SalesRoutes.js"
 import salesSummary from "./SalesSummaryRoutes.js"
 
 const routes = (app) => {
-    app.use(user, address, burger, drink, portion, combo, order, sales, salesSummary)
+    app.use("/v1", user, address, burger, drink, portion, combo, order, sales, salesSummary)
 };
 
 export default routes

@@ -5,16 +5,16 @@ import Upload from "../config/multerConfig.js"
 
 const router = express.Router()
 
-router.post("/v1/products/portions", Upload.single("image"), PortionController.create)
+router.post("/products/portions", Upload.single("image"), PortionController.create)
 
-router.get("/v1/products/portions", PortionController.getAll)
+router.get("/products/portions", PortionController.getAll)
 
-router.get("/v1/products/portions/query", PortionController.getByParams)
+router.get("/products/portions/query", PortionController.getByParams)
 
-router.get("/v1/products/portions/:id", PortionController.getById)
+router.get("/products/portions/:id", PortionController.getById)
 
-router.put("/v1/products/portions/:id", PortionController.update)
+router.put("/products/portions/:id", PortionController.update)
 
-router.post("/v1/products/portions/:id", PortionController.delete)
+router.post("/products/portions/:id", PortionController.delete)
 
 export default router

@@ -3,16 +3,16 @@ import AddressController from "../controllers/AddressController.js"
 
 const router = express.Router()
 
-router.post("/v1/addresses", AddressController.create)
+router.post("/addresses", AddressController.create)
 
-router.get("/v1/addresses", AddressController.getAll)
+router.get("/addresses", AddressController.getAll)
 
-router.get("/v1/addresses/query", AddressController.getByParams)
+router.get("/addresses/query", AddressController.getByParams)
 
-router.get("/v1/addresses/:id", AddressController.getById)
+router.get("/addresses/:id", AddressController.getById)
 
-router.put("/v1/addresses/:id", AddressController.update)
+router.put("/addresses/:id", AddressController.update)
 
-router.delete("/v1/addresses", AddressController.delete)
+router.delete("/addresses", AddressController.delete)
 
 export default router
