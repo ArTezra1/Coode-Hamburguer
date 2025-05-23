@@ -35,7 +35,7 @@ function ErrorRouter(erro, req, res, next){
 
   }
 
-  // console.error("Erro não tratado:", erro)
+  console.error("Erro não tratado:", erro)
   return new ErrorMessage().enviarResposta(res)
 }
 

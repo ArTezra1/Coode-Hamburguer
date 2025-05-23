@@ -5,11 +5,11 @@ class SalesSummaryController{
 
     }
 
-    static async create(req, res, next){
+    static async createSymmary(req, res, next){
         try {
-            const data = req.body
+            const { periodType } = req.body
 
-            const result = await SalesSummaryServices.create(data)
+            const result = await SalesSummaryServices.createSummary(periodType)
             
             return res.status(201).json(result)
 

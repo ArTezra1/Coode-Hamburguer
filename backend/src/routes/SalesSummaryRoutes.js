@@ -3,7 +3,7 @@ import SalesSummaryController from "../controllers/SalesSummaryController.js"
 
 const router = express.Router()
 
-router.post("/dashboard/summarys", SalesSummaryController.create)
+router.post("/dashboard/summarys", SalesSummaryController.createSymmary)
 
 router.get("/dashboard/summarys", SalesSummaryController.getAllOrByDate)
 
