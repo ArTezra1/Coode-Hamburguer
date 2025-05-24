@@ -6,3 +6,4 @@
 - Mudar todas as rotas para arrow function para poder receber comentários do swagger
 - Adicionar tratamento de erro por reference erro
 - Adicionar tratamento de erro por erro no envio do id
+- Arrumar o model de burger onde os ingredientes não estão sendo separados na criação

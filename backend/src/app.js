@@ -8,7 +8,7 @@ import cors from "cors"
 import swaggerUi from "swagger-ui-express"
 
 const require = createRequire(import.meta.url)
-const swaggerFile = require("../swagger_output.json")
+const swaggerFile = require("../docs/swagger_output.json")
 
 dotenv.config()
 
