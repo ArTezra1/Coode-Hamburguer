@@ -14,23 +14,39 @@ const doc = {
       name: 'Hambúrgueres',
       description: 'Rotas específicas de hambúrgueres.',
     },
+    {
+      name: 'Bebidas',
+      description: 'Rotas específicas de bebidas.',
+    },
   ],
   components: {
     schemas: {
       Burger: {
-        type: 'object',
+        type: "object",
         properties: {
-          _id: { type: 'string' },
-          name: { type: 'string' },
-          price: { type: 'number' },
-          description: { type: 'string' },
-          image: { type: 'string' },
+          _id: { type: "string" },
+          name: { type: "string" },
+          price: { type: "number" },
           ingredients: {
-            type: 'array',
-            items: { type: 'string' },
+            type: "array",
+            items: { type: "string" },
           },
+          description: { type: "string" },
+          imageSrc: { type: "string" },
+          quantity: { type: "number" }
         },
       },
+      Drink: {
+        type: "object",
+        properties: {
+          _id: { type: "string" },
+          name: { type: "string" },
+          price: { type: "number" },
+          description: { type: "string" },
+          imageSrc: { type: "string" },
+          quantity: { type: "number" },
+        }
+      }
     },
   },
 };
@@ -39,15 +55,14 @@ const outputFile = './swagger_output.json';
 const endpointsFiles = ['../src/routes/index.js'];
 
 swaggerAutogen()(outputFile, endpointsFiles, doc).then(() => {
-  // 🔥 Fazendo o merge do swagger_extra no output gerado:
-  const swaggerOutput = JSON.parse(fs.readFileSync(outputFile));
+  const swaggerOutput = JSON.parse(fs.readFileSync(outputFile))
 
   swaggerOutput.paths = {
     ...swaggerOutput.paths,
     ...swaggerExtra,
-  };
+  }
 
-  fs.writeFileSync(outputFile, JSON.stringify(swaggerOutput, null, 2));
+  fs.writeFileSync(outputFile, JSON.stringify(swaggerOutput, null, 2))
 
-  console.log('Swagger docs atualizado com sucesso!');
-});
+  console.log("Merge feito")
+})

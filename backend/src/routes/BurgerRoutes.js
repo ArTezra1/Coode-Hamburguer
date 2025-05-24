@@ -9,8 +9,6 @@ router.post("/products/burgers", Upload.single("image"), BurgerController.create
 
 router.get("/products/burgers", BurgerController.getAll)
 
-router.get("/products/burgers/query", BurgerController.getByParams)
-
 router.get("/products/burgers/:id/ingredients", BurgerController.getIngredients)
 
 router.get("/products/burgers/:id", BurgerController.getById)
