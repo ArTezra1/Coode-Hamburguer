@@ -4,7 +4,6 @@ import AddressModel from "../models/AddressModel.js";
 import OrderModel from "../models/OrderModel.js"
 
 import dotenv from "dotenv"
-import jsonwebtoken from "jsonwebtoken"
 
 dotenv.config()
 
@@ -34,19 +33,8 @@ class UserServices extends CrudServices {
             })
         }
 
-        const token = jsonwebtoken.sign({
-            id: user._id,
-            email: user.email,
-            auth0Id: user.auth0Id
-        },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1h"
-            })
-
         return {
             message: "Login realizado com sucesso.",
-            token,
             user: {
                 id: user._id,
                 name: user.name,

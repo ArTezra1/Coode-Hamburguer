@@ -1,34 +1,16 @@
-import jsonwebtoken from "jsonwebtoken"
+import { expressjwt } from "express-jwt";
+import jwks from "jwks-rsa";
 
-function CheckToken(req, res, next) {
-    const headerAuth = req.header("Authorization")
+const checkToken = expressjwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
+  audience: process.env.AUTH0_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ["RS256"],
+})
 
-    if (!headerAuth) {
-        return res.status(401).json({
-            message: "Acesso negado, é preciso do token."
-        })
-    }
-
-    const token = headerAuth.split(" ")[1]
-
-    if (!token) {
-        return res.status(401).json({
-            message: "Acesso negado, é preciso do token."
-        })
-    }
-
-    try {
-        const decodificado = jsonwebtoken.verify(token, process.env.TOKEN_SECRET)
-
-        req.user = decodificado
-
-        next()
-
-    } catch (error) {
-        return res.status(401).json({
-            message: "Token invalido ou expirado."
-        })
-    }
-}
-
-export default CheckToken
+export default checkToken
