@@ -1,9 +1,17 @@
 import jsonwebtoken from "jsonwebtoken"
 
-function CheckToken(req, res, next){
-    const token = req.header("Authorization")
+function CheckToken(req, res, next) {
+    const headerAuth = req.header("Authorization")
 
-    if(!token){
+    if (!headerAuth) {
+        return res.status(401).json({
+            message: "Acesso negado, é preciso do token."
+        })
+    }
+
+    const token = headerAuth.split(" ")[1]
+
+    if (!token) {
         return res.status(401).json({
             message: "Acesso negado, é preciso do token."
         })
