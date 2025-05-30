@@ -7,9 +7,7 @@ class SalesController{
 
     static async createSale(req, res, next){
         try {
-            const saleData = req.body
-
-            const result = await SalesServices.createSale(saleData)
+            const result = await SalesServices.createSale()
 
             res.status(201).json(result)
 

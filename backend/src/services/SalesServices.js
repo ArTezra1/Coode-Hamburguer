@@ -10,17 +10,30 @@ class SalesServices extends CrudServices {
         super(SalesModel)
     }
 
-    async createSale(data) {
-        if (!Array.isArray(data) || data.length === 0) {
-            throw new ErroValidation("Lista de vendas vazia ou inválida")
+    async createSale() {
+        const orderSales = await OrderModel.find({ 
+            paymentStatus: "pago" 
+        })
+
+        if (orderSales.length === 0) {
+            return {
+                message: "Nenhuma venda.",
+                data: []
+            }
         }
 
-        const saleDocuments = data.map((item) => ({
-            product: item.product,
-            productModel: item.productModel,
-            productCountSale: item.productCountSale,
-            productTotalSale: item.productCountSale * item.unitPrice
-        }))
+        const saleDocuments = []
+
+        orderSales.forEach(order => {
+            order.items.forEach(item => {
+                saleDocuments.push({
+                    product: item.product,
+                    productModel: item.productType,
+                    productCountSale: item.quantity,
+                    productTotalSale: item.quantity * item.unitPrice
+                })
+            })
+        })
 
         const savedSales = await SalesModel.insertMany(saleDocuments)
 

@@ -26,6 +26,10 @@ const OrderSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
                 min: 1
+            },
+            unitPrice:{
+                type: Number,
+                required: [true, "Insira o preço do item."]
             }
         }
     ],
@@ -45,7 +49,12 @@ const OrderSchema = new mongoose.Schema({
     paymentMethod: {
         type: String,
         enum: ["cartão", "dinheiro", "pix"],
-        required: true
+        required: [true, "Selecione um método de pagamento."]
+    },
+    paymentStatus:{
+        type: String,
+        enum: ["pendente", "pago", "estornado"],
+        default: "pendente"
     }
 }, {
     timestamps: true

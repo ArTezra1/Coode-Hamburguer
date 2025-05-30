@@ -1,10 +1,13 @@
 import cron from "node-cron"
 import SalesSummaryController from "../controllers/SalesSummaryController.js"
+import SalesController from "../controllers/SalesController.js"
 
 function startCron() {
     cron.schedule("0 0 * * *", async () => {
         try {
             await SalesSummaryController.createSymmary("daily")
+
+            await SalesController.createSale()
 
         } catch (error) {
             console.error("Erro ao criar o sumário:", error)

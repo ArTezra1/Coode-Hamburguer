@@ -1,9 +1,10 @@
 - Adicionar o método de paginação nas rotas
 - Adicionar o método de parâmetros de requisição nas rotas
-- Criar automação com o nodecron do salesSummary - diario - semanal- mensal
+<!-- - Criar automação com o nodecron do salesSummary - diario - semanal- mensal -->
 - Criar o método kanban com o socket.io para mudar o status dos pedidos
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
 - Mudar todas as rotas para arrow function para poder receber comentários do swagger
 - Adicionar tratamento de erro por reference erro
 - Adicionar tratamento de erro por erro no envio do id
 - Arrumar o model de burger onde os ingredientes não estão sendo separados na criação
+- Criar um método específico para o a criação do order
