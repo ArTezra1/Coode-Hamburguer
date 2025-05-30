@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 import ErrorRouter from "./middlewares/ErroRouter.js"
 import cors from "cors"
 import swaggerUi from "swagger-ui-express"
+import startCron from "./auto/autoCron.js"
 
 const require = createRequire(import.meta.url)
 const swaggerFile = require("../docs/swagger_output.json")
@@ -24,6 +25,8 @@ conexao.once("once", ()=>{
 
 const app = express()
 app.use(express.json())
+
+startCron()
 
 app.use(cors({
     origin: "http://localhost:3000", 
