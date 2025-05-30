@@ -18,9 +18,6 @@ function ErrorRouter(erro, req, res, next){
   } else if (erro instanceof mongoose.Error.ValidationError) {
     return new ErroValidation(erro).enviarResposta(res)
 
-  } else if (erro instanceof mongoose.Error.ObjectParameterError) {
-    return new ErroObjectParameter(erro).enviarResposta(res)
-
   } else if (
     erro instanceof ErroBadRequest ||
     erro instanceof ErroNotFound ||
