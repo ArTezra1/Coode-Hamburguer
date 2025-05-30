@@ -5,11 +5,11 @@ class OrderController {
 
     }
 
-    static async create(req, res, next) {
+    static async createOrder(req, res, next) {
         try {
             const data = req.body
 
-            const result = await OrderServices.create(data)
+            const result = await OrderServices.createOrder(data)
 
             return res.status(201).json(result)
 

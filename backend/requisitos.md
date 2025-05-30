@@ -6,5 +6,7 @@
 - Mudar todas as rotas para arrow function para poder receber comentários do swagger
 - Adicionar tratamento de erro por reference erro
 - Adicionar tratamento de erro por erro no envio do id
+- Adicionar tratamento de erro por erro ObjectParameterError
 - Arrumar o model de burger onde os ingredientes não estão sendo separados na criação
-- Criar um método específico para o a criação do order
+<!-- - Criar um método específico para o a criação do order -->
+- Criar o método específico para pegar os pedidos do order populado com o endereço, nome do cliente e nome dos itens pedidos
