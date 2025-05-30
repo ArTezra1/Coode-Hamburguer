@@ -40,6 +40,12 @@ class ErroValidation extends ErrorMessage{
     }
 }
 
+class ErroObjectParameter extends ErrorMessage{
+    constructor(message = "Erro na passagem de parâmetros inválidos na consulta."){
+        super(message, 400)
+    }
+}
+
 class ErroAuthentication extends ErrorMessage {
     constructor(message = "Autenticação necessária.") {
         super(message, 401)
@@ -66,5 +72,6 @@ export {
     ErroValidation,
     ErroAuthentication,
     ErroConflict,
-    ErroTimeout
+    ErroTimeout,
+    ErroObjectParameter
 }
