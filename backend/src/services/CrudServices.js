@@ -41,10 +41,6 @@ class CrudServices {
         return data
     }
 
-    async getByParams(params) {
-
-    }
-
     async update(id, data) {
         if (!id || !mongoose.Types.ObjectId.isValid(id)) {
             throw new ErroValidation("ID inválido.")
