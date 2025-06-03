@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post("/orders", OrderController.createOrder)
 
-router.get("/orders", OrderController.getAll)
+router.get("/orders", OrderController.getAllOrders)
 
 router.get("/orders/query", OrderController.getByParams)
 

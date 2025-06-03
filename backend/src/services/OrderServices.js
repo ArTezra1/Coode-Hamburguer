@@ -78,6 +78,19 @@ class OrderServices extends CrudServices {
         return newOrder
 
     }
+
+    async getAllOrders(){
+        const orders = await OrderModel.find({})
+        .select("-__v -updatedAt")
+        .populate({
+            path: "items.product", 
+            select: "name quantity -_id"
+        })
+        .populate("customer", "name email")
+        .populate("address", "street city state zipCode")
+        
+        return orders
+    }
 }
 
 export default new OrderServices()

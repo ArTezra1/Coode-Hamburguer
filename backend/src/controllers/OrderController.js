@@ -18,9 +18,9 @@ class OrderController {
         }
     }
 
-    static async getAll(req, res, next) {
+    static async getAllOrders(req, res, next) {
         try {
-            const result = await OrderServices.getAll()
+            const result = await OrderServices.getAllOrders()
 
             return res.status(200).json(result)
 
