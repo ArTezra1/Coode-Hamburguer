@@ -1,18 +1,13 @@
 import BurgerServices from "../../../../src/services/BurgerServices.js"
+import { connectDB, disconnectDB, clearDB } from "../../config/dbConnectConfig.test.js"
 
-import app from "../../../../src/app.js"
-import BurgerModel from "../../../../src/models/BurgerModel.js"
-
-let server
-
-beforeEach(async () => {
-    await BurgerModel.deleteMany({})
-    const port = 5000
-    server = app.listen(port)
+beforeAll(async () => {
+    await connectDB()
 })
 
-afterEach(() => {
-    server.close()
+afterAll(async () => {
+    await clearDB()
+    await disconnectDB()
 })
 
 describe('Testando os métodos PUT do BurgerServices', () => {
