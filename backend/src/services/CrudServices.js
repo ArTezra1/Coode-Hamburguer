@@ -51,9 +51,7 @@ class CrudServices {
         }
 
         return true
-    }
-
-    async delete(id) {
+    }    async delete(id) {
         const validId = checkId(id)
 
         const item = await this.model.findById(validId)
@@ -65,18 +63,20 @@ class CrudServices {
         const imagePath = item[this.imageField]
 
         if (imagePath) {
-            const fullPath = path.resolve(`.${imagePath}`)
+            const fullPath = path.join(process.cwd(), imagePath)
 
             try {
                 if (fs.existsSync(fullPath)) {
                     fs.unlinkSync(fullPath)
+                } else {
+                    console.warn(`Arquivo de imagem não encontrado: ${fullPath}`)
                 }
             } catch (error) {
-                console.warn("Erro ao deletar imagem:", error.message)
+                console.error("Erro ao deletar imagem:", error.message)
             }
         }
 
-        await this.model.findByIdAndDelete(id)
+        await this.model.findByIdAndDelete(validId)
 
         return true
     }
