@@ -1,11 +1,10 @@
 import fs from "fs"
 import path from "path"
-import mongoose from "mongoose"
 import filterRequest from "../middlewares/FilterRequest.js"
+import checkId from "../utils/checkMongooseId.js"
 
 import {
     ErroNotFound,
-    ErroValidation
 } from "../error/ErrorClasses.js"
 
 class CrudServices {
@@ -28,11 +27,9 @@ class CrudServices {
     }
 
     async getById(id) {
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            throw new ErroValidation("ID inválido.")
-        }
+        const validId = checkId(id)
 
-        const data = await this.model.findById(id)
+        const data = await this.model.findById(validId)
 
         if (!data) {
             throw new ErroNotFound("Registro não encontrado.")
@@ -42,11 +39,9 @@ class CrudServices {
     }
 
     async update(id, data) {
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            throw new ErroValidation("ID inválido.")
-        }
+        const validId = checkId(id)
 
-        const updated = await this.model.findByIdAndUpdate(id, data, { 
+        const updated = await this.model.findByIdAndUpdate(validId, data, {
             new: true,
             runValidators: true
         })
@@ -59,11 +54,9 @@ class CrudServices {
     }
 
     async delete(id) {
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            throw new ErroValidation("ID inválido.")
-        }
+        const validId = checkId(id)
 
-        const item = await this.model.findById(id)
+        const item = await this.model.findById(validId)
 
         if (!item) {
             throw new ErroNotFound("Registro não encontrado.")
@@ -71,11 +64,11 @@ class CrudServices {
 
         const imagePath = item[this.imageField]
 
-        if(imagePath){
+        if (imagePath) {
             const fullPath = path.resolve(`.${imagePath}`)
 
             try {
-                if(fs.existsSync(fullPath)){
+                if (fs.existsSync(fullPath)) {
                     fs.unlinkSync(fullPath)
                 }
             } catch (error) {

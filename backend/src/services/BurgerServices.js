@@ -1,11 +1,10 @@
 import CrudServices from "./CrudServices.js";
 import BurgerModel from "../models/BurgerModel.js";
+import checkId from "../utils/checkMongooseId.js";
 
 import {
-    ErroBadRequest,
     ErroNotFound,
 } from "../error/ErrorClasses.js";
-import mongoose from "mongoose";
 
 class BurgerServices extends CrudServices {
     constructor() {
@@ -13,11 +12,9 @@ class BurgerServices extends CrudServices {
     }
 
     async getIngredients(id) {
-        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-            throw new ErroBadRequest("ID inválido.")
-        }
+        const validId = checkId(id)
 
-        const data = await BurgerModel.findById(id).populate("ingredients")
+        const data = await BurgerModel.findById(validId).populate("ingredients")
 
         if (!data) {
             throw new ErroNotFound("Registro não encontrado.")
