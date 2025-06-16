@@ -51,7 +51,9 @@ class CrudServices {
         }
 
         return true
-    }    async delete(id) {
+    }   
+    
+    async delete(id) {
         const validId = checkId(id)
 
         const item = await this.model.findById(validId)

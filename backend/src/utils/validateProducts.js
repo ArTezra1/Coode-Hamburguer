@@ -10,7 +10,7 @@ function validateCategories(category) {
 function validateRequiredFields(data) {
     switch (data.category) {
         case "burger":
-            if (!data.ingredientes || !Array.isArray(data.ingredientes) || !data.ingredientes.length) {
+            if (!data.ingredients) {
                 throw new ErroBadRequest("Lanches precisam de ingredientes.")
             }
             break
@@ -22,6 +22,11 @@ function validateRequiredFields(data) {
             break
 
         case "drink":
+            if(!data.brand){
+                throw new ErroBadRequest("Bebidas precisam de uma marca.")
+            }
+            break
+
         case "portion":
         case "other":
 
@@ -45,13 +50,13 @@ function validateName(name) {
 }
 
 function validatePrice(price) {
-    if (typeof price !== "number" || price <= 0) {
+    if (price <= 0) {
         throw new ErroBadRequest("Preço é obrigatório e deve ser maior que zero.")
     }
 }
 
 function validateQuantity(quantity) {
-    if (typeof quantity !== "number" || quantity < 0) {
+    if (quantity < 0) {
         throw new ErroBadRequest("Quantidade é obrigatória e deve ser maior ou igual a zero.")
     }
 }

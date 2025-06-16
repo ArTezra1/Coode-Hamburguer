@@ -40,7 +40,10 @@ const ProductSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Products"
         }
-    ]
+    ],
+    brand: {
+        type: String
+    }
 }, {
     timestamps: true
 })
