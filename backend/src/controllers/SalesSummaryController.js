@@ -5,7 +5,7 @@ class SalesSummaryController{
 
     }
 
-    static async createSymmary(req, res, next){
+    static async createSummary(req, res, next){
         try {
             const { periodType } = req.body
 
@@ -22,7 +22,9 @@ class SalesSummaryController{
         try {
             const result = await SalesSummaryServices.getAll()
 
-            return res.status(200).json(result)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)
@@ -36,12 +38,16 @@ class SalesSummaryController{
             if(periodType){
                 const result = await SalesSummaryServices.getByDate(periodType)
 
-                return res.status(200).json(result)
+                req.result = result
+
+                next()
             }
 
             const result = await SalesSummaryServices.getAll()
 
-            return res.status(200).json(result)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)

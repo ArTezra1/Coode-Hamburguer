@@ -22,7 +22,9 @@ class AddressController {
         try {
             const result = await AddressServices.getAll()
 
-            return res.status(200).json(result)
+            req. result = result
+
+            next()
 
         } catch (error) {
             next(error)

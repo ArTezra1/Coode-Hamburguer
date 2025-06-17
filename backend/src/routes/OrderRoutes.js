@@ -1,11 +1,13 @@
-import express from "express"
 import OrderController from "../controllers/OrderController.js"
+import express from "express"
+
+import paginate from "../middlewares/Paginate.js"
 
 const router = express.Router()
 
 router.post("/orders", OrderController.createOrder)
 
-router.get("/orders", OrderController.getAllOrders)
+router.get("/orders", OrderController.getAllOrders, paginate)
 
 router.get("/orders/query", OrderController.getByParams)
 

@@ -22,27 +22,18 @@ class SalesController{
 
             if(group){
                 const result = await SalesServices.getByGroups(group)
-                
-                return res.status(200).json(result)
+
+                req.result = result
+
+                next()
             }
 
             const result = await SalesServices.getAll()
 
-            return res.status(200).json(result)
+            req.result = result 
 
-        } catch (error) {
-            next(error)
-        }
-    }
+            next()
 
-    static async getByGroup(req, res, next){
-        try {
-            const { group } = req.query
-
-            const result = await SalesServices.getByGroups(group)
-
-            res.status(200).json(result)
-            
         } catch (error) {
             next(error)
         }

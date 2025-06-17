@@ -22,7 +22,9 @@ class OrderController {
         try {
             const result = await OrderServices.getAllOrders()
 
-            return res.status(200).json(result)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)

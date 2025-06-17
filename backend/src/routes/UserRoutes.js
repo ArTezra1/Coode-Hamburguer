@@ -8,13 +8,13 @@ const router = express.Router()
 
 router.post("/login", UserControler.login)
 
-router.get("/users", CheckToken, CheckAdmin,UserControler.getAll)
+router.get("/users", CheckToken, CheckAdmin, UserControler.getAll)
 
-router.get("/users/query", CheckToken, CheckAdmin,UserControler.getByParams)
+router.get("/users/query", CheckToken, CheckAdmin, UserControler.getByParams)
 
-router.get("/users/:id", CheckToken, CheckAdmin, UserControler.getById)
+router.get("/users/:id", CheckToken, UserControler.getById)
 
-router.get("/profile/orders", CheckToken, UserControler.getOrders)
+router.get("/users/profile/orders", CheckToken, UserControler.getOrders)
 
 router.get("/profile/address", CheckToken, UserControler.getAddress)
 

@@ -25,7 +25,9 @@ class ProductController {
 
             const result = await ProductServices.getAll(category)
 
-            res.status(200).json(result)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)

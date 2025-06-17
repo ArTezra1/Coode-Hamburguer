@@ -26,7 +26,9 @@ class UserController {
 
             const result = await UserServices.getOrders(auth0Id)
 
-            res.status(200).json(result)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)
@@ -63,11 +65,11 @@ class UserController {
 
     static async getAll(req, res, next) {
         try {
-            const { page, limit } = req.query
+            const result = await UserServices.getAll()
 
-            const data = await UserServices.getAll()
+            req.result = result
 
-            return res.status(200).json(data)
+            next()
 
         } catch (error) {
             next(error)
@@ -91,9 +93,11 @@ class UserController {
         try {
             const { params } = req.query
 
-            const data = await UserServices.getByParams(params)
+            const result = await UserServices.getByParams(params)
 
-            return res.status(200).json(data)
+            req.result = result
+
+            next()
 
         } catch (error) {
             next(error)
@@ -103,9 +107,9 @@ class UserController {
     static async update(req, res, next) {
         try {
             const { id } = req.params
-            const data = req.body
+            const result = req.body
 
-            await UserServices.update(id, data)
+            await UserServices.update(id, result)
 
             return res.status(200).send()
 

@@ -1,11 +1,13 @@
-import express from "express"
 import SalesSummaryController from "../controllers/SalesSummaryController.js"
+import express from "express"
+
+import paginate from "../middlewares/Paginate.js"
 
 const router = express.Router()
 
-router.post("/dashboard/summarys", SalesSummaryController.createSymmary)
+router.post("/dashboard/summarys", SalesSummaryController.createSummary)
 
-router.get("/dashboard/summarys", SalesSummaryController.getAllOrByDate)
+router.get("/dashboard/summarys", SalesSummaryController.getAllOrByDate, paginate)
 
 router.get("/dashboard/summarys/:id", SalesSummaryController.getById)
 
