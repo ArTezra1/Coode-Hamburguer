@@ -21,9 +21,7 @@ class ProductController {
 
     static async getAll(req, res, next) {
         try {
-            const { category } = req.query
-
-            const result = await ProductServices.getAll(category)
+            const result = await ProductServices.getAll(req.query)
 
             req.result = result
 

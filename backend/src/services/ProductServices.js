@@ -3,6 +3,7 @@ import ProductModel from "../models/ProductModel.js";
 import { ErroNotFound } from "../error/ErrorClasses.js";
 import validateProduct from "../utils/validateProducts.js";
 import checkId from "../utils/checkMongooseId.js";
+import buildMongoQuery from "../utils/buildMongoQuery.js";
 import path from "path"
 import fs from "fs"
 
@@ -22,10 +23,10 @@ class ProductServices {
         return product
     }
 
-    async getAll(category) {
-        const products = await ProductModel.find({
-            category: category || { $exists: true }
-        })
+    async getAll(query = {}) {
+        const { filter, sort } = buildMongoQuery(query)
+
+        const products = await ProductModel.find(filter).sort(sort)
 
         return products
     }
