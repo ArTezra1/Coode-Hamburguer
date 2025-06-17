@@ -22,8 +22,10 @@ class ProductServices {
         return product
     }
 
-    async getAll() {
-        const products = await ProductModel.find({})
+    async getAll(category) {
+        const products = await ProductModel.find({
+            category: category || { $exists: true }
+        })
 
         return products
     }

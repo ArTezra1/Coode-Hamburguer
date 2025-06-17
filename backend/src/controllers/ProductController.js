@@ -21,7 +21,9 @@ class ProductController {
 
     static async getAll(req, res, next) {
         try {
-            const result = await ProductServices.getAll()
+            const { category } = req.query
+
+            const result = await ProductServices.getAll(category)
 
             res.status(200).json(result)
 

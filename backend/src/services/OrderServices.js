@@ -1,15 +1,12 @@
 import CrudServices from "./CrudServices.js";
 import OrderModel from "../models/OrderModel.js";
 
-import BurgerModel from "../models/BurgerModel.js"
-import DrinkModel from "../models/DrinkModel.js"
-import PortionModel from "../models/PortionModel.js"
-import ComboModel from "../models/ComboModel.js"
 import {
     ErroBadRequest,
     ErroNotFound,
     ErroValidation
 } from "../error/ErrorClasses.js";
+import ProductModel from "../models/ProductModel.js";
 
 class OrderServices extends CrudServices {
     constructor() {
@@ -28,26 +25,8 @@ class OrderServices extends CrudServices {
         for (const item of items) {
             const { productType, product: productId, quantity } = item
 
-            let ProductModel
-
-            switch (productType) {
-                case "Burger":
-                    ProductModel = BurgerModel;
-                    break
-                case "Drink":
-                    ProductModel = DrinkModel;
-                    break
-                case "Portion":
-                    ProductModel = PortionModel;
-                    break
-                case "Combo":
-                    ProductModel = ComboModel;
-                    break
-                default:
-                    throw new ErroValidation(`Tipo de produto inválido: ${productType}`)
-            }
-
             const product = await ProductModel.findById(productId)
+            
             if (!product) {
                 throw new ErroNotFound(`Produto não encontrado para o ID: ${productId}`)
             }
