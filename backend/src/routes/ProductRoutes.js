@@ -15,6 +15,8 @@ router.get("/products/:id", ProductController.getById)
 
 router.put("/products/:id", ProductController.update)
 
+router.delete("/products", ProductController.deleteAll)
+
 router.delete("/products/:id", ProductController.delete)
 
 export default router

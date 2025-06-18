@@ -13,6 +13,8 @@ router.get("/addresses/:id", AddressController.getById)
 
 router.put("/addresses/:id", AddressController.update)
 
+router.delete("/addresses", AddressController.deleteAll)
+
 router.delete("/addresses/:id", AddressController.delete)
 
 export default router

@@ -13,6 +13,8 @@ router.get("/summarys/:id", SalesSummaryController.getById)
 
 router.put("/summarys/:id", SalesSummaryController.update)
 
+router.delete("/summarys", SalesSummaryController.deleteAll)
+
 router.delete("/summarys/:id", SalesSummaryController.delete)
 
 export default router

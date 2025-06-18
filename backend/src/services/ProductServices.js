@@ -1,3 +1,4 @@
+import CrudServices from "./CrudServices.js";
 import ProductModel from "../models/ProductModel.js";
 
 import {
@@ -18,8 +19,9 @@ const dataPerCategory = {
     other: "-_id -__v -updatedAt -createdAt -ingredients -itensCombo"
 }
 
-class ProductServices {
+class ProductServices extends CrudServices{
     constructor() {
+        super(ProductModel)
         this.imageField = "imageSrc"
         this.imageFolder = "images"
     }

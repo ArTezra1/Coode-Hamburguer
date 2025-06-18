@@ -72,7 +72,18 @@ class SalesController {
 
             await SalesServices.delete(id)
 
-            return res.status(200).send()
+            return res.status(204).send()
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async deleteAll(req, res, next) {
+        try {
+            await SalesServices.deleteAll()
+
+            return res.status(204).send()
 
         } catch (error) {
             next(error)

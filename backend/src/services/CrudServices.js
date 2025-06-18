@@ -54,8 +54,8 @@ class CrudServices {
         }
 
         return true
-    }   
-    
+    }
+
     async delete(id) {
         const validId = checkId(id)
 
@@ -84,6 +84,34 @@ class CrudServices {
         await this.model.findByIdAndDelete(validId)
 
         return true
+    }
+
+    async deleteAll() {
+        const modelName = this.model.modelName
+
+        if (modelName === "Product") {
+            const products = await this.model.find({})
+
+            await Promise.all(
+                products.map(async (product) => {
+                    const imagePath = product[this.imageField]
+
+                    if (imagePath) {
+                        const fullPath = path.join(process.cwd(), imagePath)
+
+                        try {
+                            await fs.promises.access(fullPath)
+                            await fs.promises.unlink(fullPath)
+
+                        } catch (error) {
+                            console.warn(`Erro ao deletar imagem ou arquivo não encontrado: ${fullPath} -> ${error.message}`)
+                        }
+                    }
+                })
+            )
+        }
+
+        await this.model.deleteMany({})
     }
 }
 

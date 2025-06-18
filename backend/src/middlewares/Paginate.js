@@ -11,7 +11,7 @@ function paginate(req, res, next) {
       })
     }
 
-    const result = req.result
+    const result = Array.isArray(req.result) ? req.result : [] 
 
     const startIndex = (pageNumber - 1) * limitNumber
     const endIndex = startIndex + limitNumber

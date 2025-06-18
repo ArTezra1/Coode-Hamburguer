@@ -21,7 +21,8 @@ class ProductController {
 
     static async getAll(req, res, next) {
         try {
-            const result = await ProductServices.getAll(req.query)
+            
+            const result = await ProductServices.getAll(req.query || {})
 
             req.result = result
 
@@ -64,6 +65,17 @@ class ProductController {
             const { id } = req.params
 
             await ProductServices.delete(id)
+
+            return res.status(204).send()
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async deleteAll(req, res, next) {
+        try {
+            await ProductServices.deleteAll()
 
             return res.status(204).send()
 
