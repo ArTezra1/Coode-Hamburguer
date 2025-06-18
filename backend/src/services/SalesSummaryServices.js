@@ -3,8 +3,7 @@ import SalesSummaryModel from "../models/SalesSummaryModel.js";
 import SalesModel from "../models/SalesModel.js"
 
 import {
-    ErroBadRequest,
-    ErroValidation
+    ErroBadRequest
 } from "../error/ErrorClasses.js";
 
 class SalesSummaryServices extends CrudServices {
@@ -16,7 +15,7 @@ class SalesSummaryServices extends CrudServices {
         const validPeriods = ["daily", "weekly", "monthly"]
 
         if (!validPeriods.includes(periodType)) {
-            throw new Error("Tipo de período inválido.")
+            throw new ErroBadRequest("Tipo de período inválido.")
         }
 
         const now = new Date()
@@ -25,13 +24,13 @@ class SalesSummaryServices extends CrudServices {
         if (periodType === "daily") {
             startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
             endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-            
+
         } else if (periodType === "weekly") {
             const firstDay = now.getDate() - now.getDay()
-            
+
             startDate = new Date(now.getFullYear(), now.getMonth(), firstDay)
             endDate = new Date(now.getFullYear(), now.getMonth(), firstDay + 7)
-        
+
         } else if (periodType === "monthly") {
             startDate = new Date(now.getFullYear(), now.getMonth(), 1)
             endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1)
@@ -67,12 +66,11 @@ class SalesSummaryServices extends CrudServices {
         return summary
     }
 
-
     async getByDate(data) {
         const periodTypes = ["daily", "weekly", "monthly"]
 
         if (!data) {
-            throw new ErroValidation("A o tipo de periodo é obrigatório.")
+            throw new ErroBadRequest("A o tipo de periodo é obrigatório.")
         }
 
         if (!periodTypes.includes(data)) {

@@ -22,15 +22,9 @@ class SalesSummaryController {
         try {
             const { periodType } = req.query
 
-            if (periodType) {
-                const result = await SalesSummaryServices.getByDate(periodType)
-
-                req.result = result
-
-                next()
-            }
-
-            const result = await SalesSummaryServices.getAll()
+            const result = periodType 
+            ? await SalesSummaryServices.getByDate(periodType)
+            : await SalesSummaryServices.getAll(req.query) 
 
             req.result = result
 

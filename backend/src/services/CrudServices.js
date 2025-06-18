@@ -26,7 +26,7 @@ class CrudServices {
     async getAll(query = {}) {
         const { filter, sort } = buildMongoQuery(query)
 
-        return await this.model.find(filter, "-__v -updatedAt -createdAt").sort(sort)
+        return this.model.find(filter, "-__v -updatedAt -createdAt").sort(sort)
     }
 
     async getById(id) {
