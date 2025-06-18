@@ -4,12 +4,12 @@ const SalesSchema = new mongoose.Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        refPath: "productModel"
+        ref: "Product"
     },
-    productModel: {
+    category: {
         type: String,
         required: true,
-        enum: ["Burger", "Drink", "Portion", "Combo"]
+        enum: ["burger", "drink", "portion", "combo", "other"]
     },
     productCountSale: {
         type: Number,

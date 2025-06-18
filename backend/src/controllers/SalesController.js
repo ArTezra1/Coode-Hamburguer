@@ -20,16 +20,10 @@ class SalesController {
         try {
             const { group } = req.query
 
-            if (group) {
-                const result = await SalesServices.getByGroups(group)
-
-                req.result = result
-
-                next()
-            }
-
-            const result = await SalesServices.getAll(req.query)
-
+            const result = group 
+            ? await SalesServices.getByGroups(group) 
+            : await SalesServices.getAll(req.query)
+            
             req.result = result
 
             next()

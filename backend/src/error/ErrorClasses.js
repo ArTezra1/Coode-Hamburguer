@@ -33,12 +33,15 @@ class ErroUnauthorized extends ErrorMessage {
 
 class ErroValidation extends ErrorMessage {
     constructor(erro) {
-        const mensagemErro = Object.values(erro.errors)
+        const mensagemErro = Object
+            .values(erro?.errors || {})
             .map(erro => erro.message)
             .join("; ")
+
         super(`Os seguintes erros foram encontrados: ${mensagemErro}`, 422)
     }
 }
+
 
 class ErroObjectParameter extends ErrorMessage {
     constructor(message = "Erro na passagem de parâmetros inválidos na consulta.") {

@@ -4,7 +4,6 @@ const OrderSchema = new mongoose.Schema({
     customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
     },
     address: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,22 +11,22 @@ const OrderSchema = new mongoose.Schema({
     },
     items: [
         {
-            productType: {
-                type: String,
-                enum: ["Burger", "Drink", "Portion", "Combo"],
-                required: true
-            },
             product: {
                 type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                refPath: "items.productType"
+                ref: "Product",
+                required: true
+            },
+            category: {
+                type: String,
+                enum: ["burger", "drink", "portion", "combo", "other"],
+                required: true
             },
             quantity: {
                 type: Number,
                 required: true,
                 min: 1
             },
-            unitPrice:{
+            unitPrice: {
                 type: Number,
                 required: [true, "Insira o preço do item."]
             }
@@ -51,7 +50,7 @@ const OrderSchema = new mongoose.Schema({
         enum: ["cartão", "dinheiro", "pix"],
         required: [true, "Selecione um método de pagamento."]
     },
-    paymentStatus:{
+    paymentStatus: {
         type: String,
         enum: ["pendente", "pago", "estornado"],
         default: "pendente"

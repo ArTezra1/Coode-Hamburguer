@@ -3,8 +3,7 @@ import OrderModel from "../models/OrderModel.js";
 
 import {
     ErroBadRequest,
-    ErroNotFound,
-    ErroValidation
+    ErroNotFound
 } from "../error/ErrorClasses.js";
 import ProductModel from "../models/ProductModel.js";
 
@@ -13,7 +12,7 @@ class OrderServices extends CrudServices {
         super(OrderModel)
     }
 
-    async createOrder({ customer, address, items, isDelivery, paymentMethod }) {
+    async createOrder({ customer, address, items, isDelivery, paymentMethod, paymentStatus }) {
         if (!items || items.length === 0) {
             throw new ErroBadRequest("O pedido deve conter pelo menos um item.")
         }
@@ -23,7 +22,7 @@ class OrderServices extends CrudServices {
         let totalPrice = 0
 
         for (const item of items) {
-            const { productType, product: productId, quantity } = item
+            const { category, product: productId, quantity } = item
 
             const product = await ProductModel.findById(productId)
             
@@ -37,8 +36,8 @@ class OrderServices extends CrudServices {
             totalPrice += itemTotal
 
             populatedItems.push({
-                productType,
                 product: productId,
+                category,
                 quantity,
                 unitPrice,
             })
@@ -51,7 +50,7 @@ class OrderServices extends CrudServices {
             totalPrice,
             isDelivery,
             paymentMethod,
-            paymentStatus: "pendente"
+            paymentStatus: paymentStatus || "pendente"
         })
 
         return newOrder
@@ -65,7 +64,7 @@ class OrderServices extends CrudServices {
             path: "items.product", 
             select: "name quantity -_id"
         })
-        .populate("customer", "name email")
+        // .populate("customer", "name email")
         .populate("address", "street city state zipCode")
         
         return orders
