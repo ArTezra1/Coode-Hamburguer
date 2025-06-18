@@ -1,7 +1,8 @@
 import fs from "fs"
 import path from "path"
-import filterRequest from "../middlewares/FilterRequest.js"
+
 import checkId from "../utils/checkMongooseId.js"
+import buildMongoQuery from "../utils/buildMongoQuery.js"
 
 import {
     ErroNotFound,
@@ -22,8 +23,10 @@ class CrudServices {
         return await this.model.create(data)
     }
 
-    async getAll() {
-        return await this.model.find({})
+    async getAll(query = {}) {
+        const { filter, sort } = buildMongoQuery(query)
+
+        return await this.model.find(filter, "-__v -updatedAt -createdAt").sort(sort)
     }
 
     async getById(id) {

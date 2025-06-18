@@ -20,7 +20,7 @@ class OrderController {
 
     static async getAllOrders(req, res, next) {
         try {
-            const result = await OrderServices.getAllOrders()
+            const result = await OrderServices.getAllOrders(req.query)
 
             req.result = result
 
@@ -36,19 +36,6 @@ class OrderController {
             const { id } = req.params
 
             const result = await OrderServices.getById(id)
-
-            return res.status(200).json(result)
-
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    static async getByParams(req, res, next) {
-        try {
-            const { params } = req.query
-
-            const result = await OrderServices.getByParams()
 
             return res.status(200).json(result)
 

@@ -9,8 +9,6 @@ router.post("/orders", OrderController.createOrder)
 
 router.get("/orders", OrderController.getAllOrders, paginate)
 
-router.get("/orders/query", OrderController.getByParams)
-
 router.get("/orders/:id", OrderController.getById)
 
 router.put("/orders/:id", OrderController.update)

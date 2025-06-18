@@ -44,7 +44,7 @@ class SalesServices extends CrudServices {
     }
 
     async getByGroups(group) {
-        const modelsTypes = ["burger", "drink", "portion", "combo"]
+        const modelsTypes = ["burger", "drink", "portion", "combo", "other"]
 
         if (!group) {
             throw new ErroValidation("O tipo de produto é obrigatório.")

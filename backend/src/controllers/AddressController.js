@@ -20,7 +20,7 @@ class AddressController {
 
     static async getAll(req, res, next) {
         try {
-            const result = await AddressServices.getAll()
+            const result = await AddressServices.getAll(req.query)
 
             req. result = result
 
@@ -36,19 +36,6 @@ class AddressController {
             const { id } = req.params
 
             const result = await AddressServices.getById(id)
-
-            return res.status(200).json(result)
-
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    static async getByParams(req, res, next) {
-        try {
-            const { params } = req.query
-
-            const result = await AddressServices.getByParams(params)
 
             return res.status(200).json(result)
 

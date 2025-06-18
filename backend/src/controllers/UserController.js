@@ -65,7 +65,7 @@ class UserController {
 
     static async getAll(req, res, next) {
         try {
-            const result = await UserServices.getAll()
+            const result = await UserServices.getAll(req.query)
 
             req.result = result
 
@@ -83,21 +83,6 @@ class UserController {
             const user = await UserServices.getById(id)
 
             return res.status(200).json(user)
-
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    static async getByParams(req, res, next) {
-        try {
-            const { params } = req.query
-
-            const result = await UserServices.getByParams(params)
-
-            req.result = result
-
-            next()
 
         } catch (error) {
             next(error)

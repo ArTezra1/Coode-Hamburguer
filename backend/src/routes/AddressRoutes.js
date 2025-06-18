@@ -9,8 +9,6 @@ router.post("/addresses", AddressController.create)
 
 router.get("/addresses", AddressController.getAll, paginate)
 
-router.get("/addresses", AddressController.getByParams, paginate)
-
 router.get("/addresses/:id", AddressController.getById)
 
 router.put("/addresses/:id", AddressController.update)

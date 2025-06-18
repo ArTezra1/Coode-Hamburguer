@@ -6,7 +6,6 @@ class AddresServices extends CrudServices{
         super(AddresModel)
     }
 
-
 }
 
 export default new AddresServices()

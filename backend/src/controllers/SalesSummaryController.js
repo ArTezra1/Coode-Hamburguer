@@ -1,16 +1,16 @@
 import SalesSummaryServices from "../services/SalesSummaryServices.js";
 
-class SalesSummaryController{
-    constructor(){
+class SalesSummaryController {
+    constructor() {
 
     }
 
-    static async createSummary(req, res, next){
+    static async createSummary(req, res, next) {
         try {
             const { periodType } = req.body
 
             const result = await SalesSummaryServices.createSummary(periodType)
-            
+
             return res.status(201).json(result)
 
         } catch (error) {
@@ -18,24 +18,11 @@ class SalesSummaryController{
         }
     }
 
-    static async getAll(req, res, next){
-        try {
-            const result = await SalesSummaryServices.getAll()
-
-            req.result = result
-
-            next()
-
-        } catch (error) {
-            next(error)
-        }
-    }
-
-    static async getAllOrByDate(req, res, next){
+    static async getAllOrByDate(req, res, next) {
         try {
             const { periodType } = req.query
 
-            if(periodType){
+            if (periodType) {
                 const result = await SalesSummaryServices.getByDate(periodType)
 
                 req.result = result
@@ -54,7 +41,7 @@ class SalesSummaryController{
         }
     }
 
-    static async getById(req, res, next){
+    static async getById(req, res, next) {
         try {
             const { id } = req.params
 
@@ -67,7 +54,7 @@ class SalesSummaryController{
         }
     }
 
-    static async update(req, res, next){
+    static async update(req, res, next) {
         try {
             const { id } = req.params
             const data = req.body
@@ -81,7 +68,7 @@ class SalesSummaryController{
         }
     }
 
-    static async delete(req, res, next){
+    static async delete(req, res, next) {
         try {
             const { id } = req.params
 

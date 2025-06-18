@@ -1,11 +1,11 @@
 import SalesServices from "../services/SalesServices.js";
 
-class SalesController{
-    constructor(){
+class SalesController {
+    constructor() {
 
     }
 
-    static async createSale(req, res, next){
+    static async createSale(req, res, next) {
         try {
             const result = await SalesServices.createSale()
 
@@ -16,11 +16,11 @@ class SalesController{
         }
     }
 
-    static async getAllOrByGroup(req, res, next){
-        try { 
+    static async getAllOrByGroup(req, res, next) {
+        try {
             const { group } = req.query
 
-            if(group){
+            if (group) {
                 const result = await SalesServices.getByGroups(group)
 
                 req.result = result
@@ -28,9 +28,9 @@ class SalesController{
                 next()
             }
 
-            const result = await SalesServices.getAll()
+            const result = await SalesServices.getAll(req.query)
 
-            req.result = result 
+            req.result = result
 
             next()
 
@@ -39,8 +39,8 @@ class SalesController{
         }
     }
 
-    static async getById(req, res, next){
-        try { 
+    static async getById(req, res, next) {
+        try {
             const { id } = req.params
 
             const result = await SalesServices.getById(id)
@@ -52,8 +52,8 @@ class SalesController{
         }
     }
 
-    static async update(req, res, next){
-        try { 
+    static async update(req, res, next) {
+        try {
             const { id } = req.params
             const data = req.body
 
@@ -66,8 +66,8 @@ class SalesController{
         }
     }
 
-    static async delete(req, res, next){
-        try { 
+    static async delete(req, res, next) {
+        try {
             const { id } = req.params
 
             await SalesServices.delete(id)
