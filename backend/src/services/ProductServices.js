@@ -1,16 +1,41 @@
 import ProductModel from "../models/ProductModel.js";
 
-import { ErroNotFound } from "../error/ErrorClasses.js";
+import {
+    ErroNotFound,
+} from "../error/ErrorClasses.js";
+
 import validateProduct from "../utils/validateProducts.js";
 import checkId from "../utils/checkMongooseId.js";
 import buildMongoQuery from "../utils/buildMongoQuery.js";
+
 import path from "path"
 import fs from "fs"
+
+const dataPerCategory = {
+    burger: "-_id -__v -updatedAt -createdAt -brand -itensCombo",
+    drink: "-_id -__v -updatedAt -createdAt -ingredients -itensCombo",
+    combo: "-_id -__v -updatedAt -createdAt -ingredients -brand",
+    other: "-_id -__v -updatedAt -createdAt -ingredients -itensCombo"
+}
 
 class ProductServices {
     constructor() {
         this.imageField = "imageSrc"
         this.imageFolder = "images"
+    }
+
+    static async getProductsByCategory(category, filter, sort) {
+        if (!category) {
+            return null
+        }
+
+        const projection = dataPerCategory[category] || "-_id -__v -updatedAt -createdAt"
+
+        return ProductModel.find({
+            category,
+            ...filter
+        }, projection).sort(sort)
+
     }
 
     async createProduct(data, file) {
@@ -26,7 +51,7 @@ class ProductServices {
     async getAll(query = {}) {
         const { filter, sort } = buildMongoQuery(query)
 
-        const products = await ProductModel.find(filter).sort(sort)
+        const products = await ProductServices.getProductsByCategory(query.category, filter, sort)
 
         return products
     }
