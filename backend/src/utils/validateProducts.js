@@ -50,13 +50,13 @@ function validateName(name) {
 }
 
 function validatePrice(price) {
-    if (price <= 0) {
+    if (typeof price !== "number" ||price <= 0) {
         throw new ErroBadRequest("Preço é obrigatório e deve ser maior que zero.")
     }
 }
 
 function validateQuantity(quantity) {
-    if (quantity < 0) {
+    if (typeof quantity !== "number" || quantity < 0) {
         throw new ErroBadRequest("Quantidade é obrigatória e deve ser maior ou igual a zero.")
     }
 }
@@ -71,3 +71,12 @@ function validateProduct(data, file) {
 }
 
 export default validateProduct
+
+export {
+    validateCategories,
+    validateRequiredFields,
+    validateImage,
+    validateName,
+    validatePrice,
+    validateQuantity
+}
