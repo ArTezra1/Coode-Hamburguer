@@ -1,5 +1,2 @@
-- Adicionar o método de paginação nas rotas
-- Adicionar o método de parâmetros de requisição nas rotas
 - Criar o método kanban com o socket.io para mudar o status dos pedidos
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
-- Mudar todas as rotas para arrow function para poder receber comentários do swagger
