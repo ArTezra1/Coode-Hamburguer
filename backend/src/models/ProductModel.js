@@ -38,7 +38,7 @@ const ProductSchema = new mongoose.Schema({
     itensCombo: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Products"
+            ref: "Product"
         }
     ],
     brand: {
