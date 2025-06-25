@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "test:utils": "vitest run __test__/src/utils/",
-    "test:services": "vitest run __test__/src/services/OrderServices.test.js"
+    "test:services": "vitest run __test__/src/services/SalesServices.test.js"
   },
   "keywords": [],
   "author": "",
