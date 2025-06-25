@@ -9,9 +9,13 @@ export default function buildMongoQuery(filters = {}, options = {}) {
 
         const value = filters[key]
 
-        if (key === "price" && typeof value === "string" && value.includes("-")) {
-            const [min, max] = value.split("-").map(Number)
-            mongoQuery[key] = { $gte: min, $lte: max }
+        if (key === "min" || key === "max" && typeof value === "string" && !isNaN(value)) {
+           const numberValue = Number(value)
+
+           mongoQuery["price"] = {
+            ...(mongoQuery["price"] || {}),
+            ...(key === "min" ? { $gte: numberValue } : { $lte: numberValue })
+           }
 
         } else if (regexFields.includes(key)) {
             mongoQuery[key] = { $regex: value, $options: "i" }

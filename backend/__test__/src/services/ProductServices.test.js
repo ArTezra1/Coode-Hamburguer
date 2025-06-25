@@ -1,13 +1,19 @@
 import ProductModel from "../../../src/models/ProductModel.js"
 import ProductServices from "../../../src/services/ProductServices.js"
+import app from "../../../src/app.js"
 import mongoose from "mongoose"
-import { ErroValidation, ErroNotFound } from "../../../src/error/ErrorClasses.js"
+import {
+    ErroNotFound,
+    ErroBadRequest
+} from "../../../src/error/ErrorClasses.js"
 
 describe('ProductServices Tests', () => {
-    let server;
-    
     beforeEach(async () => {
         await ProductModel.deleteMany({})
+    })
+
+    beforeAll(async ()=>{
+        app.listen(5000)
     })
 
     afterAll(async () => {
@@ -47,7 +53,11 @@ describe('ProductServices Tests', () => {
         test('deve lançar erro ao tentar criar produto sem nome', async () => {
             const produtoInvalido = {
                 price: 15.90,
-                category: 'burger'
+                description: 'Hambúrguer delicioso',
+                category: 'burger',
+                ingredients: ['pão', 'hambúrguer', 'queijo'],
+                isAvailable: true,
+                quantity: 10
             }
 
             const fileMock = {
@@ -69,14 +79,17 @@ describe('ProductServices Tests', () => {
             }
 
             await expect(ProductServices.createProduct(produtoInvalido, fileMock))
-                .rejects.toThrow('Categoria é obrigatória')
+                .rejects.toThrow('Categoria inválida')
         })
 
         test('deve lançar erro ao tentar criar produto sem imagem', async () => {
             const produtoMock = {
                 name: 'X-Burger',
                 price: 15.90,
-                category: 'burger'
+                ingredients: ['pão', 'hambúrguer', 'queijo'],
+                description: 'Hambúrguer delicioso',
+                category: 'burger',
+                quantity: 10
             }
 
             await expect(ProductServices.createProduct(produtoMock))
@@ -84,131 +97,170 @@ describe('ProductServices Tests', () => {
         })
     })
 
-    // describe('Método getAll', () => {
-    //     test('deve retornar todos os produtos de uma categoria específica', async () => {
-    //         const produtos = [
-    //             {
-    //                 name: 'X-Burger',
-    //                 price: 15.90,
-    //                 category: 'burger',
-    //                 imageSrc: 'images/burger.jpg',
-    //                 quantity: 10
-    //             },
-    //             {
-    //                 name: 'X-Salada',
-    //                 price: 17.90,
-    //                 category: 'burger',
-    //                 imageSrc: 'images/burger2.jpg',
-    //                 quantity: 10
-    //             }
-    //         ]
+    describe('Método getAll', () => {
+        test('deve retornar todos os produtos de uma categoria específica', async () => {
+            const produtos = [
+                {
+                    name: 'X-Burger',
+                    price: 15.90,
+                    description: 'Hambúrguer delicioso',
+                    category: 'burger',
+                    imageSrc: 'images/burger.jpg',
+                    quantity: 10
+                },
+                {
+                    name: 'X-Salada',
+                    price: 17.90,
+                    description: 'Hambúrguer delicioso',
+                    category: 'burger',
+                    imageSrc: 'images/burger2.jpg',
+                    quantity: 10
+                }
+            ]
 
-    //         await ProductModel.insertMany(produtos)
+            await ProductModel.insertMany(produtos)
 
-    //         const result = await ProductServices.getAll({ category: 'burger' })
+            const result = await ProductServices.getAll({ category: 'burger' })
 
-    //         expect(result).not.toBeNull()
-    //         expect(Array.isArray(result)).toBe(true)
-    //         expect(result.length).toBe(2)
-    //         expect(result[0]).toHaveProperty('name', 'X-Burger')
-    //         expect(result[1]).toHaveProperty('name', 'X-Salada')
-    //     })
+            expect(result).not.toBeNull()
+            expect(Array.isArray(result)).toBe(true)
+            expect(result.length).toBe(2)
+            expect(result[0]).toHaveProperty('name', 'X-Burger')
+            expect(result[1]).toHaveProperty('name', 'X-Salada')
+        })
 
-    //     test('deve retornar null quando categoria não é fornecida', async () => {
-    //         const result = await ProductServices.getAll({})
-    //         expect(result).toBeNull()
-    //     })
+        test('deve filtrar produtos por preço', async () => {
+            const produtos = [
+                {
+                    name: 'X-Burger',
+                    price: 15.90,
+                    description: 'Hambúrguer delicioso',
+                    category: 'burger',
+                    imageSrc: 'images/burger.jpg',
+                    quantity: 10
+                },
+                {
+                    name: 'X-Especial',
+                    price: 25.90,
+                    description: 'Hambúrguer delicioso',
+                    category: 'burger',
+                    imageSrc: 'images/burger2.jpg',
+                    quantity: 10
+                }
+            ]
 
-    //     test('deve filtrar produtos por preço', async () => {
-    //         const produtos = [
-    //             {
-    //                 name: 'X-Burger',
-    //                 price: 15.90,
-    //                 category: 'burger',
-    //                 imageSrc: 'images/burger.jpg',
-    //                 quantity: 10
-    //             },
-    //             {
-    //                 name: 'X-Especial',
-    //                 price: 25.90,
-    //                 category: 'burger',
-    //                 imageSrc: 'images/burger2.jpg',
-    //                 quantity: 10
-    //             }
-    //         ]
+            await ProductModel.insertMany(produtos)
 
-    //         await ProductModel.insertMany(produtos)
+            const result = await ProductServices.getAll({
+                category: 'burger',
+                max: "20",
+                min: "15"
+            })
 
-    //         const result = await ProductServices.getAll({
-    //             category: 'burger',
-    //             price_lte: 20
-    //         })
+            expect(result).not.toBeNull()
+            expect(Array.isArray(result)).toBe(true)
+            expect(result.length).toBe(1)
+            expect(result[0]).toHaveProperty('name', 'X-Burger')
+        })
+    })
 
-    //         expect(result).not.toBeNull()
-    //         expect(Array.isArray(result)).toBe(true)
-    //         expect(result.length).toBe(1)
-    //         expect(result[0]).toHaveProperty('name', 'X-Burger')
-    //     })
-    // })
+    describe('Método getById', () => {
+        test('deve retornar um produto pelo ID', async () => {
+            const productMock = {
+                name: "X-Burger",
+                description: "Hambúrguer delicioso",
+                ingredients: ["Pão", "hambúrguer", "queijo"],
+                price: 15.9,
+                category: "burger",
+                quantity: 10
+            }
 
-    // describe('Método getProductsByCategory', () => {
-    //     test('deve retornar produtos com projeção correta para categoria burger', async () => {
-    //         const burgerMock = {
-    //             name: 'X-Burger',
-    //             price: 15.90,
-    //             category: 'burger',
-    //             ingredients: ['pão', 'hambúrguer'],
-    //             brand: 'Marca Teste',
-    //             itensCombo: [],
-    //             imageSrc: 'images/burger.jpg',
-    //             quantity: 10
-    //         }
+            const fileMock = {
+                filename: "burger.jpg"
+            }
 
-    //         await ProductModel.create(burgerMock)
+            const product = await ProductServices.createProduct(productMock, fileMock)
+            const result = await ProductServices.getById(product._id)
 
-    //         const result = await ProductServices.getProductsByCategory('burger', {}, {})
-    //         const burger = await result.exec()
+            expect(result).toMatchObject({
+                name: "X-Burger"
+            })
+        })
 
-    //         expect(burger[0]._doc).not.toHaveProperty('__v')
-    //         expect(burger[0]._doc).not.toHaveProperty('updatedAt')
-    //         expect(burger[0]._doc).not.toHaveProperty('createdAt')
-    //         expect(burger[0]._doc).not.toHaveProperty('brand')
-    //         expect(burger[0]._doc).not.toHaveProperty('itensCombo')
-    //     })
+        test('deve retornar um erro ao não encontrar um produto pelo ID', async () => {
+            await expect(ProductServices.getById("123456789012345678901234")).rejects.toThrow(ErroNotFound)
+        })
 
-    //     test('deve popular itensCombo quando categoria é combo', async () => {
-    //         // Cria produtos para o combo
-    //         const burger = await ProductModel.create({
-    //             name: 'X-Burger',
-    //             price: 15.90,
-    //             category: 'burger',
-    //             imageSrc: 'images/burger.jpg',
-    //             quantity: 10
-    //         })
+        test('deve retornar um erro ao tentar obter um produto com ID inválido', async () => {
+            await expect(ProductServices.getById("1234")).rejects.toThrow(ErroBadRequest)
+        })
+    })
 
-    //         const drink = await ProductModel.create({
-    //             name: 'Refrigerante',
-    //             price: 5.90,
-    //             category: 'drink',
-    //             imageSrc: 'images/drink.jpg',
-    //             quantity: 10
-    //         })
+    describe('Método update', () => {
+        test('deve atualizar um produto com sucesso', async () => {
+            const produtoOriginal = {
+                name: 'X-Burger',
+                price: 15.90,
+                description: 'Hambúrguer delicioso',
+                category: 'burger',
+                ingredients: ['pão', 'hambúrguer', 'queijo'],
+                isAvailable: true,
+                quantity: 10
+            }
 
-    //         const combo = await ProductModel.create({
-    //             name: 'Combo X-Burger',
-    //             price: 20.90,
-    //             category: 'combo',
-    //             itensCombo: [burger._id, drink._id],
-    //             imageSrc: 'images/combo.jpg',
-    //             quantity: 10
-    //         })
+            const fileMock = { filename: 'burger.jpg' }
+            const produtoCriado = await ProductServices.createProduct(produtoOriginal, fileMock)
+            const dadosAtualizacao = { name: 'Super X-Burger', price: 18.90 }
 
-    //         const result = await ProductServices.getProductsByCategory('combo', {}, {})
-    //         const comboPopulated = await result.exec()
+            const resultado = await ProductServices.update(produtoCriado._id, dadosAtualizacao)
+            const produtoAtualizado = await ProductModel.findById(produtoCriado._id)
 
-    //         expect(comboPopulated[0].itensCombo).toHaveLength(2)
-    //         expect(comboPopulated[0].itensCombo[0]).toHaveProperty('name')
-    //         expect(comboPopulated[0].itensCombo[1]).toHaveProperty('name')
-    //     })
-    // })
+            expect(resultado).toBe(true)
+            expect(produtoAtualizado.name).toBe(dadosAtualizacao.name)
+            expect(produtoAtualizado.price).toBe(dadosAtualizacao.price)
+        })
+
+        test('deve lançar erro ao tentar atualizar produto com ID inválido', async () => {
+            await expect(ProductServices.update('123', { name: 'Novo Nome' }))
+                .rejects.toThrow(ErroBadRequest)
+        })
+
+        test('deve lançar erro ao tentar atualizar produto inexistente', async () => {
+            await expect(ProductServices.update('123456789012345678901234', { name: 'Novo Nome' }))
+                .rejects.toThrow(ErroNotFound)
+        })
+    })
+
+    describe('Método delete', () => {
+        test('deve deletar um produto com sucesso', async () => {
+            const produtoMock = {
+                name: 'X-Burger',
+                price: 15.90,
+                description: 'Hambúrguer delicioso',
+                category: 'burger',
+                ingredients: ['pão', 'hambúrguer', 'queijo'],
+                isAvailable: true,
+                quantity: 10
+            }
+            const fileMock = { filename: 'burger.jpg' }
+            const produtoCriado = await ProductServices.createProduct(produtoMock, fileMock)
+
+            const resultado = await ProductServices.delete(produtoCriado._id)
+            const produtoDeletado = await ProductModel.findById(produtoCriado._id)
+
+            expect(resultado).toBe(true)
+            expect(produtoDeletado).toBeNull()
+        })
+
+        test('deve lançar erro ao tentar deletar produto com ID inválido', async () => {
+            await expect(ProductServices.delete('123'))
+                .rejects.toThrow(ErroBadRequest)
+        })
+
+        test('deve lançar erro ao tentar deletar produto inexistente', async () => {
+            await expect(ProductServices.delete('123456789012345678901234'))
+                .rejects.toThrow(ErroNotFound)
+        })
+    })
+
 })

@@ -28,35 +28,25 @@ class ProductServices extends CrudServices{
         return product
     }
 
-    async getAll(query = {}) {
+    async getProductsByCategory(category, query = {}) {
         const { filter, sort } = buildMongoQuery(query)
-
-        const products = await ProductServices.getProductsByCategory(query.category, filter, sort)
-
-        return products
-    }
-
-    static async getProductsByCategory(category, filter, sort) {
-        if (!category) {
-            return null
-        }
 
         const projection = dataPerCategory[category] || "-__v -updatedAt -createdAt"
 
-        let query = ProductModel.find({
+        let products = ProductModel.find({
             category,
             ...filter
         }, projection).sort(sort)
 
     
         if(category === "combo"){
-            query = query.populate({
+            products = products.populate({
                 path: "itensCombo",
-                select: "-__v -updatedAt -createdAt -itensCombo -brand -category -description -isAvailable -quantity -ingredients -imageSrc"
+                select: "-__v -updatedAt -createdAt -itensCombo -brand -category -description -quantity -ingredients"
             })
         }
 
-        return query
+        return products
 
     }
 }

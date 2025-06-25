@@ -50,13 +50,15 @@ function validateName(name) {
 }
 
 function validatePrice(price) {
-    if (typeof price !== "number" ||price <= 0) {
+    const parsed = Number(price)
+    if (isNaN(parsed) || parsed <= 0) {
         throw new ErroBadRequest("Preço é obrigatório e deve ser maior que zero.")
     }
 }
 
 function validateQuantity(quantity) {
-    if (typeof quantity !== "number" || quantity < 0) {
+    const parsed = Number(quantity)
+    if (isNaN(parsed) || parsed < 0) {
         throw new ErroBadRequest("Quantidade é obrigatória e deve ser maior ou igual a zero.")
     }
 }
