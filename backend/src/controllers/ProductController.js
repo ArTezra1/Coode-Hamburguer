@@ -67,9 +67,11 @@ class ProductController {
         try {
             const { id } = req.params
 
-            await ProductServices.delete(id)
+            const deleted = await ProductServices.delete(id)
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
@@ -78,9 +80,11 @@ class ProductController {
 
     static async deleteAll(req, res, next) {
         try {
-            await ProductServices.deleteAll()
+            const deleted = await ProductServices.deleteAll()
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)

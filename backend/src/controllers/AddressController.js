@@ -62,9 +62,11 @@ class AddressController {
         try {
             const { id } = req.params
 
-            await AddressServices.delete(id)
+            const deleted = await AddressServices.delete(id)
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
@@ -73,10 +75,12 @@ class AddressController {
 
     static async deleteAll(req, res, next) {
         try {
-            await AddressServices.deleteAll()
+            const deleted = await AddressServices.deleteAll()
 
-            return res.status(204).send()
-
+            return res.status(200).json({
+                message: deleted.message
+            })
+            
         } catch (error) {
             next(error)
         }

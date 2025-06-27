@@ -66,9 +66,11 @@ class SalesSummaryController {
         try {
             const { id } = req.params
 
-            await SalesSummaryServices.delete(id)
+            const deleted = await SalesSummaryServices.delete(id)
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
@@ -77,10 +79,12 @@ class SalesSummaryController {
 
     static async deleteAll(req, res, next) {
         try {
-            await SalesSummaryServices.deleteAll()
+            const deleted = await SalesSummaryServices.deleteAll()
 
-            return res.status(204).send()
-
+            return res.status(200).json({
+                message: deleted.message
+            })
+            
         } catch (error) {
             next(error)
         }

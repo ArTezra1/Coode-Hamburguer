@@ -20,10 +20,10 @@ class SalesController {
         try {
             const { group } = req.query
 
-            const result = group 
-            ? await SalesServices.getByGroups(group) 
-            : await SalesServices.getAll(req.query)
-            
+            const result = group
+                ? await SalesServices.getByGroups(group)
+                : await SalesServices.getAll(req.query)
+
             req.result = result
 
             next()
@@ -64,9 +64,11 @@ class SalesController {
         try {
             const { id } = req.params
 
-            await SalesServices.delete(id)
+            const deleted = await SalesServices.delete(id)
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
@@ -75,9 +77,11 @@ class SalesController {
 
     static async deleteAll(req, res, next) {
         try {
-            await SalesServices.deleteAll()
+            const deleted = await SalesServices.deleteAll()
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)

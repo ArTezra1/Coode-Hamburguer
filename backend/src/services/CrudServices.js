@@ -1,4 +1,4 @@
-import fs from "fs"
+import fs from "fs/promises"
 import path from "path"
 
 import checkId from "../utils/checkMongooseId.js"
@@ -71,19 +71,23 @@ class CrudServices {
             const fullPath = path.join(process.cwd(), imagePath)
 
             try {
-                if (fs.existsSync(fullPath)) {
-                    fs.unlinkSync(fullPath)
-                } else {
-                    console.warn(`Arquivo de imagem não encontrado: ${fullPath}`)
-                }
+                await fs.unlink(fullPath)
+
             } catch (error) {
-                console.error("Erro ao deletar imagem:", error.message)
+                if (error.code === "ENOENT") {
+                    console.warn("Arquivo não encontrado")
+                } else {
+                    console.error("Erro ao deletar:", error.message)
+                    throw error
+                }
             }
         }
 
         await this.model.findByIdAndDelete(validId)
 
-        return true
+        return {
+            message: "Registro deletado com sucesso."
+        }
     }
 
     async deleteAll() {
@@ -100,8 +104,8 @@ class CrudServices {
                         const fullPath = path.join(process.cwd(), imagePath)
 
                         try {
-                            await fs.promises.access(fullPath)
-                            await fs.promises.unlink(fullPath)
+                            await fs.access(fullPath)
+                            await fs.unlink(fullPath)
 
                         } catch (error) {
                             console.warn(`Erro ao deletar imagem ou arquivo não encontrado: ${fullPath} -> ${error.message}`)
@@ -112,6 +116,10 @@ class CrudServices {
         }
 
         await this.model.deleteMany({})
+
+        return {
+            message: "Todos os registro foram deletados com sucesso."
+        }
     }
 }
 

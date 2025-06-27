@@ -62,9 +62,11 @@ class OrderController {
         try {
             const { id } = req.params
 
-            await OrderServices.delete(id)
+            const deleted = await OrderServices.delete(id)
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
@@ -73,9 +75,11 @@ class OrderController {
 
     static async deleteAll(req, res, next) {
         try {
-            await OrderServices.deleteAll()
+            const deleted = await OrderServices.deleteAll()
 
-            return res.status(204).send()
+            return res.status(200).json({
+                message: deleted.message
+            })
 
         } catch (error) {
             next(error)
