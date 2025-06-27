@@ -60,9 +60,11 @@ class ProductController {
             const { id } = req.params
             const data = req.body
 
-            await ProductServices.update(id, data)
+            const updated = await ProductServices.update(id, data)
 
-            return res.status(204).send()
+            return res.status(204).json({
+                message: updated.message
+            })
 
         } catch (error) {
             next(error)

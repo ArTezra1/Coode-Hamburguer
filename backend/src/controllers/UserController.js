@@ -106,9 +106,11 @@ class UserController {
             const { id } = req.params
             const result = req.body
 
-            await UserServices.update(id, result)
+            const update = await UserServices.update(id, result)
 
-            return res.status(200).send()
+            return res.status(200).json({
+                message: update.message
+            })
 
         } catch (error) {
             next(error)

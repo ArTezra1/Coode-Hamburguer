@@ -57,9 +57,11 @@ class SalesSummaryController {
             const { id } = req.params
             const data = req.body
 
-            await SalesSummaryServices.update(id, data)
+            const updated = await SalesSummaryServices.update(id, data)
 
-            return res.status(200).send()
+            return res.status(200).json({
+                message: updated.message
+            })
 
         } catch (error) {
             next(error)

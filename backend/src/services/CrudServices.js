@@ -53,7 +53,9 @@ class CrudServices {
             throw new ErroNotFound("Registro não encontrado.")
         }
 
-        return true
+        return {
+            message: "Registro atualizado com sucesso."
+        }
     }
 
     async delete(id) {

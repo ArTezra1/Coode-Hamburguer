@@ -55,9 +55,11 @@ class OrderController {
             const { id } = req.params
             const data = req.body
 
-            await OrderServices.update(id, data)
+            const updated = await OrderServices.update(id, data)
 
-            return res.status(200).send()
+            return res.status(200).json({
+                message: updated.message
+            })
 
         } catch (error) {
             next(error)

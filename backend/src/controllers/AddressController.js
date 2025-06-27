@@ -61,9 +61,11 @@ class AddressController {
             const { id } = req.params
             const data = req.body
 
-            await AddressServices.update(id, data)
+            const updated = await AddressServices.update(id, data)
 
-            return res.status(200).send()
+            return res.status(200).json({
+                message: updated.message
+            })
 
         } catch (error) {
             next(error)
