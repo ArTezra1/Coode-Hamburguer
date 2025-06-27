@@ -12,12 +12,12 @@ router.get("/users", CheckToken, CheckAdmin, UserControler.getAll)
 
 router.get("/users/:id", CheckToken, UserControler.getById)
 
-router.get("/profile/orders", CheckToken, UserControler.getOrders)
+router.get("/users/:id/orders", CheckToken, UserControler.getOrders)
 
-router.get("/profile/address", CheckToken, UserControler.getAddress)
+router.get("/users/:id/address", CheckToken, UserControler.getAddress)
 
-router.put("/profile/address", CheckToken, UserControler.updateAddress)
+router.put("/users/:id/address", CheckToken, UserControler.updateAddress)
 
-router.delete("/profile", UserControler.delete)
+router.delete("/users/:id", UserControler.delete)
 
 export default router

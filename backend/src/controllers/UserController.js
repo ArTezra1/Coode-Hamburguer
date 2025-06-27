@@ -7,6 +7,12 @@ class UserController {
 
     static async login(req, res, next) {
         try {
+            if (!req.user) {
+                return res.status(401).json({ 
+                    message: "Usuário não autenticado" 
+                })
+            }
+
             const { sub: auth0Id, email, name } = req.user
 
             const result = await UserServices.login({
