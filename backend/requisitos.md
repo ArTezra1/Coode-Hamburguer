@@ -1,7 +1,5 @@
 - Criar o método kanban com o socket.io para mudar o status dos pedidos
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
-- Colocar a pesquisa por query e paginação nos orders, getAllOrders
-- Tirar o comentário de populate do customer no getAllOrders
 - Adicionar a URL na criação de produtos com imagens para quando o deploy do front e do back for feito o front não depender diretamente da URL relativa do back e sim a salva completa URL no back
 - Adicionar complemento no model de endereços
 - O delete deve retornar uma mensagem de deletado com sucesso ou não

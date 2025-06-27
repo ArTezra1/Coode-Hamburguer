@@ -1,11 +1,13 @@
 import CrudServices from "./CrudServices.js";
 import OrderModel from "../models/OrderModel.js";
+import ProductModel from "../models/ProductModel.js";
 
 import {
     ErroBadRequest,
     ErroNotFound
 } from "../error/ErrorClasses.js";
-import ProductModel from "../models/ProductModel.js";
+
+import buildMongoQuery from "../utils/buildMongoQuery.js";
 
 class OrderServices extends CrudServices {
     constructor() {
@@ -57,14 +59,16 @@ class OrderServices extends CrudServices {
 
     }
 
-    async getAllOrders(){
-        const orders = await OrderModel.find({})
-        .select("-__v -updatedAt")
+    async getAllOrders(query = {}){
+        const { filter, sort } = buildMongoQuery(query)
+
+        const orders = await OrderModel.find(filter, "-__v -updatedAt")
+        .sort(sort)
         .populate({
             path: "items.product", 
             select: "name quantity -_id"
         })
-        // .populate("customer", "name email")
+        .populate("customer", "name email")
         .populate("address", "street city state zipCode")
         
         return orders
