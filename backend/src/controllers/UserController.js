@@ -1,5 +1,7 @@
 import UserServices from "../services/UserServices.js";
 
+import { verifyAuth0Token } from "../utils/auth.js";
+
 class UserController {
     constructor() {
 
@@ -7,13 +9,17 @@ class UserController {
 
     static async login(req, res, next) {
         try {
-            if (!req.user) {
-                return res.status(401).json({ 
-                    message: "Usuário não autenticado" 
+            const authHeader = req.headers.authorization
+
+            if(!authHeader?.startsWith("Bearer ")){
+                return res.status(401).json({
+                    message: "Token inválido."
                 })
             }
 
-            const { sub: auth0Id, email, name } = req.user
+            const token = authHeader.split(" ")[1]
+
+            const { sub: auth0Id, email, name } = await verifyAuth0Token(token)
 
             const result = await UserServices.login({
                 auth0Id, email, name
