@@ -67,19 +67,22 @@ class CrudServices {
             throw new ErroNotFound("Registro não encontrado.")
         }
 
-        const imagePath = item[this.imageField]
+        const imageUrl = item[this.imageField]
 
-        if (imagePath) {
-            const fullPath = path.join(process.cwd(), imagePath)
-
+        if (imageUrl) {
             try {
+                const pathname = new URL(imageUrl).pathname 
+                const filename = path.basename(pathname)    
+                
+                const fullPath = path.join(process.cwd(), "uploads/images", filename)
+
                 await fs.unlink(fullPath)
 
             } catch (error) {
                 if (error.code === "ENOENT") {
-                    console.warn("Arquivo não encontrado")
+                    console.warn("Arquivo de imagem não encontrado.")
                 } else {
-                    console.error("Erro ao deletar:", error.message)
+                    console.error("Erro ao deletar imagem:", error.message)
                     throw error
                 }
             }
@@ -100,17 +103,20 @@ class CrudServices {
 
             await Promise.all(
                 products.map(async (product) => {
-                    const imagePath = product[this.imageField]
+                    const imageUrl = product[this.imageField]
 
-                    if (imagePath) {
-                        const fullPath = path.join(process.cwd(), imagePath)
-
+                    if (imageUrl) {
                         try {
+                            const pathname = new URL(imageUrl).pathname
+                            const filename = path.basename(pathname)
+
+                            const fullPath = path.join(process.cwd(), "uploads/images", filename)
+
                             await fs.access(fullPath)
                             await fs.unlink(fullPath)
 
                         } catch (error) {
-                            console.warn(`Erro ao deletar imagem ou arquivo não encontrado: ${fullPath} -> ${error.message}`)
+                            console.warn(`Erro ao deletar imagem: ${imageUrl} -> ${error.message}`)
                         }
                     }
                 })
@@ -120,7 +126,7 @@ class CrudServices {
         await this.model.deleteMany({})
 
         return {
-            message: "Todos os registro foram deletados com sucesso."
+            message: "Todos os registros foram deletados com sucesso."
         }
     }
 }

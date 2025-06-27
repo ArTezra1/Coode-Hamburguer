@@ -4,6 +4,9 @@ import ProductModel from "../models/ProductModel.js";
 import validateProduct from "../utils/validateProducts.js";
 import buildMongoQuery from "../utils/buildMongoQuery.js";
 
+import { configDotenv } from "dotenv";
+configDotenv()
+
 const dataPerCategory = {
     burger: "-__v -updatedAt -createdAt -brand -itensCombo",
     drink: "-__v -updatedAt -createdAt -ingredients -itensCombo",
@@ -21,7 +24,7 @@ class ProductServices extends CrudServices{
     async createProduct(data, file) {
         validateProduct(data, file)
 
-        data[this.imageField] = `${this.imageFolder}/${file.filename}`
+        data[this.imageField] = `${process.env.API_URL}/images/${file.filename}`
 
         const product = await ProductModel.create(data)
 
