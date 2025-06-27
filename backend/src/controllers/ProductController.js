@@ -1,5 +1,7 @@
 import ProductServices from "../services/ProductServices.js";
 
+import { ErroBadRequest } from "../error/ErrorClasses.js";
+
 class ProductController {
     constructor() {
 
@@ -7,6 +9,10 @@ class ProductController {
 
     static async createProduct(req, res, next) {
         try {
+            if (!req.body || Object.keys(req.body).length === 0) {
+                throw new ErroBadRequest("O corpo da requisição está vazio.")
+            }
+
             const data = req.body;
             const file = req.file;
 
@@ -22,11 +28,11 @@ class ProductController {
     static async getAll(req, res, next) {
         try {
             const category = req.query.category
-            
-            const result = category 
-            ? await ProductServices.getProductsByCategory(category, req.query)
-            : await ProductServices.getAll(req.query)
-            
+
+            const result = category
+                ? await ProductServices.getProductsByCategory(category, req.query)
+                : await ProductServices.getAll(req.query)
+
             req.result = result
 
             next()

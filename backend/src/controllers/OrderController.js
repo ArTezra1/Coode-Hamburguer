@@ -1,5 +1,7 @@
 import OrderServices from "../services/OrderServices.js";
 
+import { ErroBadRequest } from "../error/ErrorClasses.js";
+
 class OrderController {
     constructor() {
 
@@ -7,6 +9,10 @@ class OrderController {
 
     static async createOrder(req, res, next) {
         try {
+            if (!req.body || Object.keys(req.body).length === 0) {
+                throw new ErroBadRequest("O corpo da requisição está vazio.")
+            }
+
             const data = req.body
 
             const result = await OrderServices.createOrder(data)

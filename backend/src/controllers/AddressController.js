@@ -1,5 +1,7 @@
 import AddressServices from "../services/AddressServices.js";
 
+import { ErroBadRequest } from "../error/ErrorClasses.js";
+
 class AddressController {
     constructor() {
 
@@ -7,11 +9,21 @@ class AddressController {
 
     static async create(req, res, next) {
         try {
+            if (!req.body || Object.keys(req.body).length === 0) {
+                throw new ErroBadRequest("O corpo da requisição está vazio.")
+            }
+
             const data = req.body
 
-            const result = await AddressServices.create(data)
+            console.log(data.lenght)
 
-            return res.status(201).json(result)
+            if (data) {
+
+            }
+
+            // const result = await AddressServices.create(data)
+
+            // return res.status(201).json(result)
 
         } catch (error) {
             next(error)
@@ -80,7 +92,7 @@ class AddressController {
             return res.status(200).json({
                 message: deleted.message
             })
-            
+
         } catch (error) {
             next(error)
         }

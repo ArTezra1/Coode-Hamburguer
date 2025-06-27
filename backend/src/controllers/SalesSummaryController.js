@@ -7,8 +7,12 @@ class SalesSummaryController {
 
     static async createSummary(req, res, next) {
         try {
+            if (!req.body || Object.keys(req.body).length === 0) {
+                throw new ErroBadRequest("O corpo da requisição está vazio.")
+            }
+            
             const { periodType } = req.body
-
+            
             const result = await SalesSummaryServices.createSummary(periodType)
 
             return res.status(201).json(result)
@@ -22,9 +26,9 @@ class SalesSummaryController {
         try {
             const { periodType } = req.query
 
-            const result = periodType 
-            ? await SalesSummaryServices.getByDate(periodType)
-            : await SalesSummaryServices.getAll(req.query) 
+            const result = periodType
+                ? await SalesSummaryServices.getByDate(periodType)
+                : await SalesSummaryServices.getAll(req.query)
 
             req.result = result
 
@@ -84,7 +88,7 @@ class SalesSummaryController {
             return res.status(200).json({
                 message: deleted.message
             })
-            
+
         } catch (error) {
             next(error)
         }
