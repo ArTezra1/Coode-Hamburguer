@@ -56,7 +56,7 @@ class ErroAuthentication extends ErrorMessage {
 }
 
 class ErroConflict extends ErrorMessage {
-    constructor(message = "Conflito de dados. O recurso já existe.") {
+    constructor(message = "Conflito de dados, o recurso já existe.") {
         super(message, 409)
     }
 }

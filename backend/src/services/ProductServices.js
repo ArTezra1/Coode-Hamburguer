@@ -4,6 +4,8 @@ import ProductModel from "../models/ProductModel.js";
 import validateProduct from "../utils/validateProducts.js";
 import buildMongoQuery from "../utils/buildMongoQuery.js";
 
+import { ErroConflict } from "../error/ErrorClasses.js";
+
 import { configDotenv } from "dotenv";
 configDotenv()
 
@@ -14,7 +16,7 @@ const dataPerCategory = {
     other: "-__v -updatedAt -createdAt -ingredients -itensCombo"
 }
 
-class ProductServices extends CrudServices{
+class ProductServices extends CrudServices {
     constructor() {
         super(ProductModel)
         this.imageField = "imageSrc"
@@ -22,11 +24,24 @@ class ProductServices extends CrudServices{
     }
 
     async createProduct(data, file) {
+        const { name } = data
+
+        const existingProduct = await ProductModel.findOne({
+            name: name.toLowerCase()
+        })
+
+        if (existingProduct) {
+            throw new ErroConflict("Já existe um produto com esse nome.")
+        }
+
         validateProduct(data, file)
 
         data[this.imageField] = `${process.env.API_URL}/images/${file.filename}`
 
-        const product = await ProductModel.create(data)
+        const product = await ProductModel.create({
+            ...data,
+            name: name.toLowerCase()
+        })
 
         return product
     }
@@ -41,8 +56,8 @@ class ProductServices extends CrudServices{
             ...filter
         }, projection).sort(sort)
 
-    
-        if(category === "combo"){
+
+        if (category === "combo") {
             products = products.populate({
                 path: "itensCombo",
                 select: "-__v -updatedAt -createdAt -itensCombo -brand -category -description -quantity -ingredients"

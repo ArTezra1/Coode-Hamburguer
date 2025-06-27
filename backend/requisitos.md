@@ -2,5 +2,4 @@
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
 - Adicionar o método de logout em user se necessário
 - Adicionar HTTPS no servidos
-- Adicionar verificação se o produto existe no banco antes de criar, se tiver um produto com o mesmo nome deve retornar erro
 - FIM 
