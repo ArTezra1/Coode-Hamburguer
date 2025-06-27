@@ -1,9 +1,9 @@
 - Criar o método kanban com o socket.io para mudar o status dos pedidos
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
 - Adicionar a URL na criação de produtos com imagens para quando o deploy do front e do back for feito o front não depender diretamente da URL relativa do back e sim a salva completa URL no back
-- Adicionar complemento no model de endereços
 - O delete deve retornar uma mensagem de deletado com sucesso ou não
 - O update deve retornar o dado atualizado ao invés de true
+- Adicionar retorno de erro certo quando tenta criar um registro sem dados na requisição nos métodos create.
 - Deve ser trocado o status 204 dos updates dos controllers para retornar a mensagem do service
 - Deve ser trocado o status 204 dos deletes dos controllers para retorna a mensagem do service
 - Adicionar HTTPS no servidos

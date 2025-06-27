@@ -16,6 +16,9 @@ const AddressSchema = new mongoose.Schema({
     neighborhood:{
         type: String,
         required: [true, "Neighborhood is required"]
+    },
+    complement:{
+        type: String
     }
 }, {
     timestamps: true
