@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const AddressSchema = new mongoose.Schema({
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
     street:{
         type: String,
         required: [true, "Street is required"]

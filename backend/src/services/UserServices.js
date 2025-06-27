@@ -7,7 +7,7 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-import { 
+import {
     ErroBadRequest,
     ErroNotFound,
     ErroAuthentication
@@ -93,7 +93,10 @@ class UserServices extends CrudServices {
             )
 
         } else {
-            updatedAddress = await AddressModel.create(address)
+            updatedAddress = await AddressModel.create({
+                userId: user._id,
+                ...address
+            })
             user.address = updatedAddress._id
 
             await user.save()
