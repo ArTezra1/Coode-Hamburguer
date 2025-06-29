@@ -1,7 +1,18 @@
-export default function Home() {
+import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
+import SearchBar from '@/components/SearchBar'
+import React from 'react'
+
+const page = () => {
   return (
-    <div>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et similique eaque molestiae perspiciatis facilis? Accusantium, sit eos? Neque tenetur soluta earum temporibus id, recusandae voluptate dignissimos adipisci sunt maiores. Repellendus.
-    </div>
-  );
+    <main className='w-full h-screen'>
+      <Header />
+      <SearchBar />
+
+
+      <NavBar />
+    </main>
+  )
 }
+
+export default page

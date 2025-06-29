@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { Poppins } from "next/font/google";
-import NavBar from "@/components/NavBar";
+import Sidebar from "@/components/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +29,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
       <body
-        className={`${poppins.variable} bg-slate-950 text-slate-100`}
+        className={`${poppins.variable} bg-[#00010D] text-zinc-100`}
       >
-        <div className="flex min-h-screen flex-col items-center">
-          <div>
-            <NavBar />
+        <div className="flex gap-1 h-screen w-screen overflow-hidden">
+          <div className="hidden lg:block">
+            <Sidebar />
           </div>
           {children}
         </div>

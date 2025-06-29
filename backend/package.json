@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon app.js",
-    "test:utils": "vitest run __test__/src/utils/",
-    "test:services": "vitest run __test__/src/services/",
-    "test:controllers": "vitest run __test__/src/controllers/UserController.test.js"
+    "test:utils": "vitest run test/src/utils/",
+    "test:services": "vitest run test/src/services/",
+    "test:controllers": "vitest run test/src/controllers/UserController.test.js"
   },
   "keywords": [],
   "author": "",

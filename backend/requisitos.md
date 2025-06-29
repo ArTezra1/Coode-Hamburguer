@@ -1,5 +1,4 @@
 - Criar o método kanban com o socket.io para mudar o status dos pedidos
 - Melhorar a documentação, refatorando e colocando detalhes nas rotas
-- Adicionar o método de logout em user se necessário
-- Adicionar HTTPS no servidos
+- Integrar a API com Stripe ou Mercado pago
 - FIM 
