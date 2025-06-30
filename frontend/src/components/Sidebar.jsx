@@ -6,7 +6,7 @@ import BottomSidebar from './BottomSidebar'
 
 const Sidebar = () => {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[280px] bg-[#00010D] flex flex-col">
+    <aside className="fixed left-0 top-0 h-screen w-[280px] bg-[#130F0C] hidden lg:flex flex-col">
       <div className="flex flex-col gap-1 h-full">
         <TopSidebar />
         <BottomSidebar />

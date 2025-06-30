@@ -38,7 +38,7 @@ const SectionsBar = ({ onSelectCategory }) => {
     const [section, setSection] = useState(0)
 
     return (
-        <nav className='flex justify-between items-center lg:hidden m-auto mt-4 bg-[#3C3530] w-[96vw] rounded-2xl px-4 py-2'>
+        <nav className='flex justify-between items-center lg:hidden m-auto mt-4 bg-[#3C3530] rounded-2xl px-4 py-2'>
             <ul className='flex items-center justify-between w-full px-4 sm:px-20 py-2'>
                 <NavSection
                     index={0}

@@ -9,7 +9,7 @@ import swaggerUi from "swagger-ui-express"
 import startCron from "./auto/autoCron.js"
 
 const require = createRequire(import.meta.url)
-const swaggerFile = require("../docs/swagger_output.json")
+const swaggerFile = require("../src/docs/swagger_output.json")
 
 dotenv.config()
 

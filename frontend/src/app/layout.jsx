@@ -31,10 +31,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} bg-[#130F0C] text-zinc-100`}
       >
-        <div className="flex gap-1 h-screen w-screen overflow-hidden">
-          <div className="hidden lg:block">
-            <Sidebar />
-          </div>
+        <Sidebar />
+        <div className="lg:pl-[280px] min-h-screen">
           {children}
         </div>
       </body>
