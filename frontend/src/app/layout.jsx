@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">
       <body
-        className={`${poppins.variable} bg-[#00010D] text-zinc-100`}
+        className={`${poppins.variable} bg-[#130F0C] text-zinc-100`}
       >
         <div className="flex gap-1 h-screen w-screen overflow-hidden">
           <div className="hidden lg:block">
