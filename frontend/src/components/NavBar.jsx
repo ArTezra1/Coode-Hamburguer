@@ -21,7 +21,7 @@ const NavItem = ({ index, section, setSection, icon, href, text }) => {
         >
             <div className={clsx(
                 "z-10 transition-all duration-300",
-                isActive && "bg-[#675D56] h-12 w-12 rounded-full flex flex-col justify-center items-center -mt-6"
+                isActive && "bg-zinc-700 h-12 w-12 rounded-full flex flex-col justify-center items-center -mt-6"
             )}>
                 {icon}
             </div>
@@ -36,7 +36,7 @@ const NavBar = () => {
     const [section, setSection] = useState(0)
 
     return (
-        <nav className="flex justify-between items-center lg:hidden bg-[#3C3530] w-[96vw] h-14 rounded-xl fixed bottom-1 left-1/2 transform -translate-x-1/2 px-8 sm:px-20 py-2 z-10">
+        <nav className="flex justify-between items-center lg:hidden bg-zinc-800 w-[96vw] h-14 rounded-xl fixed bottom-1 left-1/2 transform -translate-x-1/2 px-8 sm:px-20 py-2 z-10">
             <NavItem
                 index={0}
                 icon={<HomeIcon className="text-white" />}
