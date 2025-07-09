@@ -10,6 +10,7 @@ import SearchBar from '@/components/SearchBar'
 import SectionsBar from '@/components/SectionsBar'
 import React from 'react'
 import ProductsCard from '@/components/ProductsCard.jsx'
+import Pg from '@/components/Pg.jsx'
 
 const categoryLabels = {
   burger: "Lanches",
@@ -47,9 +48,10 @@ const page = () => {
         <h2 className="text-xl font-bold my-4">
           {categoryLabels[category]}
         </h2>
-        <ProductsCard
+        {/* <ProductsCard
           products={products.items}
-        />
+        /> */}
+        <Pg />
       </section>
       <NavBar />
     </main>
